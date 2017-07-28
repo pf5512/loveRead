@@ -1,0 +1,52 @@
+<style>
+body{
+	background:#e9e9e9;
+}
+</style>
+<div class="title-bar">
+	<img src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:history.back();"></img><p>图书列表</p>
+</div>
+<div class="book-list">
+    #if($!{bookDetailList.size()}>0)
+    	<ul>
+    		#foreach($value in $!bookDetailList)
+    		<li>
+    			<div class="book-list-item">
+    				<img class="book-pic" src="$value.cover" onclick="window.location.href='${rc.contextPath}/book/bookDetail?bookId=$!{value.bookId}'"></img>
+    				#if($!{value.status} == "00")
+    				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/borrowable_icon.png"></img>
+    				#elseif($!{value.status} == "01")
+    				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/lent_icon.png"></img>
+    				#else
+    				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/down_icon.png"></img>
+    				#end
+    				<div class="list-item-info">
+    					<p class="book-title-p">$!{value.bookName}</p>
+    					<p>$!{value.ownerName} - $!{value.ownerTeam}</p>
+    					<p class="book-count-p">
+    						<img src="${rc.contextPath}/resources/images/hackthon/like_icon.png" style="width:16px;"></img>
+    						#if($!{value.likeNums})
+    						$!value.likeNums
+    						#else
+    						0
+    						#end
+                            &nbsp;
+    						<img src="${rc.contextPath}/resources/images/hackthon/borrow_icon.png" style="width:18px;margin-left:5px;"></img>
+    						#if($!{value.borrowNums})
+    						$!value.borrowNums
+    						#else
+    						0
+    						#end
+    					</p>
+    				</div>
+    			</div>
+    		</li>
+    		#end
+    	</ul>
+    #else
+        <div class="no-item">
+            <img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
+            <p>大侠，暂时还没有图书哦！</p>
+        </div>
+    #end
+</div>

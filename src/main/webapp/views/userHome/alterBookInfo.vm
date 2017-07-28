@@ -1,0 +1,255 @@
+<div class="title-bar">
+	<img src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:history.back();"></img><p>修改图书信息</p>
+	#if($!book.status=="02")
+		<a href="javascript:jumpDown($!book.id)">上架</a>
+	#elseif($!book.status=="00")
+		<a href="javascript:jumpDown($!book.id)">下架</a>
+	#end
+</div>
+<div id="coverPreview" class="book-detail-img">
+	<img id="book_cover" class="book-pic" src="$!book.cover"></img>
+	<img class="book-status-pic" src="${rc.contextPath}/resources/images/hackthon/camera_icon.png" onclick="$('#bookCoverInput').click();"></img>
+</div>
+<div class="book-upload-info">
+	<div class="form-group">
+		<label for="bookName">书名</label>
+		<input type="text" class="form-control" id="bookName" name="bookName" placeholder="请输入书名" value ="$!book.bookName">
+	</div>
+	<div class="form-group">
+		<label for="summary">描述</label>
+		<textarea class="form-control" id="summary" name="summary" maxlength="100">$!book.summary</textarea>
+	</div>
+	<div class="form-group">
+		<label for="borrowType">图书类型</label>
+		<select class="form-control" id="borrowType" name="borrowType">
+			<option value="00" #if($book.borrowType=="00") selected="selected" #end >借阅</option>
+			<!--<option value="01" #if($book.borrowType=="01") selected="selected" #end >交换</option>-->
+            
+            #if($!donateFlag == "true")
+			<option value="02" #if($book.borrowType=="02") selected="selected" #end >赠送</option>
+            #end
+		</select>
+	</div>
+    
+    <div class="form-group" id="lastDayDiv" #if($book.borrowType == "01" || $book.borrowType == "02") style="display:none;" #end>
+        <label for="lastDay">可借天数</label>
+        <input type="number" class="form-control" id="lastDay" name="lastDay" placeholder="请输入可借天数" value="$book.lastDay">
+    </div>
+    
+	<div class="form-group"  id="exchangeDiv"  #if($book.borrowType == "00" || $book.borrowType == "02") style="display:none;" #end>
+		<label for="lastDay">交换条件</label>
+		<input type="text" class="form-control" id="exchangeCondition" name="exchangeCondition" value="$!book.exchangeCondition" placeholder="请输入交换条件">
+	</div>
+    
+    <div class="form-group" id="donateDiv"  #if($book.borrowType == "00" || $book.borrowType == "01") style="display:none;" #end>
+        <label for="lastDay">赠送数量</label>
+        <input type="number" class="form-control" id="donateNums" name="lastDay" placeholder="请输入赠送数量" value="$book.lastDay">
+    </div>
+
+	<input id="bookCoverInput" style="display:none;" type="file" capture='camera' onchange ="previewCover(this,'bookCoverInput','coverPreview')">
+	<button id="uploadButton" type="button" class="submit-btn" style="width:100%;margin-top:10px;">修改</button>
+</div>
+<script type="text/javascript" src="${rc.contextPath}/resources/js/zzrw.image.upload.js"></script>
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$(".book-pic").css('height',$(window).height() * 0.3);
+	});
+
+	 function previewCover(file,id,previewId){
+ 		var input = document.getElementById(id);
+ 		if (!input['value'].match(/.jpg|.gif|.png|.bmp/i)){
+			return zzrw.alert("上传的图片格式不正确，请重新选择")
+		}
+    	var prevDiv = document.getElementById(previewId); 
+    	 if (file.files && file.files[0])  { 
+    		 var reader = new FileReader();  
+    		 reader.onload = function(evt){ 
+    			 $("#book_cover").remove();
+    			 prevDiv.innerHTML += '<img class="book-pic" src="' + evt.target.result + '" />';  
+    			 $(".book-pic").css('height',$(window).height() * 0.3);
+    		 }    
+    		 reader.readAsDataURL(file.files[0]);  
+    	 } 
+      }
+	 
+	 $("#uploadButton").click(function(){
+	 	/*var lastDay = $("#lastDay").val.trim();
+	 	var reg = new RegExp("^[0-9]*$");
+	 	if(!reg.test(lastDay)){
+	 		zzrw.alert("请确认天数为数字");
+	 		return false;
+	 	}*/
+	 	var url ="${rc.contextPath}/book/upload?recId=$!book.id";
+	 	newImageUpload(null,"bookCoverInput",url,480);
+	 })
+	 
+	 function newImageUpload(form,id,url,height){
+		var e = document.getElementById(id);
+		if(e.files.length=="0"){
+			//return zzrw.alert("未选择图片！");
+			justAlterInfo();
+			return false;
+		}
+		var count = 0;
+		var successCount = 0;
+		var failCount = 0;
+		var size = 480;
+		if(height!=""){
+			size = height;
+		}
+		//zzrw.load('上传中...');
+		for(var i= 0;i<e.files.length;i++){
+			var file = e.files[i];
+			var FR=new FileReader();
+			FR.readAsDataURL(file);
+			//alert(i);   onloadend
+			FR.onload=function(file){
+				compressImg(this.result,size,function(data){
+					var blob = dataURLtoBlob(data);
+			
+    				var fd = new FormData();//普通form转为formdata
+    				fd.append("newImg", blob, "image.png");//压缩后的blob追加到formdata
+					
+					$.ajax({
+                        type:'POST',
+                        url:url,
+                        data : fd,
+        				processData : false,
+        				contentType : false,
+        				success : function(data){
+							count++;
+							if(data.result=="success"){
+								successCount++;
+							}else{
+								failCount++;
+							}
+							if(count==e.files.length){
+								 if(count==successCount){
+								 	var bookName = $("#bookName").val().trim();
+								 	var summary = $("#summary").val().trim();
+								 	var lastDay = $("#lastDay").val().trim();
+                                    if(lastDay < 7){
+                                        zzrw.alert("出借天数不得小于7天！");
+                                        return;
+                                    }
+								 	var borrowType = $("#borrowType").val().trim();
+								 	var exchangeCondition ="";
+								 	if(borrowType=="01"){
+								 		exchangeCondition = $("#exchangeCondition").val().trim();
+								 	}
+								 	var recordId = data.recordId;
+								 //	alert("bookName="+bookName+"category="+category+"lastDay="+lastDay+"borrowType="+borrowType+"exchangeCondition="+exchangeCondition+"recordId="+recordId);
+								 	$.ajax({
+								 		type:"POST",
+								 		data:{
+								 			bookName:bookName,
+								 			summary:summary,
+								 			lastDay:lastDay,
+								 			borrowType:borrowType,
+								 			exchangeCondition:exchangeCondition,
+								 			recordId:recordId
+								 		},
+								 		url:"${rc.contextPath}/book/add",
+								 		success:function(res){
+								 			if(res=="success"){
+								 				window.location.href="${rc.contextPath}/userHome/myBookList";
+								 			}else{
+								 				zzrw.alert("修改书籍信息失败！");
+								 			}
+								 		},
+								 		error:function(){
+								 			zzrw.alert("操作失败，请稍后重试！");
+								 		}
+								 	})
+								 }else{
+								 	$("#loadModal").modal('hide');
+								 	zzrw.alert("操作失败，请稍后重试！");
+								 }
+							}
+                         } 
+         			})	
+					
+				})
+			};
+		}
+	 	
+	}
+	
+	$("#borrowType").change(function(){
+		var selectVal = $(this).children('option:selected').val();
+		if(selectVal == '00'){
+			$("#exchangeDiv").css("display","none");
+			$("#donateDiv").css("display","none");
+			$("#lastDayDiv").css("display","block");
+		}else if(selectVal == '02'){
+            $("#lastDayDiv").css("display","none");
+            $("#exchangeDiv").css("display","none");
+            $("#donateDiv").css("display","block");
+        }else{
+			$("#exchangeDiv").css("display","block");
+            $("#donateDiv").css("display","none");
+			$("#lastDayDiv").css("display","none");
+		}
+	});
+	
+	function justAlterInfo(){
+		var bookName = $.trim($("#bookName").val());
+		//var category = $.trim($("#category").val());
+		var borrowType = $.trim($("#borrowType").val());
+		var lastDay = $.trim($("#lastDay").val());
+	 	var exchangeCondition ="";
+	 	if(borrowType=="01"){
+	 		exchangeCondition = $.trim($("#exchangeCondition").val());
+	 	}else if(borrowType=="02"){
+            lastDay = $.trim($("#donateNums").val())
+        }
+	 	var defaultCover = "$!book.cover";
+	 	var recordId = "$!book.id"; 
+	 	$.ajax({
+	 		type:"POST",
+	 		data:{
+	 			bookName:bookName,
+	 			//category:category,
+	 			lastDay:lastDay,
+	 			borrowType:borrowType,
+	 			exchangeCondition:exchangeCondition,
+	 			defaultCover:defaultCover,
+	 			recordId:recordId
+	 		},
+	 		url:"${rc.contextPath}/book/alter",
+	 		success:function(res){
+	 			if(res=="success"){
+	 				window.location.href="${rc.contextPath}/userHome/myBookList";
+	 			}else{
+	 				zzrw.alert("修改书籍信息失败！");
+	 			}
+	 		},
+	 		error:function(){
+	 			zzrw.alert("操作失败，请稍后重试！");
+	 		}
+	 	})
+	}
+	
+	function jumpDown(id){
+		//window.location.href="${rc.contextPath}/book/drop?id="+id;
+		$.ajax({
+			type:'POST',
+			data:{
+				id:id
+			},
+			url:"${rc.contextPath}/book/drop",
+			success:function(data){
+				if(data==="success"){
+					zzrw.alert("操作成功！");
+					window.location.href="${rc.contextPath}/userHome/myBookList";
+				}else{
+					zzrw.alert("操作失败，请稍后重试！");
+				}
+			},
+			error:function(data){
+				
+			}
+		})
+	}
+</script>

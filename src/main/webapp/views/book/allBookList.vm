@@ -1,0 +1,325 @@
+<style>
+body{
+	background:#e9e9e9;
+}
+</style>
+<div class="title-bar">
+	<img src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:history.back();"></img><p>图书列表</p>
+</div>
+<div class="content-tab">
+	<ul>
+		<li><a href="javascript:tabClick(0);" class="active-a" id="allBookA">所有</a></li>
+		<li><a href="javascript:tabClick(1);" id="borrowBookA">借吧</a></li>
+		<li><a href="javascript:tabClick(2);" id="exChangeBookA">换呀</a></li>
+	</ul>
+</div>
+<div class="swiper-container all-book-swiper">
+	<div class="swiper-wrapper">
+        <div class="swiper-slide all-book-list" id="allBookList">
+            #if($!{bookDetailList.size()}>0)
+        	   <ul>
+            		#foreach($value in $!bookDetailList)
+            		<li>
+            			<div class="book-list-item">
+            				<img class="book-pic" src="$value.cover" onclick="window.location.href='${rc.contextPath}/book/bookDetail?bookId=$!{value.bookId}'"></img>
+            				#if($!{value.status} == "00")
+            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/borrowable_icon.png"></img>
+            				#elseif($!{value.status} == "01")
+            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/lent_icon.png"></img>
+            				#else
+            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/down_icon.png"></img>
+            				#end
+            				<div class="list-item-info">
+            					<p class="book-title-p">$!{value.bookName}</p>
+            					<p>$!{value.ownerName} - $!{value.ownerTeam}</p>
+            					<p class="book-count-p">
+            						<img src="${rc.contextPath}/resources/images/hackthon/like_icon.png" style="width:16px;"></img>
+            						#if($!{value.likeNums})
+            						$!value.likeNums
+            						#else
+            						0
+            						#end
+                                    &nbsp;
+            						<img src="${rc.contextPath}/resources/images/hackthon/borrow_icon.png" style="width:18px;margin-left:5px;"></img>
+            						#if($!{value.borrowNums})
+            						$!value.borrowNums
+            						#else
+            						0
+            						#end
+            					</p>
+            				</div>
+            			</div>
+            		</li>
+                    #end
+        	   </ul>
+            #else
+                <div class="no-item">
+                    <img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
+                    <p>大侠，暂时还没有图书哦！</p>
+                </div>
+            #end
+        </div>
+		<div class="swiper-slide all-book-list" id="allBorrowList">
+            #if($!{borrowList.size()}>0)
+        	   <ul>
+            		#foreach($value in $!borrowList)
+            		<li>
+            			<div class="book-list-item">
+            				<img class="book-pic" src="$value.cover" onclick="window.location.href='${rc.contextPath}/book/bookDetail?bookId=$!{value.bookId}'"></img>
+            				#if($!{value.status} == "00")
+            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/borrowable_icon.png"></img>
+            				#elseif($!{value.status} == "01")
+            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/lent_icon.png"></img>
+            				#else
+            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/down_icon.png"></img>
+            				#end
+            				<div class="list-item-info">
+            					<p class="book-title-p">$!{value.bookName}</p>
+            					<p>$!{value.ownerName} - $!{value.ownerTeam}</p>
+            					<p class="book-count-p">
+            						<img src="${rc.contextPath}/resources/images/hackthon/like_icon.png" style="width:16px;"></img>
+            						#if($!{value.likeNums})
+            						$!value.likeNums
+            						#else
+            						0
+            						#end
+                                    &nbsp;
+            						<img src="${rc.contextPath}/resources/images/hackthon/borrow_icon.png" style="width:18px;margin-left:5px;"></img>
+            						#if($!{value.borrowNums})
+            						$!value.borrowNums
+            						#else
+            						0
+            						#end
+            					</p>
+            				</div>
+            			</div>
+            		</li>
+                    #end
+        	   </ul>
+            #else
+                <div class="no-item">
+                    <img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
+                    <p>大侠，暂时还没有可借的书哦！</p>
+                </div>
+            #end                
+        </div>
+		<div class="swiper-slide all-book-list" id="allExList">
+            #if($!{borrowList.size()}>0)
+            	<ul>
+            		#foreach($value in $!exchangeList)
+            		<li>
+            			<div class="book-list-item">
+            				<img class="book-pic" src="$value.cover" onclick="window.location.href='${rc.contextPath}/book/bookDetail?bookId=$!{value.bookId}'"></img>
+            				#if($!{value.status} == "00")
+            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/borrowable_icon.png"></img>
+            				#elseif($!{value.status} == "01")
+            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/lent_icon.png"></img>
+            				#else
+            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/down_icon.png"></img>
+            				#end
+            				<div class="list-item-info">
+            					<p class="book-title-p">$!{value.bookName}</p>
+            					<p>$!{value.ownerName} - $!{value.ownerTeam}</p>
+            					<p class="book-count-p">
+            						<img src="${rc.contextPath}/resources/images/hackthon/like_icon.png" style="width:16px;"></img>
+            						#if($!{value.likeNums})
+            						$!value.likeNums
+            						#else
+            						0
+            						#end
+                                    &nbsp;
+            						<img src="${rc.contextPath}/resources/images/hackthon/borrow_icon.png" style="width:18px;margin-left:5px;"></img>
+            						#if($!{value.borrowNums})
+            						$!value.borrowNums
+            						#else
+            						0
+            						#end
+            					</p>
+            				</div>
+            			</div>
+            		</li>
+                    #end
+        	   </ul>
+            #else
+                <div class="no-item">
+                    <img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
+                    <p>大侠，暂时还没有可换的书哦！</p>
+                </div>
+            #end                      
+        </div>
+	</div>
+</div>
+<script>
+var bookSwiper;
+$(document).ready(function(){
+	$('.all-book-swiper').css('height',$(window).height() - 90);
+	bookSwiper = new Swiper('.all-book-swiper', {
+        slidesPerView: 'auto',
+		effect : 'flip',
+		onSlideNextStart: function(swiper){
+			if(swiper.activeIndex == 1){
+				$("#allBookA").removeAttr('class');
+				$("#borrowBookA").attr('class','active-a');
+				$("#exChangeBookA").removeAttr('class');
+			}else if(swiper.activeIndex == 2){
+				$("#allBookA").removeAttr('class');
+				$("#borrowBookA").removeAttr('class');
+				$("#exChangeBookA").attr('class','active-a');
+			}else{
+				$("#allBookA").attr('class','active-a');
+				$("#borrowBookA").removeAttr('class');
+				$("#exChangeBookA").removeAttr('class');
+			}
+		},
+		onSlidePrevStart: function(swiper){
+			if(swiper.activeIndex == 0){
+				$("#allBookA").attr('class','active-a');
+				$("#borrowBookA").removeAttr('class');
+				$("#exChangeBookA").removeAttr('class');
+			}else if(swiper.activeIndex == 1){
+				$("#allBookA").removeAttr('class');
+				$("#borrowBookA").attr('class','active-a');
+				$("#exChangeBookA").removeAttr('class');
+			}else{
+				$("#allBookA").removeAttr('class');
+				$("#borrowBookA").removeAttr('class');
+				$("#exChangeBookA").attr('class','active-a');
+			}
+		}
+    });
+	
+	var allBookFlag = false;
+	$("#allBookList").scroll(function(){
+		if(!allBookFlag){
+    		var scrollPos = $("#allBookList").scrollTop();
+    		var bottomPos = $("#allBookList").get(0).scrollHeight;
+    		var windowHeight = $("#allBookList").height();
+    		
+    		if(scrollPos == bottomPos - windowHeight){
+    			showPersistLoading();
+    			$.ajax({
+    				url:"${rc.contextPath}/book/getMoreBook",
+    				data:{
+    					start: $("#allBookList li").length
+    				},
+    				type:"POST",
+    				dataType:"json",
+    				success:function(data){
+    					if(data.result == "success")
+    						appendBookItem(data.bookList, "allBookList");
+    					else
+    						allBookFlag=true;
+    					removeLoading();
+    				},
+    				error:function(){
+    					removeLoading();
+    				}
+    			});
+    		}
+		}
+	});
+	
+	var allBorrowFlag = false;
+	$("#allBorrowList").scroll(function(){
+		if(!allBorrowFlag){
+    		var scrollPos = $("#allBorrowList").scrollTop();
+    		var bottomPos = $("#allBorrowList").get(0).scrollHeight;
+    		var windowHeight = $("#allBorrowList").height();
+    		
+    		if(scrollPos == bottomPos - windowHeight){
+    			showPersistLoading();
+    			$.ajax({
+    				url:"${rc.contextPath}/book/getMoreBook",
+    				data:{
+    					start: $("#allBorrowList li").length,
+						type: '00'
+    				},
+    				type:"POST",
+    				dataType:"json",
+    				success:function(data){
+    					if(data.result == "success")
+    						appendBookItem(data.bookList, "allBorrowList");
+    					else
+    						allBorrowFlag=true;
+    					removeLoading();
+    				},
+    				error:function(){
+    					removeLoading();
+    				}
+    			});
+    		}
+		}
+	});
+	
+	var allExFlag = false;
+	$("#allExList").scroll(function(){
+		if(!allExFlag){
+    		var scrollPos = $("#allExList").scrollTop();
+    		var bottomPos = $("#allExList").get(0).scrollHeight;
+    		var windowHeight = $("#allExList").height();
+    		
+    		if(scrollPos == bottomPos - windowHeight){
+    			showPersistLoading();
+    			$.ajax({
+    				url:"${rc.contextPath}/book/getMoreBook",
+    				data:{
+    					start: $("#allExList li").length,
+						type: '01'
+    				},
+    				type:"POST",
+    				dataType:"json",
+    				success:function(data){
+    					if(data.result == "success")
+    						appendBookItem(data.bookList, "allExList");
+    					else
+    						allExFlag=true;
+    					removeLoading();
+    				},
+    				error:function(){
+    					removeLoading();
+    				}
+    			});
+    		}
+		}
+	});
+});
+
+function tabClick(i){
+	bookSwiper.slideTo(i);
+}
+
+function appendBookItem(bookList, id){
+	var htmlStr = "";
+	for(i = 0; i<bookList.length; i++){
+    	htmlStr += "<li><div class='book-list-item'>";
+    	htmlStr = htmlStr + "<img class='book-pic' src='" + bookList[i].cover + "' onclick='showBookDetail(" + bookList[i].bookId + ")'></img>";
+		if(bookList[i].status == "00")
+			htmlStr = htmlStr + "<img class='book-pic-status' src='" + webRoot + "/resources/images/hackthon/borrowable_icon.png'></img>";
+		else if(bookList[i].status == "01")
+			htmlStr = htmlStr + "<img class='book-pic-status' src='" + webRoot + "/resources/images/hackthon/lent_icon.png'></img>";
+		else
+			htmlStr = htmlStr + "<img class='book-pic-status' src='" + webRoot + "/resources/images/hackthon/down_icon.png'></img>";
+		htmlStr += "<div class='list-item-info'>";
+		htmlStr = htmlStr + "<p class='book-title-p'>" + bookList[i].bookName + "</p>";
+		htmlStr = htmlStr + "<p>" + bookList[i].ownerName + "-" + bookList[i].ownerTeam + "</p>";
+		htmlStr = htmlStr + "<p class='book-count-p'><img src='" + webRoot + "/resources/images/hackthon/like_icon.png' style='width:16px;'></img>";
+		if(bookList[i].likeNums != null && bookList[i].likeNums != undefined && bookList[i].likeNums != "")
+			htmlStr = htmlStr + "&nbsp;" + bookList[i].likeNums;
+		else
+			htmlStr += '&nbsp;0';
+		htmlStr = htmlStr + "&nbsp;&nbsp;&nbsp;<img src='" + webRoot + "/resources/images/hackthon/borrow_icon.png' style='width:18px;margin-left:5px;'></img>";
+		if(bookList[i].borrowNums != null && bookList[i].borrowNums != undefined && bookList[i].borrowNums != "")
+			htmlStr = htmlStr + "&nbsp;" + bookList[i].borrowNums;
+		else
+			htmlStr += '&nbsp;0';
+		htmlStr += "</p>";
+		htmlStr += "</div>";
+		htmlStr += "</div></li>";
+	}
+	$("#"+id+" ul").append(htmlStr);
+}
+
+function showBookDetail(id){
+	window.location.href="${rc.contextPath}/book/bookDetail?bookId="+id;
+}
+</script>

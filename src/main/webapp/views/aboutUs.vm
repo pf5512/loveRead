@@ -1,0 +1,52 @@
+<style>
+.info{
+	color:#fff;
+	text-align:center;
+	margin:0 auto;
+	margin-top: 30%;	
+}
+
+.title_about_us{
+	text-align:left;
+	margin-left: 15%;
+}
+
+.title_about_us2{
+	color:#fff;
+	text-align:center;
+	text-decoration:underline;
+	margin:0 auto;
+}
+
+.footer_about_us{
+	position:absolute; 
+    bottom: 0px;
+    width: 100%;
+    text-align: center;	
+    color: #fff;
+    font-size: 12px;
+}
+
+</style>
+<img class="qr-code-title-img" src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:history.back();"><p class="qr-code-title-p">关于</p></img>
+<div class="title_about_us2"><h2>我们</h2></div>
+<div class="info">
+	<div class="title_about_us"><h3>程序猿们：</h3></div>
+	<div >
+		<p>陶方金-技术开发中心-自助入网团队</p>
+		<p>林英觉-技术开发中心-自助入网团队</p>
+		<p>赵希-技术开发中心-自助入网团队</p>
+		<p>严克文-技术开发中心-自助入网团队</p>
+		<p>麦锐辉-技术开发中心-支付控件团队</p>
+	</div>
+</div>
+
+<footer class="footer_about_us">中国银联 技术开发中心 2016 Hackathon</footer>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("body").css("height",$(window).height());
+});
+</script>
+
+

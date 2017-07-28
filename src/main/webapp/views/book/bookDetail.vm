@@ -1,0 +1,119 @@
+
+<div class="title-bar">
+	<img src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:history.back();"></img><p>图书详情</p>
+	<a href="javascript:dianZan('$!bookDetail.bookId')">
+		#if($!isLike == 'yes')
+		<img id="likeBtnImg" src="${rc.contextPath}/resources/images/hackthon/like_btn.png"></img>
+		#else
+		<img id="likeBtnImg" src="${rc.contextPath}/resources/images/hackthon/like_yet_btn.png"></img>
+		#end
+	</a>
+</div>
+<div class="book-detail-img">
+	<img class="book-pic" src="$!bookDetail.cover"></img>
+	#if($!bookDetail.status == "00")
+	<img class="book-status-pic" src="${rc.contextPath}/resources/images/hackthon/borrowable_icon.png"></img>
+	#elseif($!bookDetail.status == "01")
+	<img class="book-status-pic" src="${rc.contextPath}/resources/images/hackthon/lent_icon.png"></img>
+	#else
+	<img class="book-status-pic" src="${rc.contextPath}/resources/images/hackthon/down_icon.png"></img>
+	#end
+</div>
+<div class="book-detail-info">
+	<p class="book-title">$!bookDetail.bookName</p>
+	<p class="book-owner">$!{bookDetail.ownerName} - $!{bookDetail.ownerTeam}
+		<span>
+			<img src="${rc.contextPath}/resources/images/hackthon/like_icon.png" style="width:16px;"></img>
+			#if($!{bookDetail.likeNums})
+			<font id="likeNum">$!{bookDetail.likeNums}</font>
+			#else
+			<font id="likeNum">0</font>
+			#end
+			<img src="${rc.contextPath}/resources/images/hackthon/borrow_icon.png" style="width:18px;margin-left:5px;"></img>
+			#if($!{bookDetail.borrowNums})
+			$!{bookDetail.borrowNums}
+			#else
+			0
+			#end
+		</span>
+	</p>
+	<p class="book-desc">
+	#if($!{bookDetail.summary} != '')
+		$!{bookDetail.summary}...
+	#else
+	该书暂无简介...
+	#end
+	</p>
+</div>
+<div class="book-other-info">
+	#if($!bookDetail.status == "00")
+		#if($!bookDetail.borrowType == "02")
+		<p>可借本数<span>$!{bookDetail.lastDay}本</span></p>
+		#else
+		<p>可借时间<span>$!{bookDetail.lastDay}天</span></p>
+		#end
+	#elseif($!bookDetail.status == "01")
+		<p>借阅者<span>$!{bookDetail.readerName} - $!{bookDetail.readerTeam}</span></p>
+		<p>到期时间<span>$!date.format("yyyy-MM-dd",$!{bookDetail.endTime})</span></p>
+	#end
+</div>
+#if($!reviewList && $!reviewList.size() > 0)
+<div class="book-comment-info">
+	<p class="title">精选评论</p>
+	<ul>
+		#foreach($reviewInfo in $!reviewList)
+		<li>
+			<div>
+				#if($!reviewInfo.reviewerIcon)
+                <img class="review-header" src="$!reviewInfo.reviewerIcon"></img>
+                #else
+                <img class="review-header" src="${rc.contextPath}/resources/images/hackthon/user_header_icon.png"></img>
+                #end
+				<p class="review-user">$!{reviewInfo.reviewer}</p>
+				<p class="review-content">$!{reviewInfo.reviewContent}</p>
+				<p class="review-time">$!date.format("yyyy-MM-dd", $!{reviewInfo.reviewTime})</p>
+			</div>
+		</li>
+		#end
+	</ul>
+</div>
+#end
+
+<script>
+$(document).ready(function(){
+	$(".book-pic").css('height',$(window).height() * 0.4);
+});
+
+function dianZan(id){
+	showLoading();
+	$.ajax({
+		url:"${rc.contextPath}/book/addLike",
+		data:{
+			bookId:id
+		},
+		success:function(data){
+			removeLoading();
+			if(data == "fail"){
+				zzrw.alert("操作失败!");
+			}else{
+				var likeNums = $("#likeNum").html();
+				var countNum = parseInt(likeNums);
+				if(data == "success_up"){
+					countNum ++;			
+					$("#likeBtnImg").attr("src","${rc.contextPath}/resources/images/hackthon/like_btn.png");
+					zzrw.alert("点赞成功!");
+				}else{
+					countNum --;
+					$("#likeBtnImg").attr("src","${rc.contextPath}/resources/images/hackthon/like_yet_btn.png");
+					zzrw.alert("已取消赞!");
+				}
+				$("#likeNum").text(countNum);
+			}
+		},
+		error:function(){
+			removeLoading();
+			zzrw.alert("服务器异常，请稍后再试！");
+		}
+	});
+}
+</script>

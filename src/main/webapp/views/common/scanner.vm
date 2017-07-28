@@ -1,0 +1,45 @@
+<script src="${rc.contextPath}/resources/js/jquery-1.11.2.min.js?v=$!staticVersion" ></script>
+<script src="${rc.contextPath}/resources/js/app.upchat.js?v=$!staticVersion" ></script>
+
+<div class="container"></div>
+
+<script type="text/javascript">
+	$(function(){
+        //成功后回调函数
+        var _success = function (result) {
+            UPCHAT.M.NAPI.dismiss();
+            alert(JSON.stringify(result));
+        };
+
+        //失败后回调函数
+        var _fail = function (fal) {
+            UPCHAT.M.NAPI.dismiss();
+            toApp();
+        };
+
+        //获取Uid
+        var getUid = function () {
+            UPCHAT.M.NAPI.showLoadingView();
+            //if (cver == undefined || cver == null || cver == "") {
+            //	UPCHAT.M.NAPI.dismiss();
+            //} else {
+            UPCHAT.M.NAPI.fetchUserId(_success, _fail);
+            //}
+        };
+
+        //非U聊客户端打开
+        var toApp = function () {
+            $(".container").css("display", "block");
+            var html = '<label>请用最新版U聊客户端扫码二维码</label><br />' +
+                    '<a href="http://upchat.95516.net/app/">U聊客户端下载</a>';
+            $(".container").html(html);
+        };
+
+
+        if (UPCHAT.M.isNative()) {
+            UPCHAT.M.init(getUid);
+        } else {
+            toApp();
+        }
+	});
+</script>

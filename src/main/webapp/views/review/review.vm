@@ -1,0 +1,678 @@
+<style>
+body{
+	background:#e9e9e9;
+}
+</style>
+<div class="title-bar">
+	<img src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:window.location.href='${rc.contextPath}/index';"></img><p>圈子</p>
+</div>
+<div class="book-user">
+    <ul>
+        <li><a href="javascript:tabClick(0);" class="active-a" id="workmateReviewA">同事动态</a></li>
+        <li><a href="javascript:tabClick(1);" id="myReviewA">我的动态</a></li>
+    </ul>
+</div>
+<div class="swiper-container book-review-swiper">
+	<div class="swiper-wrapper">
+        <!--同事评论信息-->
+        <div class="swiper-slide workmate-review-list swiper-no-swiping" id="workmateReviewList">
+            #if($!{reviewInfoList.size()}>0)
+				<div style="position:relative;z-index:2;height:100%;" id="workmateScroll">
+    				<ul>
+                        #foreach($reviewInfo in $!reviewInfoList)
+        				<li class="reviewItem${reviewInfo.reviewId} review-item-li">
+        					<div class="review-list-item">
+        						<div class="review-title">
+                                    #if($!reviewInfo.reviewerIcon)
+                                    <img class="review-header" src="$!reviewInfo.reviewerIcon"></img>
+                                    #else
+                                    <img class="review-header" src="${rc.contextPath}/resources/images/hackthon/user_header_icon.png"></img>
+                                    #end
+        							<p class="review-name">$!{reviewInfo.reviewerName}</p>
+        							<p class="review-team">$!{reviewInfo.reviewerTeam}</p>
+                                    <p class="review-date">$!date.format("yyyy-MM-dd HH:mm:ss",$!{reviewInfo.reviewTime})</p>
+        						</div>
+        						<div class="review-body">
+                                    #if($!reviewInfo.bookName)
+        							<p class="review-book">对<span>《$!{reviewInfo.bookName}》</span>发表评论：</p>
+                                    #end
+                                    #if($!reviewInfo.commentImg)
+        							<img src="${rc.contextPath}/upload/${reviewInfo.commentImg}"></img>
+                                    #end
+        							<p class="review-content">$!{reviewInfo.reviewContent}</p>
+        						</div>
+        						<div class="review-operation">
+        							#if($!reviewInfo.reviewerId == $!userId)
+        							<a class="delete-operation" href="javascript:deleteComment('$reviewInfo.reviewId');"><img src="${rc.contextPath}/resources/images/hackthon/delete_comment_icon.png"></img> 删除</a>
+                                    #end
+        							<a class="like-operation" href="javascript:addLike('$reviewInfo.reviewId')">
+                                        #if($!reviewInfo.isLike == 'yes')
+                                        <img class="likeBtnImg$reviewInfo.reviewId" src="${rc.contextPath}/resources/images/hackthon/like_icon.png"></img>
+                                        #else
+                                        <img class="likeBtnImg$reviewInfo.reviewId" src="${rc.contextPath}/resources/images/hackthon/like_yet_icon.png"></img>
+                                        #end
+                                    </a>
+        							<span class="like-span likeNum$reviewInfo.reviewId">$!{reviewInfo.likeNums}</span>
+        							<img class="reply-icon" onclick="showReplyDialog('$reviewInfo.reviewId','')" src="${rc.contextPath}/resources/images/hackthon/reply_icon.png"></img>
+        						</div>
+        						<div class="review-reply">
+        							<ul>
+    									#foreach($reviewReply in $!{reviewInfo.reviewReplyList})
+    										#if($reviewReply.replyerName)
+    											<li>
+                									<p onclick="showReplyDialog('$reviewInfo.reviewId','$reviewReply.replyerName')">
+                                                        <span>$!reviewReply.replyerName</span>
+                                                        #if($reviewReply.parentReplyName && "$reviewReply.parentReplyName" != "")回复<span>$!reviewReply.parentReplyName</span>#end: $!reviewReply.replyContent
+                                                    </p>
+    											</li>
+                                            #end
+    								    #end 
+        							</ul>
+        						</div>
+        					</div>
+        				</li>
+    					#end
+        			</ul>
+				</div>
+				<div id="refreshDiv" style="z-index:1;color:#888;height:50px;line-height:50px;position:absolute;text-align:center;left:0;top:0;width:100%;font-size:14px;"></div>
+				<p id="loadDiv" style="z-index:1;position:fixed;bottom:0;width:100%;color:#888;font-size:14px;margin:0;height:50px;line-height:50px;text-align:center;"></p>
+            #else
+                <div class="no-item">
+                    <img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
+                    <p>大侠，暂时还没有评论哦！</p>
+                </div>
+            #end
+        </div>
+        <!--我的评论信息-->
+		<div class="swiper-slide my-review-list swiper-no-swiping" id="myReviewList" style="overflow-y:auto;">
+            #if($!{myReviewList.size()}>0)
+			<div style="position:relative;z-index:2;height:100%;">
+                <ul>
+                    #foreach($reviewInfo in $!myReviewList)
+                    <li class="reviewItem${reviewInfo.reviewId}">
+                        <div class="review-list-item">
+                            <div class="review-title">
+                                #if($!reviewInfo.reviewerIcon)
+                                <img class="review-header" src="$!reviewInfo.reviewerIcon"></img>
+                                #else
+                                <img class="review-header" src="${rc.contextPath}/resources/images/hackthon/user_header_icon.png"></img>
+                                #end
+                                <p class="review-name">$!{reviewInfo.reviewerName}</p>
+                                <p class="review-team">$!{reviewInfo.reviewerTeam}</p>
+                                <p class="review-date">$!date.format("yyyy-MM-dd HH:mm:ss",$!{reviewInfo.reviewTime})</p>
+                            </div>
+                            <div class="review-body">
+                                #if($!reviewInfo.bookName)
+                                <p class="review-book">对<span>《$!{reviewInfo.bookName}》</span>发表评论：</p>
+                                #end
+                                #if($!reviewInfo.commentImg)
+                                <img src="${rc.contextPath}/upload/${reviewInfo.commentImg}"></img>
+                                #end
+                                <p class="review-content">$!{reviewInfo.reviewContent}</p>
+                            </div>
+                            <div class="review-operation">
+    							<a class="delete-operation" href="javascript:deleteComment('$reviewInfo.reviewId');"><img src="${rc.contextPath}/resources/images/hackthon/delete_comment_icon.png"></img> 删除</a>
+                                <a class="like-operation" href="javascript:addLike('$reviewInfo.reviewId')">
+                                    #if($!reviewInfo.isLike == 'yes')
+                                    <img class="likeBtnImg$reviewInfo.reviewId" src="${rc.contextPath}/resources/images/hackthon/like_icon.png"></img>
+                                    #else
+                                    <img class="likeBtnImg$reviewInfo.reviewId" src="${rc.contextPath}/resources/images/hackthon/like_yet_icon.png"></img>
+                                    #end
+                                </a>
+                                <span class="like-span likeNum$reviewInfo.reviewId">$!{reviewInfo.likeNums}</span>
+                                <img class="reply-icon" onclick="showReplyDialog('$reviewInfo.reviewId','')" src="${rc.contextPath}/resources/images/hackthon/reply_icon.png"></img>
+                            </div>
+                            <div class="review-reply">
+                                <ul>
+                                    #foreach($reviewReply in $!{reviewInfo.reviewReplyList})
+                                        #if($reviewReply.replyerName)
+                                        <li>
+                                            <p onclick="showReplyDialog('$reviewInfo.reviewId','$reviewReply.replyerName')">
+                                                <span>$!reviewReply.replyerName</span>
+                                                #if($reviewReply.parentReplyName && "$reviewReply.parentReplyName" != "")回复<span>$!reviewReply.parentReplyName</span>#end: $!reviewReply.replyContent
+                                            </p>
+    									</li>
+                                        #end
+                                    #end 
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    #end
+                </ul>
+			</div>
+            #else
+                <div class="no-item">
+                    <img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
+                    <p>大侠，您暂时还没有动态哦！</p>
+                </div>
+            #end
+		</div>
+	</div>
+</div>
+<!-- 发表评论按钮 -->
+<div class="comment-button">
+	<button onclick="showCommentDialog()"></button>
+</div>
+<!-- 评论框 -->
+<div class="comment-modal">
+	<form id="commentForm" action="${rc.contextPath}/review/add" method="post" enctype="multipart/form-data">
+		<div class="form-group book-section">
+            #if($!{reviewBookList.size()}>0)
+    		<select name="bookId" id="commentBookSel">
+                <option  value="0">不指定图书</option>
+                #foreach($book in $reviewBookList)
+                <option  value="$book.id">$book.bookName</option>
+                #end
+			</select>
+            #else
+                您暂时无法发表书评哦
+            #end
+    	</div>
+		<div class="form-group">
+    		<textarea id="reviewContentArea" name="reviewContent" placeholder="发表评论"></textarea>
+		</div>
+		<div class="form-group">
+			<img id="commentImg" style="margin-left:5%;" src="${rc.contextPath}/resources/images/hackthon/gray_add_icon.png" onclick="$('#commentImgInput').click()"></img>
+			<input type="file" style="display:none;" id="commentImgInput" name="commentImg" capture='camera'>
+		</div>
+		<button type="button" style="background-color:#449d44;" onclick="commentCheck()">发表</button>
+		<button type="button" style="background-color:#f0ad4e;" onclick="hideCommentDialog()">返回</button>
+	</form>
+</div>
+<!-- 回复框 -->
+<div class="reply-modal">
+	<form id="replyForm" action="${rc.contextPath}/review/reply" method="post">
+		<input type="hidden" name="reviewId" id="reviewId">
+		<input type="hidden" name="pReplyName" id="pReplyName">
+		<div class="form-group">
+    		<textarea id="replyContentArea" name="replyContent" placeholder="回复"></textarea>
+		</div>
+		<button type="button" style="background-color:#449d44;" onclick="replyCheck()">发表</button>
+		<button type="button" style="background-color:#f0ad4e;" onclick="hideReplyDialog()">返回</button>
+	</form>
+</div>
+<input type="hidden" id="hideUid" value="$!userId">
+<script type="text/javascript" src="${rc.contextPath}/resources/js/jquery.form.js?v=$!staticVersion"></script>
+<script>
+var reviewSwiper;
+var refreshFlag=false, loadFlag=false, moreFlag=true;
+var reviewIScroll;
+$(document).ready(function(){
+	$('.book-review-swiper').css('height',$(window).height() - 90);
+	reviewSwiper = new Swiper('.book-review-swiper', {
+        slidesPerView: 'auto',
+		effect : 'flip',
+		resistance : true,
+		resistanceRatio : 0,
+		noSwiping: true,
+		onSlideNextStart: function(swiper){
+			if(swiper.activeIndex == 1){
+				$("#workmateReviewA").removeAttr('class');
+				$("#myReviewA").attr('class','active-a');
+			}else{
+				$("#workmateReviewA").attr('class','active-a');
+				$("#myReviewA").removeAttr('class');
+			}
+		},
+		onSlidePrevStart: function(swiper){
+			if(swiper.activeIndex == 0){
+				$("#workmateReviewA").attr('class','active-a');
+				$("#myReviewA").removeAttr('class');
+			}else{
+				$("#workmateReviewA").removeAttr('class');
+				$("#myReviewA").attr('class','active-a');
+			}
+		}
+    });
+	
+	$("#commentImgInput").change(function () {
+		var $file = $(this);
+        var fileObj = $file[0];
+        var windowURL = window.URL || window.webkitURL;
+        var dataURL;
+        var $img = $("#commentImg");
+	
+ 		if (!$("#commentImgInput").val().match(/.jpg|.gif|.png|.bmp/i)){
+			$("#commentImgInput").val('');
+			return zzrw.alert("上传的图片格式不正确，请重新选择")
+		}else{
+			$img.css('width','100px');
+            if (fileObj && fileObj.files && fileObj.files[0]) {
+                dataURL = windowURL.createObjectURL(fileObj.files[0]);
+                $img.attr('src', dataURL);
+            } else {
+                dataURL = $file.val();
+                var imgObj = document.getElementById("commentImg");
+                imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+            }
+		}
+    });
+	
+});
+
+$(window).load(function(){
+	reviewIScroll = new IScroll("#workmateScroll",{
+		disableMouse: false,
+		disablePointer: false,
+		disableTouch: false,
+		click: true,
+		probeType: 2
+	});
+	
+	reviewIScroll.on('scroll', reviewScroll);
+	
+	reviewIScroll.on('scrollEnd', reviewScrollEnd);
+	
+});
+
+function reviewScroll(){
+	if(this.y >= 50){
+		$("#refreshDiv").html("释放立即刷新");
+		refreshFlag = true;
+	}else{
+		$("#refreshDiv").html("下拉刷新评论");
+		refreshFlag = false;
+	}
+	
+	if(reviewIScroll.maxScrollY - this.y <= 60 && moreFlag){
+		$("#loadDiv").html("上拉加载更多");
+		loadFlag=false;
+	}else if(moreFlag){
+		$("#loadDiv").html("释放立即加载");
+		loadFlag=true;
+	}
+}
+
+function reviewScrollEnd(){
+	if(refreshFlag){
+		console.log("开始刷新");
+		refreshComment();
+	}else if(loadFlag && moreFlag){
+		console.log("开始加载");
+		loadMoreComment();
+	}
+}
+
+function tabClick(i){
+	reviewSwiper.slideTo(i);
+}
+
+function showCommentDialog(){
+	$("#commentBookSel").val("0");
+	$("#reviewContentArea").val('');
+	$("#commentImgInput").val('');
+	$("#commentImg").attr('src','${rc.contextPath}/resources/images/hackthon/gray_add_icon.png');
+	$("#commentImg").css('width','36px');
+	$(".comment-modal").css("display","block");
+	$(".comment-modal").css("height",$(window).height() - 50);
+}
+
+function showReplyDialog(id, name){
+	$("#reviewId").val(id);
+	$("#pReplyName").val(name);
+	$(".reply-modal textarea").attr("placeholder","回复"+name);
+	$(".reply-modal textarea").val('');
+	$(".reply-modal").css("display","block");
+	$(".reply-modal").css("height",$(window).height() - 50);
+}
+
+function hideCommentDialog(){
+	$(".comment-modal").css("display","none");
+}
+
+function hideReplyDialog(){
+	$(".reply-modal").css("display","none");
+}
+
+function addLike(reviewId){
+    showLoading();
+    $.ajax({
+        url:"${rc.contextPath}/review/addLike",
+        data:{
+            reviewId:reviewId
+        },
+        dataType:'json',
+		type:'post',
+        success:function(data){
+            removeLoading();
+            if(data.code == 'fail'){
+                zzrw.alert("操作失败!");
+            }else{
+                var likeNumsId = "likeNum" + reviewId;
+                var likeBtnImgId = "likeBtnImg" + reviewId;
+                
+                var likeNums = $("."+likeNumsId).html();
+                var countNum = parseInt(likeNums);
+                if(data.code == 'success_up'){
+                    countNum ++;
+                    $("."+likeBtnImgId).attr("src","${rc.contextPath}/resources/images/hackthon/like_icon.png");
+                    zzrw.alert("点赞成功!");
+                }else if(data.code == 'success_down'){
+                    countNum --;
+                    $("."+likeBtnImgId).attr("src","${rc.contextPath}/resources/images/hackthon/like_yet_icon.png");
+                    zzrw.alert("已取消赞!");
+                }else{
+                    zzrw.alert("操作失败!");
+                }
+                $("."+likeNumsId).text(countNum);
+            }
+        },
+        error:function(){
+            removeLoading();
+            zzrw.alert("服务器异常，请稍后再试！");
+        }
+    });
+}
+
+function deleteComment(id){
+	showLoading();
+	$.ajax({
+        url:"${rc.contextPath}/review/delete",
+        data:{
+            reviewId:id
+        },
+        dataType:'json',
+        success:function(data){
+			removeLoading();
+			//删除成功后，页面上去掉该条评论
+			$(".reviewItem" + id).remove();
+			reviewIScroll.refresh();
+		},
+		error:function(){
+			removeLoading();
+		}
+	});
+}
+
+function commentCheck(){
+    var reviewContent = $.trim($("#reviewContentArea").val());
+    if("" == reviewContent){
+        zzrw.alert("评论内容不能为空哦!");
+        $("#reviewContentArea").focus();
+    }else{
+		$("#commentForm").ajaxSubmit({
+    		url : "${rc.contextPath}/review/add",
+    		dataType : "json",
+    		type : 'POST',
+    		success : function(data) {
+    			if(data.code == "0"){
+					var reviewInfo = data.data;
+    				var reviewItem = $('.workmate-review-list .review-item-li').eq(0).clone();
+					reviewItem.removeAttr('class');
+					var classStr = "review-item-li reviewItem" + reviewInfo.id;
+					reviewItem.attr('class', classStr);
+					if(reviewInfo.reviewerIcon == null || reviewInfo.reviewerIcon == undefined || reviewInfo.reviewerIcon == ''){
+						reviewItem.find('.review-header').attr('src','${rc.contextPath}/resources/images/hackthon/user_header_icon.png');
+					}else{
+						reviewItem.find('.review-header').attr('src', reviewInfo.reviewerIcon);
+					}
+					reviewItem.find('.review-name').html(reviewInfo.reviewer);
+					reviewItem.find('.review-team').html(reviewInfo.reviewerTeam);
+					reviewItem.find('.review-date').html(convertTimeToDate(reviewInfo.reviewTime));
+					reviewItem.find('.review-body').empty();
+					if($("#commentBookSel").val() != "0"){
+						var bookHtml = "<p class='review-book'>对<span>《" + $("#commentBookSel").find("option:selected").text() + "》</span>发表评论：</p>";
+						reviewItem.find('.review-body').append(bookHtml);
+					}
+					if(reviewInfo.commentImg != null && reviewInfo.commentImg != undefined && reviewInfo.commentImg != ''){
+						var commentImgHtml = "<img src='${rc.contextPath}/upload/"+reviewInfo.commentImg+"'></img>";
+						reviewItem.find('.review-body').append(commentImgHtml);
+					}
+					var commentBodyHtml = "<p class='review-content'>"+reviewInfo.reviewContent+"</p>";
+					reviewItem.find('.review-body').append(commentBodyHtml);
+					var uid = $("#hideUid").val();
+					reviewItem.find('.delete-operation').remove();
+					if(uid == reviewInfo.reviewerId){
+						var deleteHtml = "<a class='delete-operation' href='javascript:deleteComment(\"" + reviewInfo.id + "\");'><img src='${rc.contextPath}/resources/images/hackthon/delete_comment_icon.png'></img> 删除</a>";
+						reviewItem.find('.review-operation').prepend(deleteHtml);
+					}
+					reviewItem.find('.like-operation').attr('href',"javascript:addLike('"+reviewInfo.id+"')");
+					reviewItem.find('.like-operation').empty();
+					var likeHtml = "<img class='likeBtnImg"+reviewInfo.id+"' src='${rc.contextPath}/resources/images/hackthon/like_yet_icon.png'></img>";
+					reviewItem.find('.like-operation').append(likeHtml);
+					reviewItem.find('.like-span').attr('class','like-span likeNum'+reviewInfo.id);
+					reviewItem.find('.like-span').html(reviewInfo.likeNums);
+					reviewItem.find('.reply-icon').attr('onclick', "showReplyDialog('"+reviewInfo.id+"','')");
+					reviewItem.find('.review-reply ul').empty();
+					
+					$('.workmate-review-list ul').eq(0).prepend(reviewItem);
+					if($("#myReviewList").find("ul").length == 0){
+						$(".no-item").remove();
+						$('#myReviewList').append('<div style="position:relative;z-index:2;height:100%;"><ul></ul></div>');
+					}
+					
+					$('#myReviewList').find('ul').eq(0).prepend(reviewItem.clone());
+					reviewIScroll.refresh();
+					reviewIScroll.scrollTo(0,0,100);
+					hideCommentDialog();
+    			}else{
+    				zzrw.alert(data.message);
+				}
+    		},
+    		error : function() {
+    			zzrw.alert("系统繁忙，请稍后再试");
+    		}
+    	});	
+	}
+}
+
+function replyCheck(){
+    var replyContent = $.trim($("#replyContentArea").val());
+    if("" == replyContent){
+        zzrw.alert("回复内容不能为空哦!");
+        $("#replyContentArea").focus();
+    }else{
+		$("#replyForm").ajaxSubmit({
+			url : "${rc.contextPath}/review/reply",
+			dataType : "json",
+    		type : 'POST',
+    		success : function(data) {
+				if(data.code == "0"){
+					var replyItem = data.data;
+					var replyHtml = "<li>";
+					replyHtml = replyHtml + "<p onclick='showReplyDialog(\""+replyItem.reviewId+"\",\""+replyItem.replyerName+"\")'>";
+					replyHtml = replyHtml + "<span>" + replyItem.replyerName + "</span> ";
+					if(replyItem.parentReplyName != '' && replyItem.parentReplyName != undefined && replyItem.parentReplyName != null){
+						replyHtml = replyHtml + "回复<span>" + replyItem.parentReplyName + "</span>";
+					}
+					replyHtml = replyHtml + ": " + replyItem.replyContent + "</p></li>";
+					$(".reviewItem" + replyItem.reviewId + " .review-reply").find("ul").append(replyHtml);
+					hideReplyDialog();
+					reviewIScroll.refresh();
+				}else{
+					zzrw.alert(data.message);
+				}
+			},
+			error : function() {
+    			zzrw.alert("系统繁忙，请稍后再试");
+    		}
+		});
+	}
+}
+
+function loadMoreComment(){
+	showPersistLoading();
+	var startId = $('.workmate-review-list .review-item-li').length + 1;
+	$.ajax({
+		url: '${rc.contextPath}/review/addMoreReview',
+		data:{
+			start: startId
+		},
+		dataType:'json',
+		type: 'post',
+		success:function(data){
+			if(data.code != '0'){
+				removeLoading();
+				zzrw.alert(data.message);
+				return;
+			}
+			for(var i=0;i<data.data.length;i++){
+				var reviewInfo = data.data[i];
+				var reviewItem = $('.workmate-review-list .review-item-li').eq(0).clone();
+				reviewItem.removeAttr('class');
+				var classStr = "review-item-li reviewItem" + reviewInfo.reviewId;
+				reviewItem.attr('class', classStr);
+				if(reviewInfo.reviewerIcon == null || reviewInfo.reviewerIcon == undefined || reviewInfo.reviewerIcon == ''){
+					reviewItem.find('.review-header').attr('src','${rc.contextPath}/resources/images/hackthon/user_header_icon.png');
+				}else{
+					reviewItem.find('.review-header').attr('src', reviewInfo.reviewerIcon);
+				}
+				reviewItem.find('.review-name').html(reviewInfo.reviewerName);
+				reviewItem.find('.review-team').html(reviewInfo.reviewerTeam);
+				reviewItem.find('.review-date').html(convertTimeToDate(reviewInfo.reviewTime));
+				reviewItem.find('.review-body').empty();
+				if(reviewInfo.bookName != null && reviewInfo.bookName != undefined && reviewInfo.bookName != ''){
+					var bookHtml = "<p class='review-book'>对<span>《" + reviewInfo.bookName + "》</span>发表评论：</p>";
+					reviewItem.find('.review-body').append(bookHtml);
+				}
+				if(reviewInfo.commentImg != null && reviewInfo.commentImg != undefined && reviewInfo.commentImg != ''){
+					var commentImgHtml = "<img src='${rc.contextPath}/upload/"+reviewInfo.commentImg+"'></img>";
+					reviewItem.find('.review-body').append(commentImgHtml);
+				}
+				var commentBodyHtml = "<p class='review-content'>"+reviewInfo.reviewContent+"</p>";
+				reviewItem.find('.review-body').append(commentBodyHtml);
+				var uid = $("#hideUid").val();
+				reviewItem.find('.delete-operation').remove();
+				if(uid == reviewInfo.reviewerId){
+					var deleteHtml = "<a class='delete-operation' href='javascript:deleteComment(\"" + reviewInfo.reviewId + "\");'><img src='${rc.contextPath}/resources/images/hackthon/delete_comment_icon.png'></img> 删除</a>";
+					reviewItem.find('.review-operation').prepend(deleteHtml);
+				}
+				reviewItem.find('.like-operation').attr('href',"javascript:addLike('"+reviewInfo.reviewId+"')");
+				reviewItem.find('.like-operation').empty();
+				if(reviewInfo.isLike == 'yes'){
+					var likeHtml = "<img class='likeBtnImg"+reviewInfo.reviewId+"' src='${rc.contextPath}/resources/images/hackthon/like_icon.png'></img>";
+					reviewItem.find('.like-operation').append(likeHtml);
+				}else{
+					var likeHtml = "<img class='likeBtnImg"+reviewInfo.reviewId+"' src='${rc.contextPath}/resources/images/hackthon/like_yet_icon.png'></img>";
+					reviewItem.find('.like-operation').append(likeHtml);
+				}
+				reviewItem.find('.like-span').attr('class','like-span like-span likeNum'+reviewInfo.reviewId);
+				reviewItem.find('.like-span').html(reviewInfo.likeNums);
+				reviewItem.find('.reply-icon').attr('onclick', "showReplyDialog('"+reviewInfo.reviewId+"','')");
+				
+				reviewItem.find('.review-reply').empty();
+				var replyHtml = "<ul>";
+				var replyList = reviewInfo.reviewReplyList;
+				for(var j=0;j<replyList.length;j++){
+					var replyItem = replyList[j];
+					if(replyItem.replyerName != null && replyItem.replyerName != undefined && replyItem.replyerName != ''){
+						replyHtml += "<li>";
+						replyHtml = replyHtml + "<p onclick='showReplyDialog(\""+reviewInfo.reviewId+"\",\""+replyItem.replyerName+"\")'";
+						replyHtml = replyHtml + "<span>" + replyItem.replyerName + "</span>";
+						if(replyItem.parentReplyName != null && replyItem.parentReplyName != undefined && replyItem.parentReplyName != ''){
+							replyHtml = replyHtml + " 回复<span>" + replyItem.parentReplyName + "</span>";
+						}
+						replyHtml = replyHtml + ": " + replyItem.replyContent + "</p>";
+						replyHtml += "</li>";
+					}
+				}
+				replyHtml += "</ul>";
+				reviewItem.find('.review-reply').append(replyHtml);
+				$('.workmate-review-list ul').eq(0).append(reviewItem);
+			}
+			if(data.data.length < 10){
+				var lastItem = '<li class="review-item-li last-item">已无更多</li>';
+				$('.workmate-review-list ul').eq(0).append(lastItem);
+				$("#loadDiv").remove();
+				moreFlag = false;
+			}
+			reviewIScroll.refresh();
+			removeLoading();
+		},
+		error:function(){
+			removeLoading();
+		}
+	});
+}
+
+function refreshComment(){
+	showPersistLoading();
+	$.ajax({
+		url: '${rc.contextPath}/review/refreshReview',
+		dataType:'json',
+		type: 'post',
+		success:function(data){
+			if(data.code != '0'){
+				removeLoading();
+				zzrw.alert(data.message);
+				return;
+			}
+			for(var i=0;i<data.data.length;i++){
+				var reviewInfo = data.data[i];
+				var reviewItem = $('.workmate-review-list .review-item-li').eq(0).clone();
+				if(i == 0){
+					$('.workmate-review-list ul').eq(0).empty();
+				}
+				reviewItem.removeAttr('class');
+				var classStr = "review-item-li reviewItem" + reviewInfo.reviewId;
+				reviewItem.attr('class', classStr);
+				if(reviewInfo.reviewerIcon == null || reviewInfo.reviewerIcon == undefined || reviewInfo.reviewerIcon == ''){
+					reviewItem.find('.review-header').attr('src','${rc.contextPath}/resources/images/hackthon/user_header_icon.png');
+				}else{
+					reviewItem.find('.review-header').attr('src', reviewInfo.reviewerIcon);
+				}
+				reviewItem.find('.review-name').html(reviewInfo.reviewerName);
+				reviewItem.find('.review-team').html(reviewInfo.reviewerTeam);
+				reviewItem.find('.review-date').html(convertTimeToDate(reviewInfo.reviewTime));
+				reviewItem.find('.review-body').empty();
+				if(reviewInfo.bookName != null && reviewInfo.bookName != undefined && reviewInfo.bookName != ''){
+					var bookHtml = "<p class='review-book'>对<span>《" + reviewInfo.bookName + "》</span>发表评论：</p>";
+					reviewItem.find('.review-body').append(bookHtml);
+				}
+				if(reviewInfo.commentImg != null && reviewInfo.commentImg != undefined && reviewInfo.commentImg != ''){
+					var commentImgHtml = "<img src='${rc.contextPath}/upload/"+reviewInfo.commentImg+"'></img>";
+					reviewItem.find('.review-body').append(commentImgHtml);
+				}
+				var commentBodyHtml = "<p class='review-content'>"+reviewInfo.reviewContent+"</p>";
+				reviewItem.find('.review-body').append(commentBodyHtml);
+				var uid = $("#hideUid").val();
+				reviewItem.find('.delete-operation').remove();
+				if(uid == reviewInfo.reviewerId){
+					var deleteHtml = "<a class='delete-operation' href='javascript:deleteComment(\"" + reviewInfo.reviewId + "\");'><img src='${rc.contextPath}/resources/images/hackthon/delete_comment_icon.png'></img> 删除</a>";
+					reviewItem.find('.review-operation').prepend(deleteHtml);
+				}
+				reviewItem.find('.like-operation').attr('href',"javascript:addLike('"+reviewInfo.reviewId+"')");
+				reviewItem.find('.like-operation').empty();
+				if(reviewInfo.isLike == 'yes'){
+					var likeHtml = "<img class='likeBtnImg"+reviewInfo.reviewId+"' src='${rc.contextPath}/resources/images/hackthon/like_icon.png'></img>";
+					reviewItem.find('.like-operation').append(likeHtml);
+				}else{
+					var likeHtml = "<img class='likeBtnImg"+reviewInfo.reviewId+"' src='${rc.contextPath}/resources/images/hackthon/like_yet_icon.png'></img>";
+					reviewItem.find('.like-operation').append(likeHtml);
+				}
+				reviewItem.find('.like-span').attr('class','like-span like-span likeNum'+reviewInfo.reviewId);
+				reviewItem.find('.like-span').html(reviewInfo.likeNums);
+				reviewItem.find('.reply-icon').attr('onclick', "showReplyDialog('"+reviewInfo.reviewId+"','')");
+				
+				reviewItem.find('.review-reply').empty();
+				var replyHtml = "<ul>";
+				var replyList = reviewInfo.reviewReplyList;
+				for(var j=0;j<replyList.length;j++){
+					var replyItem = replyList[j];
+					if(replyItem.replyerName != null && replyItem.replyerName != undefined && replyItem.replyerName != ''){
+						replyHtml += "<li>";
+						replyHtml = replyHtml + "<p onclick='showReplyDialog(\""+reviewInfo.reviewId+"\",\""+replyItem.replyerName+"\")'";
+						replyHtml = replyHtml + "<span>" + replyItem.replyerName + "</span>";
+						if(replyItem.parentReplyName != null && replyItem.parentReplyName != undefined && replyItem.parentReplyName != ''){
+							replyHtml = replyHtml + " 回复<span>" + replyItem.parentReplyName + "</span>";
+						}
+						replyHtml = replyHtml + ": " + replyItem.replyContent + "</p>";
+						replyHtml += "</li>";
+					}
+				}
+				replyHtml += "</ul>";
+				reviewItem.find('.review-reply').append(replyHtml);
+				$('.workmate-review-list ul').eq(0).append(reviewItem);
+			}
+			reviewIScroll.refresh();
+			removeLoading();
+			moreFlag = true;
+		},
+		error:function(){
+			removeLoading();
+		}
+	});
+}
+</script>

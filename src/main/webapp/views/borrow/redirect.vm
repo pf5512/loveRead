@@ -1,0 +1,142 @@
+<style>
+.loading {background: url("../images/loading.gif") no-repeat center;width: 128px;height: 128px;position: absolute;top: 50%;left: 50%;margin-left:-64px;margin-top:-64px;z-index:99999}
+.mask {background: #000;position: absolute;left: 0px;top: 0px;opacity: 0.5;filter: alpha(opacity = 50);-moz-opacity: 0.5;*-khtml-opacity: 0.5;z-index:99998}
+</style>
+
+<script src="${rc.contextPath}/resources/js/jquery-1.11.2.min.js?v=$!staticVersion" ></script>
+<script src="${rc.contextPath}/resources/js/app.upchat.js?v=$!staticVersion" ></script>
+
+<div class="container">
+	<div class="tip" style="position:fixed;height:100px;width:300px;top:50%;left:50%;margin-top:-50px;margin-left:-150px;text-align:center;">
+		<img style="height:50px;width:50px"></img>
+		<label style="margin-top:20px;width:300px;"></label>
+	</div>
+</div>
+
+
+
+<script type="text/javascript">
+	$(function(){
+        //成功后回调函数
+        var _success = function (result) {
+            
+            if (result.userId != null && result.userId != '') {
+            	
+            	var userId = result.userId;
+            	
+            	var readerId = '';
+            	var ownerId = '';
+            	
+            	var eventId = '$!eventId';
+            	var urlText = '';
+            	
+            	if (eventId == '1') {
+    				urlText = '${rc.contextPath}/borrow';
+    				readerId = userId;
+    				ownerId = '$!{ownId}';
+    			} else if (eventId == '2') {
+    				urlText = '${rc.contextPath}/returnBack';
+    				readerId = '$!{ownId}';
+    				ownerId = userId;
+    			} else if (eventId == '3') {
+    				urlText = '${rc.contextPath}/';
+    			}else if (eventId == '4') {
+                    urlText = '${rc.contextPath}/donate';
+                    readerId = userId;
+                    ownerId = '$!{ownId}';
+                }
+            			
+            	$.ajax({
+            		type:'POST',
+            		url: urlText,
+            		dataType:'json',
+            		data: {
+            			bookId : '$!{bookId}',
+            			readerId : readerId,
+            			ownerId : ownerId
+            		},
+            		success: function(data) {
+                        	
+            			var html = '';
+            			var htmlText = '';
+            			            			
+            			if (eventId == '1') {
+            				htmlText = '借书';
+            			} else if (eventId == '2') {
+            				htmlText = '还书';
+            			} else if (eventId == '3') {
+            				htmlText = '交换';
+            			} else if (eventId == '4') {
+                            htmlText = '赠送';
+                        }
+            			
+            			if(data.code == '0') {
+            				$('img', $('.tip')).attr('src', '${rc.contextPath}/resources/images/hackthon/success_icon.png');
+            				$('label', $('.tip')).text(htmlText + '成功');
+            			} else {
+            				$('img', $('.tip')).attr('src', '${rc.contextPath}/resources/images/hackthon/error_icon.png');
+            				$('label', $('.tip')).text(data.message);
+            			}
+                        
+                        UPCHAT.M.NAPI.dismiss();
+            		},
+					error:function(data){
+						alert(JSON.stringify(data));
+					}
+            	})
+            } else {
+            	toApp();
+            }
+        };
+
+        //失败后回调函数
+        var _fail = function (fal) {
+            UPCHAT.M.NAPI.dismiss();
+            toApp();
+        };
+
+        //获取Uid
+        var getUid = function () {
+            UPCHAT.M.NAPI.showLoadingView();
+            //if (cver == undefined || cver == null || cver == "") {
+            //	UPCHAT.M.NAPI.dismiss();
+            //} else {
+            UPCHAT.M.NAPI.fetchUserId(_success, _fail);
+            //}
+        };
+
+        //非U聊客户端打开
+        var toApp = function () {
+            $(".container").css("display", "block");
+            var html = '<label>请用最新版U聊客户端扫码二维码</label><br />' +
+                    '<a href="http://upchat.95516.net/app/">U聊客户端下载</a>';
+            $(".container").html(html);
+        };
+
+
+        if (UPCHAT.M.isNative()) {
+            UPCHAT.M.init(getUid);
+        } else {
+            toApp();
+        }
+	});
+	
+	function showLoading() {
+		var loading = $('<div class="loading dilog"></div>');
+		var mask = $('<div class="mask dilog"></div>');
+	
+		$('body').append(mask);
+		$('body').append(loading);
+		var zd_width = $(window).width();
+		var zd_height = $(document).height();
+		mask.css({
+			height : zd_height,
+			width : zd_width
+		});
+	}
+	
+	function removeLoading() {
+		$('.mask').remove();
+		$('.loading').remove();
+	}
+</script>

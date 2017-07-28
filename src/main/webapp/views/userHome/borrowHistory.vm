@@ -1,0 +1,43 @@
+ <style>
+body{
+	background:#e9e9e9;
+}
+</style>
+<div class="title-bar">
+	<img src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:history.back();"></img><p>借阅记录</p>
+</div>
+<div class="book-list">
+	#if($!{borrowHistoryList.size()}>0)
+	<ul>
+		#foreach($value in $!borrowHistoryList)
+		<li>
+			<div class="book-list-item">
+				<img class="book-pic" src="$value.cover" onclick="window.location.href='${rc.contextPath}/book/bookDetail?bookId=$!{value.bookId}'"></img>
+				#if($!value.bookStatus == "01")
+				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/return_icon.png"></img>
+				#else
+				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/not_return_icon.png"></img>
+				#end
+				<div class="list-item-info">
+					<p class="book-title-p">$!{value.bookName}</p>
+					<p>$!{value.ownerName} - $!{value.ownerTeam}</p>
+					<p>借阅时间：#if($!value.outTime)$date.format("yyyy-MM-dd",$!value.outTime)#else-#end</p>
+					<p>
+						#if($!value.bookStatus == "01")
+						归还时间：$!date.format("yyyy-MM-dd",$!value.backTime)
+						#else
+					           到期时间：$!date.format("yyyy-MM-dd",$!value.endTime)
+						#end
+					</p>
+				</div>
+			</div>
+		</li>
+		#end
+	</ul>
+	#else
+		<div class="no-item">
+			<img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
+			<p>好伤心，小主你居然还没借过书！</p>
+		</div>
+	#end
+</div>

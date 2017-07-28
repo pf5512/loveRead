@@ -1,0 +1,274 @@
+<style>
+body{
+	background:#f6f7fc;
+}
+</style>
+<div class="title-bar">
+	<img src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:window.location.href='${rc.contextPath}/index';"></img><p>我的图书</p>
+	<a href="javascript:showUploadTypeModal();"><img style="width:20px;height:20px;top:15px;" src="${rc.contextPath}/resources/images/hackthon/upload_book_icon.png"></img></a>
+</div>
+<div class="book-list">
+	<div class="swiper-container oper-tips">
+    	<div class="swiper-wrapper">
+    		<span class="swiper-slide">小提示:点击图书封面可以打开图书借阅二维码</span>
+    		<span class="swiper-slide">小提示:向左滑动图书可以展开图书管理菜单哦</span>
+    	</div>
+    </div>
+	#if($!{bookDetailList.size()}>0)
+		<ul>
+    		#foreach($value in $!bookDetailList)
+    		<li class="swiper-container" id="li$velocityCount">
+				<form id="qrBookForm$!velocityCount" action="${rc.contextPath}/qrBook/borrow" method="POST">
+    				<input type="hidden" name="bookId" value="$value.bookId">
+    				<input type="hidden" name="ownerId" value="$value.ownerId">
+    				<input type="hidden" name="bookName" value="$value.bookName">
+    				<input type="hidden" name="lastDay" value="$value.lastDay">
+    				<input type="hidden" name="bookCover" value="$value.cover">
+                    <input type="hidden" name="borrowType" value="$value.borrowType">
+    			</form>
+				<div class="swiper-wrapper">
+        			<div class="swiper-slide book-list-item">
+						#if($!value.status == "00")
+        				<a href="javascript:$('#qrBookForm$!velocityCount').submit();">
+						#else
+						<a href="javascript:zzrw.alert('很抱歉，该书处于不可借阅的状态，无法生成借阅二维码');">
+						#end
+							<img class="book-pic" src="$value.cover"></img>
+						</a>
+        				<div class="list-item-info">
+        					<p class="book-title-p">$!{value.bookName}</p>
+                            #if($!value.status == "01" && $!value.borrowType == "00")
+        					   <p>借阅者：$!{value.readerName} - $!{value.readerTeam}</p>
+        					   <p>到期时间：$!date.format("yyyy-MM-dd",$!{value.endTime})</p>
+                            #elseif($!value.borrowType == "02")
+								<p>剩余数量：$!value.lastDay</p>
+							#else
+                                <p>未借出</p>
+                            #end
+        					<p class="book-count-p">
+    							<img src="${rc.contextPath}/resources/images/hackthon/like_icon.png" style="width:16px;"></img>
+    							#if($!{value.likeNums})
+    							$!value.likeNums
+    							#else
+    							0
+    							#end
+    	                        &nbsp;
+    							<img src="${rc.contextPath}/resources/images/hackthon/borrow_icon.png" style="width:18px;margin-left:5px;"></img>
+    							#if($!{value.borrowNums})
+    							$!value.borrowNums
+    							#else
+    							0
+    							#end
+    						</p>
+        				</div>
+        			</div>
+					<a href="javascript:jumpEdit($!value.bookId);" class="swiper-slide book-operation-item" style="background-color:#f0ad4e;">编辑</a>
+					
+                    #if($!value.status=="00")
+					<a href="javascript:jumpDown($!value.bookId);" class="swiper-slide book-operation-item">下架</a>
+				    #elseif($!value.status=="01")
+                    <a href="javascript:jumpCallBack('$!value.readerId','$!value.bookId');" class="swiper-slide book-operation-item" style="background-color:#08c;">召回</a>
+                    #elseif($!value.status=="02")
+					<a href="javascript:jumpDown($!value.bookId);" class="swiper-slide book-operation-item" style="background-color:#449d44;">上架</a>
+					#end
+				</div>
+    		</li>
+			#end
+		</ul>
+	#else
+		<div class="no-item">
+			<img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
+			<p>小主，你还没有上传图书哦，快去上传吧！</p>
+		</div>
+	#end
+</div>
+<script src="${rc.contextPath}/resources/js/app.upchat.js?v=$!staticVersion" ></script>
+<script>
+$(document).ready(function(){
+	var tipSwiper = new Swiper('.oper-tips', {
+        slidesPerView: 1,
+		autoplay : 1000,
+		speed : 1000,
+		loop : true,
+		direction : 'vertical'
+	});
+
+	$(".book-list li").each(function(index){
+			var realIndex = index + 1;
+    		var swiper = new Swiper('#li'+realIndex, {
+            slidesPerView: 'auto'
+        });
+	});
+});
+
+function jumpEdit(id){
+	window.location.href="${rc.contextPath}/book/alter?id="+id;
+}
+
+function uploadBookByPhoto(){
+	hideUploadTypeModal();
+	UPCHAT.M.NAPI.choosePhoto(
+        function(succ) {
+            showLoading();
+            $.ajax({
+                type:'POST',
+                url: "${rc.contextPath}/douban/analyze",
+                dataType:'json',
+                data: {
+                    bookImg : succ.content
+                },
+                success: function(data) {
+                    if(data.code == '0') {
+						getBookInfoFromBouban(data.data);
+                    }else{
+						removeLoading();
+                        zzrw.confirm("上传失败，选择其他上传方式？",function(){
+                        	showUploadTypeModal();
+                        });
+                    }
+                },
+                error:function(){
+					removeLoading();
+                    zzrw.alert("解析异常，请重新拍照！");
+                }
+            })
+        },
+        function(fail) {
+            util.showInfo('打开图片失败！');
+        }
+    );
+}
+/*
+function uploadBook(){
+	$("#uploadTypeModal").modal('show');
+    zzrw.confirm("将手机摄像头对准书本isbn号并点击拍照按钮，或者选择图库中已拍摄好的isbn照片即可上传图书",function(){
+            UPCHAT.M.NAPI.choosePhoto(
+            function(succ) {
+                showLoading();
+                $.ajax({
+                    type:'POST',
+                    url: "${rc.contextPath}/douban/analyze",
+                    dataType:'json',
+                    data: {
+                        bookImg : succ.content
+                    },
+                    success: function(data) {
+                        if(data.code == '0') {
+							getBookInfoFromBouban(data.data);
+                        }else{
+							removeLoading();
+                            zzrw.confirm("上传失败，是否通过ISBN号上传？",function(){
+                                $("#isbnModal").modal("show");
+                            });
+                        }
+                    },
+                    error:function(){
+						removeLoading();
+                        zzrw.alert("解析异常，请重新拍照！");
+                    }
+                })
+            },
+            function(fail) {
+                util.showInfo('打开图片失败！');
+            }
+        );
+    })
+}
+*/
+
+function getBookInfoFromBouban(isbn){
+	$.ajax({
+        async : true,
+        url : "https://api.douban.com/v2/book/isbn/"+isbn,
+        type : "GET",
+        dataType : "jsonp", // 返回的数据类型，设置为JSONP方式
+        jsonp : 'callback', //指定一个查询参数名称来覆盖默认的 jsonp 回调参数名 callback
+        jsonpCallback: 'handleResponse', //设置回调函数名
+        data : {
+            q : "javascript", 
+            count : 1
+        },
+		timeout : 2000,
+        success: function(response, status, xhr){
+            //zzrw.alert('状态为：' + status + ',状态是：' + xhr.statusText + ";-----;" + response);
+			$.ajax({
+				url:'${rc.contextPath}/douban/upload',
+				data:{
+					bookStr:JSON.stringify(response)
+				},
+				type:'post',
+				success:function(){
+					removeLoading();
+					zzrw.alert("上传成功！",function(){
+                                    window.location.href="${rc.contextPath}/userHome/myBookList";
+                                })
+				},
+				error:function(){
+					removeLoading();
+					zzrw.alert("服务器异常，请重新拍照！");
+				}
+			});
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown){
+			removeLoading();
+			if(textStatus == 'timeout'){
+				zzrw.alert("无效的ISBN号，未解析出对应的图书");
+			}
+		}
+    });
+}
+
+function uploadBookInfoFromBouban(){
+	$("#isbnModal").modal("hide");
+	var isbnNo = $("#isbnInput").val();
+	if(isbnNo == null || isbnNo == undefined || isbnNo == ""){
+		zzrw.alert("ISBN号为空");
+	}else{
+		showLoading();
+		getBookInfoFromBouban(isbnNo);
+	}
+}
+
+function jumpDown(id){
+	$.ajax({
+		type:'POST',
+		data:{
+			id:id
+		},
+		url:"${rc.contextPath}/book/drop",
+		success:function(data){
+			if(data==="success"){
+				window.location.href="${rc.contextPath}/userHome/myBookList";
+			}else{
+				zzrw.alert("操作失败，请稍后重试！");
+			}
+		},
+		error:function(data){
+			
+		}
+	})
+}
+
+function jumpCallBack(readerId,bookId){
+    $.ajax({
+        type:'POST',
+        url:"${rc.contextPath}/userHome/callBack",
+        data:{
+            borrowId:readerId,
+            bookId:bookId
+        },
+        dataType : "json",
+        success:function(data){
+            if(data.code == "0"){
+                zzrw.alert("召回成功！请不要多次召回~");
+                //window.location.href="${rc.contextPath}/userHome/myBookList";
+            }else{
+                zzrw.alert("操作失败，请稍后重试！");
+            }
+        },
+        error:function(data){
+            
+        }
+    })
+}
+</script>
