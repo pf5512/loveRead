@@ -6,7 +6,10 @@
 
 package com.unionpay.loveRead.interceptor;
 
+import com.unionpay.loveRead.constants.Constants;
 import com.unionpay.loveRead.controller.BaseController;
+import com.unionpay.loveRead.service.RedisSingletonService;
+import com.unionpay.loveRead.service.UserService;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
@@ -28,9 +31,12 @@ import java.util.Date;
 public class GlobalInterceptor extends BaseController implements HandlerInterceptor {
 
 	private final Logger logger = LoggerFactory.getLogger(GlobalInterceptor.class);
+
 	@Autowired
 	private WxMpService wxMpService;
 
+	@Autowired
+	private UserService userService;
 	/**
 	 * 网站域名、端口号信息
 	 */
@@ -58,10 +64,17 @@ public class GlobalInterceptor extends BaseController implements HandlerIntercep
 					logger.info("Get OAuth access token:");
 					WxMpOAuth2AccessToken wxMpOAuth2AccessToken =
 							wxMpService.oauth2getAccessToken(code);
-					logger.info("Token response:"+wxMpOAuth2AccessToken.toString());
+					logger.info("Token response:" + wxMpOAuth2AccessToken.toString());
 
 					WxMpUser wxMpUser = wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
 					logger.info("user info:" + wxMpUser.toString());
+
+					//从redis中判断该用户是否已经存在系统中，若已存在则不需要入库，否则创建新用户
+					boolean isExist = RedisSingletonService.isExistInSet(Constants.REDIS_USERSET_KEY,
+							wxMpUser.getOpenId());
+					if (!isExist) {
+						userService.addUser(wxMpUser);
+					}
 					setSessionUid(request,wxMpUser.getOpenId());
 				} catch (WxErrorException e) {
 					e.printStackTrace();
@@ -76,7 +89,6 @@ public class GlobalInterceptor extends BaseController implements HandlerIntercep
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler, ModelAndView modelView)
 			throws Exception {
-
 		request.setAttribute("baseUrl", baseUrl);
 		// 获取当前访问链接
 		String uri = request.getRequestURI();

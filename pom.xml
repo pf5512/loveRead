@@ -188,6 +188,14 @@
             <artifactId>weixin-java-mp</artifactId>
             <version>2.7.7</version>
         </dependency>
+
+        <!-- Jedis操作redis依赖包start -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.7.3</version>
+        </dependency>
+        <!-- Jedis操作redis依赖包end -->
     </dependencies>
 
     <build>
