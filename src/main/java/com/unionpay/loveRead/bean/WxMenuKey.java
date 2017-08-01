@@ -11,11 +11,6 @@ public class WxMenuKey {
     private String type;
     private String content;
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
     public WxMenuKey() {
 
     }
@@ -23,6 +18,11 @@ public class WxMenuKey {
     public WxMenuKey(String type, String content) {
         this.type = type;
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
     public String getType() {

@@ -1,291 +1,306 @@
-<script src="${rc.contextPath}/resources/js/app.upchat.js?v=$!staticVersion" ></script> 
-<script src="${rc.contextPath}/resources/js/jquery.form.js?v=$!staticVersion" ></script>
+<script src="${rc.contextPath}/resources/js/jquery.form.js?v=$!staticVersion"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <div class="swiper-container home-drawer-swiper">
-	<div class="swiper-wrapper">
-		<div class="swiper-slide menu-drawer">	
-		    <img id="headerIcon" src="${rc.contextPath}/resources/images/hackthon/user_header_icon.png"></img>
-		    <ul>
-		        <li onclick="javascript:window.location.href='${rc.contextPath}/userHome/myBookList'"><p>我的图书</p></li>
-		        <li onclick="javascript:window.location.href='${rc.contextPath}/userHome/borrowHistory'"><p>借阅记录</p></li>
-		        <li onclick="javascript:window.location.href='${rc.contextPath}/userHome/scoreHistory'"><p>我的积分</p></li>
-		        <!-- <li onclick="javascript:zzrw.alert('敬请期待')"><p>公告</p></li> -->
-		        <li onclick="javascript:window.location.href='${rc.contextPath}/aboutUs'"><p>关于</p></li>
-		    </ul>
-		</div>
-		<div class="swiper-slide">
-			<div class="top-menu">
-			    <div class="search-bar">
-			        <img class="menu-icon" src="${rc.contextPath}/resources/images/hackthon/top_menu.png"></img>
-			        <p>
-			            <img class="search-icon" src="${rc.contextPath}/resources/images/hackthon/search.png"></img>
-			            <input id="keywords" type="text" placeholder="搜索" onkeypress="if(event.keyCode==13) {var keywords = $('input#keywords').val();window.location.href='${rc.contextPath}/book/search?keywords=' + keywords + ''}">
-			        </p>
-			    </div>
-			    <div class="main-oper-bar">
-			        <ul>
-			            <li>
-			                <div class="main-list-item" id="borrowByCode">
-			                    <img src="${rc.contextPath}/resources/images/hackthon/borrow_by_code.png"></img>
-			                    <p>码上借</p>
-			                </div>
-			            </li>
-			            <li>
-			                <div class="main-list-item" id="uploadBook">
-			                    <img src="${rc.contextPath}/resources/images/hackthon/upload_book.png"></img>
-			                    <p>上传</p>
-			                </div>
-			            </li>
-			            <li>
-			                <div class="main-list-item" id="returnByCode">
-			                    <img src="${rc.contextPath}/resources/images/hackthon/return_by_code.png"></img>
-			                    <p>码上还</p>
-			                </div>
-			            </li>
-			        </ul>
-			    </div>
-			</div>
-			<div class="swiper-container index-notice">
-            	<ul class="swiper-wrapper">
-            		<li class="swiper-slide">点击“积分”有惊喜哦！</li>
-            		<li class="swiper-slide">点击“上传”即可分享您的图书啦！</li>
-            		<li class="swiper-slide">点击“码上借”即可出借您上传过的图书哦！</li>
-            		<li class="swiper-slide">快去“圈子”看看大家都在说什么吧！</li>
-				</ul>
-			</div>
-			<div class="second-oper-bar">
-				<ul>
-					<li>
-						<!--<div class="second-list-item" onclick="window.location.href='${rc.contextPath}/allBook'">-->
-						<div class="second-list-item" onclick="window.location.href='${rc.contextPath}/allBookAndUser'">
-							<img src="${rc.contextPath}/resources/images/hackthon/all_icon.png"></img>
-							<p>所有</p>
-						</div>
-					</li>
-					<li>
-						<div class="second-list-item" onclick="window.location.href='${rc.contextPath}/rank'">
-							<img src="${rc.contextPath}/resources/images/hackthon/rank_icon.png"></img>
-							<p>排行</p>
-						</div>
-					</li>
-					<li>
-						<div class="second-list-item" onclick="window.location.href='${rc.contextPath}/userHome/scoreHistory'">
-							<img src="${rc.contextPath}/resources/images/hackthon/exchange_icon.png"></img>
-							<p>积分</p>
-						</div>
-					</li>
-					<li>
-						<div class="second-list-item" onclick="window.location.href='${rc.contextPath}/review/list'">
-							<img src="${rc.contextPath}/resources/images/hackthon/borrow_icon.png"></img>
-							<p>圈子</p>
-						</div>
-					</li>
-				</ul>
-			</div>
-			<div class="home-top-rank">
-			    <p class="home-top-title">猜你喜欢</p>
-			    <div class="swiper-container home-rank-swiper">
-					<div class="swiper-wrapper" id="homeRankList">
-					</div>
-				</div>
-			</div>
-			<div class='menu-drawer-shadow'></div>
-		</div>
-	</div>
+    <div class="swiper-wrapper">
+        <div class="swiper-slide menu-drawer">
+            <img id="headerIcon" src="$!headerIcon"></img>
+            <ul>
+                <li onclick="javascript:window.location.href='${rc.contextPath}/userHome/myBookList'"><p>我的图书</p></li>
+                <li onclick="javascript:window.location.href='${rc.contextPath}/userHome/borrowHistory'"><p>借阅记录</p>
+                </li>
+                <li onclick="javascript:window.location.href='${rc.contextPath}/userHome/scoreHistory'"><p>我的积分</p></li>
+                <!-- <li onclick="javascript:zzrw.alert('敬请期待')"><p>公告</p></li> -->
+                <li onclick="javascript:window.location.href='${rc.contextPath}/aboutUs'"><p>关于</p></li>
+            </ul>
+        </div>
+        <div class="swiper-slide">
+            <div class="top-menu">
+                <div class="search-bar">
+                    <img class="menu-icon" src="${rc.contextPath}/resources/images/hackthon/top_menu.png"></img>
+
+                    <p>
+                        <img class="search-icon" src="${rc.contextPath}/resources/images/hackthon/search.png"></img>
+                        <input id="keywords" type="text" placeholder="搜索"
+                               onkeypress="if(event.keyCode==13) {var keywords = $('input#keywords').val();window.location.href='${rc.contextPath}/book/search?keywords=' + keywords + ''}">
+                    </p>
+                </div>
+                <div class="main-oper-bar">
+                    <ul>
+                        <li>
+                            <div class="main-list-item" id="borrowByCode">
+                                <img src="${rc.contextPath}/resources/images/hackthon/borrow_by_code.png"></img>
+
+                                <p>码上借</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="main-list-item" id="uploadBook">
+                                <img src="${rc.contextPath}/resources/images/hackthon/upload_book.png"></img>
+
+                                <p>上传</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="main-list-item" id="returnByCode">
+                                <img src="${rc.contextPath}/resources/images/hackthon/return_by_code.png"></img>
+
+                                <p>码上还</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="swiper-container index-notice">
+                <ul class="swiper-wrapper">
+                    <li class="swiper-slide">点击“积分”有惊喜哦！</li>
+                    <li class="swiper-slide">点击“上传”即可分享您的图书啦！</li>
+                    <li class="swiper-slide">点击“码上借”即可出借您上传过的图书哦！</li>
+                    <li class="swiper-slide">快去“圈子”看看大家都在说什么吧！</li>
+                </ul>
+            </div>
+            <div class="second-oper-bar">
+                <ul>
+                    <li>
+                        <!--<div class="second-list-item" onclick="window.location.href='${rc.contextPath}/allBook'">-->
+                        <div class="second-list-item" onclick="window.location.href='${rc.contextPath}/allBookAndUser'">
+                            <img src="${rc.contextPath}/resources/images/hackthon/all_icon.png"></img>
+
+                            <p>所有</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="second-list-item" onclick="javascript:zzrw.alert('敬请期待')">
+                            <img src="${rc.contextPath}/resources/images/hackthon/rank_icon.png"></img>
+
+                            <p>排行</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="second-list-item" onclick="javascript:zzrw.alert('敬请期待')">
+                            <img src="${rc.contextPath}/resources/images/hackthon/exchange_icon.png"></img>
+
+                            <p>积分</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="second-list-item" onclick="javascript:zzrw.alert('敬请期待')">
+                            <img src="${rc.contextPath}/resources/images/hackthon/borrow_icon.png"></img>
+
+                            <p>圈子</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="home-top-rank">
+                <p class="home-top-title">猜你喜欢</p>
+
+                <div class="swiper-container home-rank-swiper">
+                    <div class="swiper-wrapper" id="homeRankList">
+                    </div>
+                </div>
+            </div>
+            <div class='menu-drawer-shadow'></div>
+        </div>
+    </div>
 </div>
 
-<script>
-$(document).ready(function(){
-	var homeSwiper = new Swiper('.home-drawer-swiper', {
-        slidesPerView: 'auto',
-        initialSlide:1,
-		onTouchStart:function(){
-			$(".menu-drawer").css('height',$(window).height());
-		},
-		onSlideNextStart:function(swiper){
-			$(".menu-drawer-shadow").css('display','none');	
-		},
-		onSlidePrevStart:function(swiper){
-    		$(".menu-drawer-shadow").css('height',$(window).height());
-    		$(".menu-drawer-shadow").css('display','block');
-		}
-    });
+#if($!wxConfig)
+<script type="text/javascript">
+    $(function () {
+        if (window.wx) {
+            var appId = "$!wxConfig.appId";
+            var timestamp = "$!wxConfig.timestamp";
+            var nonceStr = "$!wxConfig.nonceStr";
+            var signature = "$!wxConfig.signature";
 
-	var noticeSwiper = new Swiper('.index-notice', {
-		slidesPerView: 1,
-		autoplay : 1000,
-		speed : 1000,
-		loop : true,
-		direction : 'vertical'
-	});
-	
-    $(".menu-icon").click(function(){
-    	$(".menu-drawer").css('height',$(window).height());
-    	homeSwiper.slideTo(0);
-    	$(".menu-drawer-shadow").css('height',$(window).height());
-    	$(".menu-drawer-shadow").css('display','block');
-    });
-    
-    $(".menu-drawer-shadow").click(function(){
-        homeSwiper.slideTo(1);
-        $(".menu-drawer-shadow").css('display','none');
-    });
-    
-    $("#borrowByCode").click(function(){
-        window.location.href="${rc.contextPath}/userHome/myBorrowAbleList";
-    });
+            wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: appId, // 必填，公众号的唯一标识
+                timestamp: timestamp, // 必填，生成签名的时间戳
+                nonceStr: nonceStr, // 必填，生成签名的随机串
+                signature: signature,// 必填，签名，见附录1
+                jsApiList: ['checkJsApi', 'scanQRCode', 'chooseImage', 'uploadImage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
 
-    $("#returnByCode").click(function(){
-        window.location.href="${rc.contextPath}/userHome/myReturnList";
+            wx.ready(function () {
+                $("#uploadBook").click(function () {
+                    //扫一扫
+                    wx.scanQRCode({
+                        // 默认为0，扫描结果由微信处理，1则直接返回扫描结果
+                        needResult: 1,
+                        scanType: ["qrCode", "barCode"],
+                        success: function (res) {
+                            var resultStr = res.resultStr;
+                            var isbn = resultStr;
+                            //图书条形码，取","后面的
+                            if (resultStr.indexOf(",") >= 0) {
+                                var tempArray = resultStr.split(',');
+                                isbn = tempArray[1];
+                            }
+                            //赋值
+                            $("#isbnInput").val(isbn);
+                            uploadBookInfoFromBouban();
+                        }
+                    });
+                });
+            });
+        }
     });
+</script>
+#end
 
-	$("#uploadBook").click(function(){
-		showUploadTypeModal();
-	});
-
-    //获取TOP10
-    $.ajax({
-        url:'${rc.contextPath}/getTopThree',
-        dataType:'json',
-        success:function(data){
-            $("#homeRankList").empty();
-            var html = "";
-            for(i = 0;i<data.books.length;i++){
-                html = html + "<div class='swiper-slide top-rank-item' onclick='jumpDetail("+data.books[i].bookId+")'>";
-                html = html + "<p style='font-size:12px;'>" + data.books[i].ownerName + "</p>";
-                html = html + "<img src='"+data.books[i].cover+"'></img>";
-                html = html + "<p>" + data.books[i].bookName + "</p>";
-                html = html + "</div>";
+<script type="text/javascript">
+    $(function () {
+        var homeSwiper = new Swiper('.home-drawer-swiper', {
+            slidesPerView: 'auto',
+            initialSlide: 1,
+            onTouchStart: function () {
+                $(".menu-drawer").css('height', $(window).height());
+            },
+            onSlideNextStart: function (swiper) {
+                $(".menu-drawer-shadow").css('display', 'none');
+            },
+            onSlidePrevStart: function (swiper) {
+                $(".menu-drawer-shadow").css('height', $(window).height());
+                $(".menu-drawer-shadow").css('display', 'block');
             }
-            $("#homeRankList").append(html);
-            
-            var swiper = new Swiper('.home-rank-swiper', {
-		        slidesPerView: 4,
-		        paginationClickable: true,
-		        spaceBetween: 10,
-				initialSlide: 0
-		    });
-        },
-        error:function(){
-        }
-    });
-   
-});
+        });
 
-function jumpDetail(id){
-    window.location.href="${rc.contextPath}/book/bookDetail?bookId="+id;
-}
+        var noticeSwiper = new Swiper('.index-notice', {
+            slidesPerView: 1,
+            autoplay: 1000,
+            speed: 1000,
+            loop: true,
+            direction: 'vertical'
+        });
 
-function getBookInfoFromDouban(isbn){
-	$.ajax({
-        async : true,
-        url : "https://api.douban.com/v2/book/isbn/"+isbn,
-        type : "GET",
-        dataType : "jsonp", // 返回的数据类型，设置为JSONP方式
-        jsonp : 'callback', //指定一个查询参数名称来覆盖默认的 jsonp 回调参数名 callback
-        jsonpCallback: 'handleResponse', //设置回调函数名
-        data : {
-            q : "javascript", 
-            count : 1
-        },
-		timeout : 5000,
-        success: function(response, status, xhr){
-            //zzrw.alert('状态为：' + status + ',状态是：' + xhr.statusText + ";-----;" + response);
-			$.ajax({
-				url:'${rc.contextPath}/douban/upload',
-				data:{
-					bookStr:JSON.stringify(response)
-				},
-				type:'post',
-				success:function(){
-					removeLoading();
-					zzrw.alert("上传成功，进入我的图书列表！",function(){
-                                    window.location.href="${rc.contextPath}/userHome/myBookList";
-                                })
-				},
-				error:function(){
-					removeLoading();
-					zzrw.alert("服务器异常，请重新拍照！");
-				}
-			});
-        },
-		error: function(XMLHttpRequest, textStatus, errorThrown){
-			removeLoading();
-			if(textStatus == 'timeout'){
-				zzrw.alert("无效的ISBN号，未解析出对应的图书");
-			}
-		}
-    });
-}
+        $(".menu-icon").click(function () {
+            $(".menu-drawer").css('height', $(window).height());
+            homeSwiper.slideTo(0);
+            $(".menu-drawer-shadow").css('height', $(window).height());
+            $(".menu-drawer-shadow").css('display', 'block');
+        });
 
-function uploadBookInfoFromBouban(){
-	$("#isbnModal").modal("hide");
-	var isbnNo = $("#isbnInput").val();
-	if(isbnNo == null || isbnNo == undefined || isbnNo == ""){
-		zzrw.alert("ISBN号为空");
-	}else{
-		showLoading();
-		//判断是否重复
-		checkIfExpire(isbnNo);
-		//getBookInfoFromBouban(isbnNo);
-	}
-}
+        $(".menu-drawer-shadow").click(function () {
+            homeSwiper.slideTo(1);
+            $(".menu-drawer-shadow").css('display', 'none');
+        });
 
-function uploadBookByPhoto(){
-	hideUploadTypeModal();
-	UPCHAT.M.NAPI.choosePhoto(
-        function(succ) {
-            showLoading();
-            $.ajax({
-                type:'POST',
-                url: "${rc.contextPath}/douban/analyze",
-                dataType:'json',
-                data: {
-                    bookImg : succ.content
-                },
-                success: function(data) {
-                    if(data.code == '0') {
-						//判断是否重复
-						checkIfExpire(data.data);
-						//getBookInfoFromDouban(data.data);
-                    }else{
-						removeLoading();
-                        zzrw.confirm("上传失败，选择其他上传方式？",function(){
-                        	showUploadTypeModal();
-                        });
-                    }
-                },
-                error:function(){
-					removeLoading();
-                    zzrw.alert("解析异常，请重新拍照！");
+        $("#borrowByCode").click(function () {
+            window.location.href = "${rc.contextPath}/userHome/myBorrowAbleList";
+        });
+
+        $("#returnByCode").click(function () {
+            window.location.href = "${rc.contextPath}/userHome/myReturnList";
+        });
+
+        //获取TOP10
+        $.ajax({
+            url: '${rc.contextPath}/getTopThree',
+            dataType: 'json',
+            success: function (data) {
+                $("#homeRankList").empty();
+                var html = "";
+                for (i = 0; i < data.books.length; i++) {
+                    html = html + "<div class='swiper-slide top-rank-item' onclick='jumpDetail(" + data.books[i].bookId + ")'>";
+                    html = html + "<p style='font-size:12px;'>" + data.books[i].ownerName + "</p>";
+                    html = html + "<img src='" + data.books[i].cover + "'></img>";
+                    html = html + "<p>" + data.books[i].bookName + "</p>";
+                    html = html + "</div>";
                 }
-            })
-        },
-        function(fail) {
-            util.showInfo('打开图片失败！');
+                $("#homeRankList").append(html);
+
+                var swiper = new Swiper('.home-rank-swiper', {
+                    slidesPerView: 4,
+                    paginationClickable: true,
+                    spaceBetween: 10,
+                    initialSlide: 0
+                });
+            },
+            error: function () {
+            }
+        });
+    })
+
+    function jumpDetail(id) {
+        window.location.href = "${rc.contextPath}/book/bookDetail?bookId=" + id;
+    }
+
+    function uploadBookInfoFromBouban() {
+        $("#isbnModal").modal("hide");
+        var isbnNo = $("#isbnInput").val();
+        if (isbnNo == null || isbnNo == undefined || isbnNo == "") {
+            zzrw.alert("ISBN号为空");
+        } else {
+            showLoading();
+            //判断是否重复
+            checkIfExpire(isbnNo);
         }
-    );
-}
-//检测是否无法上传
-function checkIfExpire(isbn){
-	$.ajax({
-		type:'POST',
-		url: "${rc.contextPath}/book/checkIsbn",
-		data:{
-			isbn:isbn
-		},
-		dataType:'json',
-		success:function(data){
-			if(data.code == '0'){
-				getBookInfoFromDouban(isbn);
-			}else{
-				removeLoading();
-				zzrw.alert(data.message);
-			}
-		},
-		error:function(){
-			removeLoading();
-			zzrw.alert("服务器异常，请稍后再试！");
-		}
-	});
-}
+    }
+
+    //检测是否无法上传
+    function checkIfExpire(isbn) {
+        $.ajax({
+            type: 'POST',
+            url: "${rc.contextPath}/book/checkIsbn",
+            data: {
+                isbn: isbn
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.code == '0') {
+                    getBookInfoFromDouban(isbn);
+                } else {
+                    removeLoading();
+                    zzrw.alert(data.message);
+                }
+            },
+            error: function () {
+                removeLoading();
+                zzrw.alert("服务器异常，请稍后再试！");
+            }
+        });
+    }
+
+    function getBookInfoFromDouban(isbn) {
+        $.ajax({
+            async: true,
+            url: "https://api.douban.com/v2/book/isbn/" + isbn,
+            type: "GET",
+            dataType: "jsonp", // 返回的数据类型，设置为JSONP方式
+            jsonp: 'callback', //指定一个查询参数名称来覆盖默认的 jsonp 回调参数名 callback
+            jsonpCallback: 'handleResponse', //设置回调函数名
+            data: {
+                q: "javascript",
+                count: 1
+            },
+            timeout: 5000,
+            success: function (response, status, xhr) {
+                //zzrw.alert('状态为：' + status + ',状态是：' + xhr.statusText + ";-----;" + response);
+                $.ajax({
+                    url: '${rc.contextPath}/douban/upload',
+                    data: {
+                        bookStr: JSON.stringify(response)
+                    },
+                    type: 'post',
+                    success: function () {
+                        removeLoading();
+                        zzrw.alert("上传成功，进入我的图书列表！", function () {
+                            window.location.href = "${rc.contextPath}/userHome/myBookList";
+                        })
+                    },
+                    error: function () {
+                        removeLoading();
+                        zzrw.alert("服务器异常，请重新拍照！");
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                removeLoading();
+                if (textStatus == 'timeout') {
+                    zzrw.alert("无效的ISBN号，未解析出对应的图书");
+                }
+            }
+        });
+    }
 </script>

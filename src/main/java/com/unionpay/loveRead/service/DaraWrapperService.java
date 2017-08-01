@@ -3,6 +3,7 @@ package com.unionpay.loveRead.service;
 import com.unionpay.loveRead.constants.WxMpConfig;
 import com.unionpay.loveRead.domain.WxUser;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,8 @@ public class DaraWrapperService {
     public WxUser convertWxUser(WxMpUser wxMpUser) {
         WxUser user = new WxUser();
         user.setAppId(wxConfig.getAppid());
-        if(wxMpUser.getSubscribe()){
+        if (wxMpUser.getSubscribe() != null
+                && wxMpUser.getSubscribe()) {
             user.setSubscribe(1);
         }
         user.setOpenId(wxMpUser.getOpenId());
@@ -34,9 +36,15 @@ public class DaraWrapperService {
         user.setLanguage(wxMpUser.getLanguage());
         user.setHeadImgUrl(wxMpUser.getHeadImgUrl());
         user.setUnionId(wxMpUser.getUnionId());
-        user.setRemark(wxMpUser.getRemark());
-        user.setGroupId(wxMpUser.getGroupId());
-        user.setSubscribeTime(new Timestamp(wxMpUser.getSubscribeTime()));
+        if (!StringUtils.isEmpty(wxMpUser.getRemark())) {
+            user.setRemark(wxMpUser.getRemark());
+        }
+        if (wxMpUser.getGroupId() != null) {
+            user.setGroupId(wxMpUser.getGroupId());
+        }
+        if (wxMpUser.getSubscribeTime() != null) {
+            user.setSubscribeTime(new Timestamp(wxMpUser.getSubscribeTime()));
+        }
         return user;
     }
 }

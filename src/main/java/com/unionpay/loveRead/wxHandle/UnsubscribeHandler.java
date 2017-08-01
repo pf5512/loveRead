@@ -9,17 +9,15 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * 
  * @author Binary Wang
- *
  */
 @Component
 public class UnsubscribeHandler extends AbstractHandler {
 
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
-            Map<String, Object> context, WxMpService wxMpService,
-            WxSessionManager sessionManager) {
+                                    Map<String, Object> context, WxMpService wxMpService,
+                                    WxSessionManager sessionManager) {
         String openId = wxMessage.getFromUser();
         this.logger.info("取消关注用户 OPENID: " + openId);
         // TODO 可以更新本地数据库为取消关注状态

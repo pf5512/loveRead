@@ -9,7 +9,6 @@ body{
 <div class="content-tab">
 	<ul>
 		<li><a href="javascript:tabClick(0);" class="active-a" id="allBookA">图书</a></li>
-		<li><a href="javascript:tabClick(1);" id="allDonateBook">享读会</a></li>
 		<li><a href="javascript:tabClick(2);" id="allUser">用户</a></li>
 	</ul>
 </div>
@@ -31,7 +30,7 @@ body{
             				#end
             				<div class="list-item-info">
             					<p class="book-title-p">$!{value.bookName}</p>
-            					<p>$!{value.ownerName} - $!{value.ownerTeam}</p>
+            					<p>$!{value.ownerName}</p>
             					<p class="book-count-p">
             						<img src="${rc.contextPath}/resources/images/hackthon/like_icon.png" style="width:16px;"></img>
             						#if($!{value.likeNums})
@@ -61,54 +60,18 @@ body{
 			#end
         </div>
         
-        <!--享读会-->
-        <div class="swiper-slide all-book-list swiper-no-swiping" id="donateList">
-            #if($!{donateList.size()}>0)
-               <ul style="position:relative;z-index:2;">
-                    #foreach($value in $!donateList)
-                    <li>
-                        <div class="book-list-item">
-                            <img class="book-pic" src="$value.cover" onclick="window.location.href='${rc.contextPath}/book/bookDetail?bookId=$!{value.bookId}'"></img>
-                            #if($!{value.status} == "00")
-                            <img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/borrowable_icon.png"></img>
-                            #elseif($!{value.status} == "01")
-                            <img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/lent_icon.png"></img>
-                            #else
-                            <img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/down_icon.png"></img>
-                            #end
-                            <div class="list-item-info">
-                                <p class="book-title-p">$!{value.bookName}</p>
-                                <p>$!{value.ownerName} - $!{value.ownerTeam}</p>
-                                <p class="book-count-p">
-                                    剩余：$!value.lastDay 本
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-                    #end
-               </ul>
-               <p id="loadMoreP" style="color:#888;z-index:1;height:40px;line-height:40px;position:absolute;width:100%;bottom:0;margin:0;text-align:center;">上滑加载更多</p>
-            #else
-                <div class="no-item">
-                    <img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
-                    <p>大侠，享读会图书还没有上传哦！</p>
-                </div>
-            #end
-        </div>
-        
         <div class="swiper-slide rank-list swiper-no-swiping" id="allUserList">
             #if($!{userList.size()}>0)
             	<ul style="position:relative;z-index:2;">
             		#foreach($value in $!userList)
             		<li>
             			<div class="user-list-item" onclick="javascript:gotoUserBookList('$!value.uid')">
-    						#if($!value.icon)
-            				<img class="user-header" src="$!value.icon"></img>
+    						#if($!value.headImgUrl)
+            				<img class="user-header" src="$!value.headImgUrl"></img>
     						#else
     						<img class="user-header" src="${rc.contextPath}/resources/images/hackthon/user_header_icon.png"></img>
     						#end
             				<p class="user-name">$!{value.empName}</p>
-            				<p class="user-team">$!{value.team}</p>
     						<span class="user-score prize-metal">
     							$!{value.score}本
 							</span>
@@ -138,30 +101,18 @@ $(document).ready(function(){
 		onSlideNextStart: function(swiper){
             if(swiper.activeIndex == 0){
                 $("#allBookA").attr('class','active-a');
-                $("#allDonateBook").removeAttr('class');
-                $("#allUser").removeAttr('class');
-            }else if(swiper.activeIndex == 1){
-                $("#allDonateBook").attr('class','active-a');
-                $("#allBookA").removeAttr('class');
                 $("#allUser").removeAttr('class');
             }else{
                 $("#allBookA").removeAttr('class');
-                $("#allDonateBook").removeAttr('class');
                 $("#allUser").attr('class','active-a');
             }
 		},
 		onSlidePrevStart: function(swiper){
 			if(swiper.activeIndex == 0){
 				$("#allBookA").attr('class','active-a');
-				$("#allDonateBook").removeAttr('class');
 				$("#allUser").removeAttr('class');
-			}else if(swiper.activeIndex == 1){
-                $("#allDonateBook").attr('class','active-a');
-                $("#allBookA").removeAttr('class');
-                $("#allUser").removeAttr('class');
-            }else{
+			}else{
 				$("#allBookA").removeAttr('class');
-				$("#allDonateBook").removeAttr('class');
 				$("#allUser").attr('class','active-a');
 			}
 		}
@@ -297,7 +248,7 @@ function appendBookItem(bookList, id){
 			htmlStr = htmlStr + "<img class='book-pic-status' src='" + webRoot + "/resources/images/hackthon/down_icon.png'></img>";
 		htmlStr += "<div class='list-item-info'>";
 		htmlStr = htmlStr + "<p class='book-title-p'>" + bookList[i].bookName + "</p>";
-		htmlStr = htmlStr + "<p>" + bookList[i].ownerName + "-" + bookList[i].ownerTeam + "</p>";
+		htmlStr = htmlStr + "<p>" + bookList[i].ownerName + "</p>";
 		htmlStr = htmlStr + "<p class='book-count-p'><img src='" + webRoot + "/resources/images/hackthon/like_icon.png' style='width:16px;'></img>";
 		if(bookList[i].likeNums != null && bookList[i].likeNums != undefined && bookList[i].likeNums != "")
 			htmlStr = htmlStr + "&nbsp;" + bookList[i].likeNums;
@@ -324,8 +275,8 @@ function appendUserItem(userList, id){
 	for(i = 0; i<userList.length; i++){
     	htmlStr += "<li>";
 		htmlStr = htmlStr + "<div class='user-list-item' onclick=\"gotoUserBookList(\'"+userList[i].uid+"\')\">";
-		htmlStr = htmlStr + "<img class='user-header' src='"+userList[i].icon+"'></img>";
-		htmlStr = htmlStr + "<p class='user-name'>"+userList[i].empName+"</p><p class='user-team'>"+userList[i].team+"</p>";
+		htmlStr = htmlStr + "<img class='user-header' src='"+userList[i].headImgUrl+"'></img>";
+		htmlStr = htmlStr + "<p class='user-name'>"+userList[i].empName+"</p>";
     	htmlStr = htmlStr + "<span class='user-score prize-metal'>"+userList[i].score+"本</span>";
 		htmlStr += "</div></li>";
 	}

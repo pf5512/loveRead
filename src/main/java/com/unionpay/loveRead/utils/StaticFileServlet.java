@@ -12,17 +12,16 @@ import java.util.Properties;
 
 /**
  * Simple servlet to solve virtual folder mapping problem in JBoss AS 7
- * 
+ *
  * @author Yaguo Zhou
- * 
  */
 public class StaticFileServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private static String basePath;
+    private static String basePath;
 
-	static {
-	    ClassPathResource resource = new ClassPathResource(
+    static {
+        ClassPathResource resource = new ClassPathResource(
                 "configuration.properties");
         try {
             String ppsPath = resource.getURL().getPath().replace("20%", "");
@@ -31,71 +30,72 @@ public class StaticFileServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
-	}
+    }
 
-	@Override
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String requestedFile = request.getPathInfo();
+    /**
+     * 根据key读取properties文件内容
+     *
+     * @param filePath
+     * @param key
+     *
+     * @return
+     */
+    public static String getValueByKey(String filePath, String key) {
+        Properties pps = new Properties();
+        try {
+            InputStream in = new BufferedInputStream(new FileInputStream(
+                    filePath));
+            pps.load(in);
+            String value = pps.getProperty(key);
+            System.out.println(key + " = " + value);
+            return value;
 
-		File file = new File(basePath,
-				URLDecoder.decode(requestedFile, "UTF-8"));
-		if (!file.exists()) {
-			// Throw 404, redirect to error page may is another selection
-			response.sendError(HttpServletResponse.SC_NOT_FOUND);
-			return;
-		}
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-		// set response expire a querter
-		response.setDateHeader("expires",
-				System.currentTimeMillis() + 1000 * 900);
+    @Override
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response) throws ServletException, IOException {
+        String requestedFile = request.getPathInfo();
 
-		// write via response's OutputStream
-		FileInputStream inputStream = null;
+        File file = new File(basePath,
+                URLDecoder.decode(requestedFile, "UTF-8"));
+        if (!file.exists()) {
+            // Throw 404, redirect to error page may is another selection
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
 
-		try {
-			inputStream = new FileInputStream(file);
-			byte[] buffer = new byte[1024];
-			int bytesRead = 0;
+        // set response expire a querter
+        response.setDateHeader("expires",
+                System.currentTimeMillis() + 1000 * 900);
 
-			do {
-				bytesRead = inputStream.read(buffer, 0, buffer.length);
-				response.getOutputStream().write(buffer, 0, bytesRead);
-			} while (bytesRead == buffer.length);
+        // write via response's OutputStream
+        FileInputStream inputStream = null;
 
-			response.getOutputStream().flush();
-		} finally {
-			if (inputStream != null)
-				inputStream.close();
-		}
-	}
+        try {
+            inputStream = new FileInputStream(file);
+            byte[] buffer = new byte[1024];
+            int bytesRead = 0;
 
-	@Override
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
+            do {
+                bytesRead = inputStream.read(buffer, 0, buffer.length);
+                response.getOutputStream().write(buffer, 0, bytesRead);
+            } while (bytesRead == buffer.length);
 
-	/**
-	 * 根据key读取properties文件内容
-	 * 
-	 * @param filePath
-	 * @param key
-	 * @return
-	 */
-	public static String getValueByKey(String filePath, String key) {
-		Properties pps = new Properties();
-		try {
-			InputStream in = new BufferedInputStream(new FileInputStream(
-					filePath));
-			pps.load(in);
-			String value = pps.getProperty(key);
-			System.out.println(key + " = " + value);
-			return value;
+            response.getOutputStream().flush();
+        } finally {
+            if (inputStream != null)
+                inputStream.close();
+        }
+    }
 
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+    @Override
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
+    }
 }

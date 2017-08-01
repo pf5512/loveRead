@@ -3,6 +3,8 @@ package com.unionpay.loveRead.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.unionpay.loveRead.constants.Constants;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,139 +18,11 @@ import java.util.Map;
 
 public abstract class BaseController {
 
-    public static final String USER = "user";
-    
-    /**
-     * 设置会话信息
-     * 
-     * @param request
-     * @param name
-     * @param value
-     */
-    public void setSession(HttpServletRequest request,String name, String value) {
-        HttpSession session = request.getSession();
-        session.setAttribute(name, value);
-    }
-
-
-    /**
-     * 获取session中uid
-     */
-    public final String getSessionUid(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String uid = (String) session.getAttribute(USER);
-        if (uid == null) {
-            uid = "";
-        }
-        return uid;
-    }
-
-    /**
-     * 获取session中uid
-     */
-    public void setSessionUid(HttpServletRequest request, String value) {
-        HttpSession session = request.getSession();
-        session.setAttribute(USER, value);
-    }
-    /**
-     * 清空用户会话信息
-     * 
-     * @param request
-     */
-    public void clearSession(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        //FIXME
-        session.removeAttribute("");
-    }
-
-    /**
-     * 为response提供Json格式的返回数据
-     * 
-     * @param obj
-     *            任何对象
-     * @return void
-     */
-    public void writeResponse(Object obj, HttpServletResponse response) {
-        try {
-            response.setContentType("text/json;charset=utf-8");
-
-            String str = JSON.toJSONString(obj);
-
-            PrintWriter writer;
-            writer = response.getWriter();
-            writer.write(str);
-            writer.flush();
-            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 为response提供String数据的返回，字符集为utf-8
-     * 
-     * @param str
-     *            字符串
-     * @return void
-     */
-    public void writeResponseStr(String str, HttpServletResponse response) {
-
-        writeResponseStr(str, response, "utf-8");
-    }
-
-    /**
-     * 为response提供String数据的返回
-     * 
-     * @param str
-     *            字符串
-     * @param encoding
-     *            字符编码
-     */
-    public void writeResponseStr(String str, HttpServletResponse response,
-            String encoding) {
-        try {
-            response.setContentType("text/html;charset=" + encoding);
-
-            PrintWriter writer;
-            writer = response.getWriter();
-            writer.write(str);
-            writer.flush();
-            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 获取当前登录用户的IP地址
-     * 
-     * @param request
-     * @return
-     * @throws Exception
-     */
-    public String getIpAddr(HttpServletRequest request) throws Exception {
-        String ip = request.getHeader("X-Real-IP");
-        if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
-            return ip;
-        }
-        ip = request.getHeader("X-Forwarded-For");
-        if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
-            // 多次反向代理后会有多个IP值，第一个为真实IP。
-            int index = ip.indexOf(',');
-            if (index != -1) {
-                return ip.substring(0, index);
-            } else {
-                return ip;
-            }
-        } else {
-            return request.getRemoteAddr();
-        }
-    }
-
     /**
      * 获取请求参数中所有的信息
-     * 
+     *
      * @param request
+     *
      * @return
      */
     public static Map<String, String> getAllRequestParam(
@@ -171,9 +45,151 @@ public abstract class BaseController {
     }
 
     /**
+     * 设置会话信息
+     *
+     * @param request
+     * @param name
+     * @param value
+     */
+    public void setSession(HttpServletRequest request,
+                           String name, Object value) {
+        HttpSession session = request.getSession();
+        session.setAttribute(name, value);
+    }
+
+    /**
+     * 获取session中的User
+     *
+     * @param request
+     *
+     * @return
+     */
+    public WxMpUser getUserInfo(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        WxMpUser user = (WxMpUser) session.getAttribute(Constants.SESSION_USER);
+        return user;
+    }
+
+    /**
+     * 获取session中uid
+     */
+    public final String getSessionUid(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String uid = (String) session.getAttribute(Constants.SESSION_OPENID);
+        if (uid == null) {
+            uid = "";
+        }
+        return uid;
+    }
+
+    /**
+     * 设置session中uid
+     */
+    public void setSessionUid(HttpServletRequest request, String value) {
+        HttpSession session = request.getSession();
+        session.setAttribute(Constants.SESSION_OPENID, value);
+    }
+
+    /**
+     * 清空用户会话信息
+     *
+     * @param request
+     */
+    public void clearSession(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        //FIXME
+        session.removeAttribute("");
+    }
+
+    /**
+     * 为response提供Json格式的返回数据
+     *
+     * @param obj 任何对象
+     *
+     * @return void
+     */
+    public void writeResponse(Object obj, HttpServletResponse response) {
+        try {
+            response.setContentType("text/json;charset=utf-8");
+
+            String str = JSON.toJSONString(obj);
+
+            PrintWriter writer;
+            writer = response.getWriter();
+            writer.write(str);
+            writer.flush();
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 为response提供String数据的返回，字符集为utf-8
+     *
+     * @param str 字符串
+     *
+     * @return void
+     */
+    public void writeResponseStr(String str, HttpServletResponse response) {
+
+        writeResponseStr(str, response, "utf-8");
+    }
+
+    /**
+     * 为response提供String数据的返回
+     *
+     * @param str      字符串
+     * @param encoding 字符编码
+     */
+    public void writeResponseStr(String str, HttpServletResponse response,
+                                 String encoding) {
+        try {
+            response.setContentType("text/html;charset=" + encoding);
+
+            PrintWriter writer;
+            writer = response.getWriter();
+            writer.write(str);
+            writer.flush();
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 获取当前登录用户的IP地址
+     *
+     * @param request
+     *
+     * @return
+     *
+     * @throws Exception
+     */
+    public String getIpAddr(HttpServletRequest request) throws Exception {
+        String ip = request.getHeader("X-Real-IP");
+        if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
+            return ip;
+        }
+        ip = request.getHeader("X-Forwarded-For");
+        if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
+            // 多次反向代理后会有多个IP值，第一个为真实IP。
+            int index = ip.indexOf(',');
+            if (index != -1) {
+                return ip.substring(0, index);
+            } else {
+                return ip;
+            }
+        } else {
+            return request.getRemoteAddr();
+        }
+    }
+
+    /**
      * 将页面请求参数转化为Map类型数据，方便调用，不保存:reqInfo
-     * 
+     *
      * @param requestParam
+     *
      * @return
      */
     public JSONObject processRequest(String requestParam) {
@@ -225,5 +241,26 @@ public abstract class BaseController {
         }
 
         return result;
+    }
+
+    /**
+     * 处理微信的信息
+     *
+     * @param request
+     * @param appUrl
+     *
+     * @return
+     */
+    public String processUrl(HttpServletRequest request, String appUrl) {
+        String url = appUrl.replace(request.getContextPath(), "");
+        url += request.getRequestURI();
+
+        //getQueryString()得到的是url后面的参数串，和前者相加就是带参数的请求路径了
+        boolean hasPara = false;
+        String queryString = request.getQueryString();
+        if (queryString != null) {
+            url += "?" + queryString;
+        }
+        return url;
     }
 }

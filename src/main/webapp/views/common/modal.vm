@@ -57,7 +57,7 @@
       <div class="modal-body">
 		 <div class="form-group">
     		<button type="button" class="btn btn-primary btn-block" onclick="javascript:uploadBookByPhoto();">拍照上传</button>
-			<span class="help-block">将手机摄像头对准书本isbn号并点击拍照按钮，或者选择图库中已拍摄好的isbn照片即可上传图书</span>
+			<span class="help-block">扫描书本背面isbn号即可上传图书</span>
     	 </div>
 		 <div class="form-group">
     		<button type="button" class="btn btn-primary btn-block" onclick="javascript:showIsbnUploadModal();">输入ISBN号上传</button>

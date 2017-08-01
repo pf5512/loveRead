@@ -21,10 +21,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/wechat/portal")
 public class WxPortalController {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private WeixinService wxService;
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @ResponseBody
     @GetMapping(produces = "text/plain;charset=utf-8")
@@ -48,9 +47,9 @@ public class WxPortalController {
     @ResponseBody
     @PostMapping(produces = "application/xml; charset=UTF-8")
     public String authPost(@RequestBody String requestBody, @RequestParam("signature") String signature,
-                       @RequestParam(name = "encrypt_type", required = false) String encType,
-                       @RequestParam(name = "msg_signature", required = false) String msgSignature,
-                       @RequestParam("timestamp") String timestamp, @RequestParam("nonce") String nonce) {
+                           @RequestParam(name = "encrypt_type", required = false) String encType,
+                           @RequestParam(name = "msg_signature", required = false) String msgSignature,
+                           @RequestParam("timestamp") String timestamp, @RequestParam("nonce") String nonce) {
         logger.info(
                 "\n接收微信请求：[signature=[{}], encType=[{}], msgSignature=[{}],"
                         + " timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ",

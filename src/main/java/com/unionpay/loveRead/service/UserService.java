@@ -17,7 +17,7 @@ import java.util.List;
 @Transactional
 public class UserService {
 
-	private static Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     UserDao userDao;
@@ -26,56 +26,61 @@ public class UserService {
     DaraWrapperService daraWrapperService;
 
     /**
-	 * 获取用户信息
-	 * 
-	 * @param openId
-	 * @return
-	 */
-	public WxUser getUserByOpenId(String openId) {
-		return userDao.findUser(openId);
-	}
+     * 获取用户信息
+     *
+     * @param openId
+     *
+     * @return
+     */
+    public WxUser getUserByOpenId(String openId) {
+        return userDao.findUser(openId);
+    }
 
-	/**
-	 * 新增用户
-	 *
+    /**
+     * 新增用户
+     *
      * @param wxMpUser
      */
-	public void addUser(WxMpUser wxMpUser) {
-		if (wxMpUser != null) {
+    public void addUser(WxMpUser wxMpUser) {
+        if (wxMpUser != null) {
             WxUser wxUser = daraWrapperService.convertWxUser(wxMpUser);
-			userDao.save(wxUser);
+            userDao.save(wxUser);
             //将用户信息放入缓存
             RedisSingletonService.addSet(Constants.REDIS_USERSET_KEY, wxUser.getOpenId());
-		} else {
-			logger.info("新增用户失败：微信用户信息为空！");
-		}
-	}
+        } else {
+            logger.info("新增用户失败：微信用户信息为空！");
+        }
+    }
 
-	public void updateUser(WxUser user) {
-		userDao.saveOrUpdate(user);
-	}
+    public void updateUser(WxUser user) {
+        userDao.saveOrUpdate(user);
+    }
 
     /**
      * 根据积分获取用户排行
+     *
      * @param num
+     *
      * @return
      */
     public List<WxUser> getUserRankByScore(String num) {
         int numInt = 0;
-        if(num != null){
-            numInt = Integer.valueOf(num); 
+        if (num != null) {
+            numInt = Integer.valueOf(num);
         }
-        List<WxUser> userList  = userDao.findUserListOrderByScore(numInt);
+        List<WxUser> userList = userDao.findUserListOrderByScore(numInt);
         return userList;
     }
-    
+
     /**
      * 分页搜索所有用户
+     *
      * @param start
+     *
      * @return
      */
-    public List<WxUser> findUserListByLimits(Integer start){
-    	return userDao.findUserListByLimits(start);
+    public List<WxUser> findUserListByLimits(Integer start) {
+        return userDao.findUserListByLimits(start);
     }
 
 }
