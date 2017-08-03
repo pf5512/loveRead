@@ -1,7 +1,5 @@
 package com.unionpay.loveRead.service;
 
-import com.unionpay.loveRead.bean.BookDetail;
-import com.unionpay.loveRead.bean.BorrowHistory;
 import com.unionpay.loveRead.bean.UserBorrowInfo;
 import com.unionpay.loveRead.constants.Constants;
 import com.unionpay.loveRead.dao.BorrowCountDao;
@@ -10,7 +8,6 @@ import com.unionpay.loveRead.domain.BookBorrowCount;
 import com.unionpay.loveRead.domain.BookBorrowFlow;
 import com.unionpay.loveRead.domain.BookInfoView;
 import com.unionpay.loveRead.utils.MyDateUtil;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,19 +93,6 @@ public class BorrowService {
     }
 
     /**
-     * 根据uid和借阅状态，获取用户的借阅详情
-     *
-     * @param uid
-     * @param borrowStatus null时表示查询该用户全部的借阅记录
-     *
-     * @return
-     */
-    public List<BookDetail> getBorrowRecord(String uid, String borrowStatus) {
-
-        return null;
-    }
-
-    /**
      * 事务性操作-借书
      *
      * @param bookId
@@ -176,17 +160,36 @@ public class BorrowService {
     }
 
     /**
-     * 根据查询结果获取用户借阅记录
+     * 获取用户借阅记录
      *
      * @param historyList
      *
      * @return
      */
-    public List<UserBorrowInfo> getBorrowHistory(List<BorrowHistory> historyList) {
+    public List<UserBorrowInfo> getBorrowHistory(List<BookBorrowFlow> historyList) {
         List<UserBorrowInfo> userBorrowList = new ArrayList<UserBorrowInfo>();
-        for (BorrowHistory borrowHistory : historyList) {
+        for (BookBorrowFlow borrowHistory : historyList) {
             UserBorrowInfo userBorrowInfo = getUserBorrowInfo(borrowHistory);
             userBorrowList.add(userBorrowInfo);
+        }
+        return userBorrowList;
+    }
+
+    /**
+     * 获取用户在借（可归还）的图书
+     *
+     * @param borrowList
+     *
+     * @return
+     */
+    public List<UserBorrowInfo> getBorrowIngBookList(List<BookBorrowFlow> borrowList) {
+        List<UserBorrowInfo> userBorrowList = new ArrayList<UserBorrowInfo>();
+        for (BookBorrowFlow borrowFlow : borrowList) {
+            //没有归还时间则表示在借
+            if (borrowFlow.getBackTime() == null) {
+                UserBorrowInfo userBorrowInfo = getUserBorrowInfo(borrowFlow);
+                userBorrowList.add(userBorrowInfo);
+            }
         }
         return userBorrowList;
     }
@@ -198,49 +201,23 @@ public class BorrowService {
      *
      * @return
      */
-    private UserBorrowInfo getUserBorrowInfo(BorrowHistory borrowHistory) {
+    private UserBorrowInfo getUserBorrowInfo(BookBorrowFlow borrowHistory) {
         UserBorrowInfo userBorrowInfo = new UserBorrowInfo();
-        BookInfoView bookInfo = bookService.getBookDetailByBookId(borrowHistory.getBookId());
-        userBorrowInfo.setBookId(borrowHistory.getBookId());
+        BookInfoView bookInfo = bookService.getBookDetailByBookId(borrowHistory.getBookId() + "");
+        userBorrowInfo.setBookId(borrowHistory.getBookId() + "");
         userBorrowInfo.setOwnerId(bookInfo.getOwnerId());
         userBorrowInfo.setBookName(bookInfo.getBookName());
         //没有归还时间则表示在借
-        if (StringUtils.isBlank(borrowHistory.getReturnTime())) {
+        if (borrowHistory.getBackTime() == null) {
             userBorrowInfo.setBookStatus(Constants.BORROW_ING);
         } else {
             userBorrowInfo.setBookStatus(Constants.BORROW_BACK);
+            userBorrowInfo.setBackTime(borrowHistory.getBackTime());
         }
         userBorrowInfo.setCover(bookInfo.getCover());
         userBorrowInfo.setOwnerName(bookInfo.getOwnerName());
-        //计算到期时间
-        String outTimeStr = borrowHistory.getReadTime();
-        Timestamp outTime = MyDateUtil.str2Timestamp(outTimeStr);
-        Timestamp endTime = MyDateUtil.getEndTime(outTime, Constants.LASTDAY);
-        if (!StringUtils.isBlank(borrowHistory.getReturnTime())) {
-            Timestamp backTime = MyDateUtil.str2Timestamp(borrowHistory.getReturnTime());
-            userBorrowInfo.setBackTime(backTime);
-        }
-        userBorrowInfo.setEndTime(endTime);
-        userBorrowInfo.setOutTime(outTime);
+        userBorrowInfo.setEndTime(borrowHistory.getEndTime());
+        userBorrowInfo.setOutTime(borrowHistory.getOutTime());
         return userBorrowInfo;
-    }
-
-    /**
-     * 获取用户在借（可归还）的图书
-     *
-     * @param historyList
-     *
-     * @return
-     */
-    public List<UserBorrowInfo> getBorrowIngBookList(List<BorrowHistory> historyList) {
-        List<UserBorrowInfo> userBorrowList = new ArrayList<UserBorrowInfo>();
-        for (BorrowHistory borrowHistory : historyList) {
-            //没有归还时间则表示在借
-            if (StringUtils.isBlank(borrowHistory.getReturnTime())) {
-                UserBorrowInfo userBorrowInfo = getUserBorrowInfo(borrowHistory);
-                userBorrowList.add(userBorrowInfo);
-            }
-        }
-        return userBorrowList;
     }
 }

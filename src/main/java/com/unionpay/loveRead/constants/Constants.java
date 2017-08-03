@@ -19,6 +19,13 @@ public class Constants {
     public static final int PAGESIZE = 20;
 
     /**
+     * 借阅状态 00-在借 01-正常归还 02-图书超期 根据归还时间判断状态
+     */
+    public static final String BORROW_ING = "00";
+    public static final String BORROW_BACK = "01";
+    public static final String BORROW_OVERDUE = "02";
+
+    /**
      * 订单分页操作，page当前页数，pageSize每页限时条数
      */
     public static final int PAGE = 1;
@@ -28,12 +35,6 @@ public class Constants {
      * 图书摘要的最大字数
      */
     public static final int SUMMARY_MAX_LENGTH = 200;
-
-    /**
-     * 101缺少必要参数,102 数据更新失败
-     */
-    public static final int RESPONSE_CODE_101 = 101;
-    public static final int RESPONSE_CODE_102 = 102;
 
     /**
      * 图书状态 00-可借 01-借出 02-下架
@@ -59,13 +60,6 @@ public class Constants {
      */
     public static final String LIKE_STATUS_LIKE = "00";
     public static final String LIKE_STATUS_UNLIKE = "01";
-
-    /**
-     * 借阅状态 00-在借 01-正常归还 02-图书超期 根据归还时间判断状态
-     */
-    public static final String BORROW_ING = "00";
-    public static final String BORROW_BACK = "01";
-    public static final String BORROW_OVERDUE = "02";
 
     /**
      * 消息发送状态 00-推送中,01-已送达,02-已阅读

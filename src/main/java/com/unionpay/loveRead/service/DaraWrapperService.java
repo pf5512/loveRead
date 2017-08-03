@@ -34,7 +34,10 @@ public class DaraWrapperService {
         user.setCountry(wxMpUser.getCountry());
         user.setProvince(wxMpUser.getProvince());
         user.setLanguage(wxMpUser.getLanguage());
-        user.setHeadImgUrl(wxMpUser.getHeadImgUrl());
+        if (!StringUtils.isEmpty(wxMpUser.getHeadImgUrl())
+                && wxMpUser.getHeadImgUrl().contains("http")) {
+            user.setHeadImgUrl(wxMpUser.getHeadImgUrl());
+        }
         user.setUnionId(wxMpUser.getUnionId());
         if (!StringUtils.isEmpty(wxMpUser.getRemark())) {
             user.setRemark(wxMpUser.getRemark());

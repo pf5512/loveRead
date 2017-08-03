@@ -26,10 +26,13 @@ public class HomeController extends BaseController {
     private static Logger logger = LoggerFactory.getLogger(HomeController.class);
     @Autowired
     AppConfig appConfig;
+
     @Autowired
     private WxMpService wxMpService;
+
     @Autowired
     private BookService bookService;
+
     @Autowired
     private UserService userService;
 
@@ -43,31 +46,19 @@ public class HomeController extends BaseController {
      */
     @RequestMapping(value = {"", "index"})
     public String score(Model model, HttpServletRequest request) {
-        logger.info("hello index");
-
+        logger.info("进入首页");
         WxMpUser user = getUserInfo(request);
         if (user != null) {
-            model.addAttribute("headerIcon", user.getHeadImgUrl());
+            if (user.getHeadImgUrl().contains("http")) {
+                model.addAttribute("headerIcon", user.getHeadImgUrl());
+            }
         }
         //获取js api
         try {
-
             String url = processUrl(request, appConfig.getAppUrl());
             logger.info("url:" + url);
-
             WxJsapiSignature wxConfig = wxMpService.createJsapiSignature(url);
             model.addAttribute("wxConfig", wxConfig);
-
-
-            String jsTicket = wxMpService.getJsapiTicket();
-            logger.info("jsTicket:" + jsTicket);
-            String noncestr = wxConfig.getNonceStr();
-            logger.info("noncestr:" + noncestr);
-            long timestamp = wxConfig.getTimestamp();
-            logger.info("timestamp:" + timestamp);
-
-            String signature = wxConfig.getSignature();
-            logger.info("signature:" + signature);
         } catch (WxErrorException e) {
             e.printStackTrace();
         }

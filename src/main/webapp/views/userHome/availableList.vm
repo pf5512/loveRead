@@ -1,43 +1,47 @@
 <style>
-body{
-	background:#e9e9e9;
-}
+    body {
+        background: #e9e9e9;
+    }
 </style>
 <div class="title-bar">
-	<img src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:history.back();"></img><p>可借列表</p>
+    <img src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:history.back();"></img>
+
+    <p>可借列表</p>
 </div>
 <div class="available-list">
-	#if($!{borrowAbleList.size()}>0)
-	<ul>
-		#foreach($value in $!borrowAbleList)
-		<li onclick="javascript:$('#qrBookForm$!velocityCount').submit()">
-			<form id="qrBookForm$!velocityCount" action="${rc.contextPath}/qrBook/borrow" method="POST">
-				<input type="hidden" name="bookId" value="$value.id">
-				<input type="hidden" name="ownerId" value="$value.ownerId">
-				<input type="hidden" name="bookName" value="$value.bookName">
-				<input type="hidden" name="lastDay" value="$value.lastDay">
-				<input type="hidden" name="bookCover" value="$value.cover">
-				<input type="hidden" name="borrowType" value="$value.borrowType">
-			</form>
-			<div class="available-list-item">
-				<img class="book-pic" src="$value.cover"></img>
-				<div class="availabel-item-info">
-					<p class="book-name">$value.bookName</p>
-                    #if($value.borrowType == "02")
-					<p class="book-info">可借数量：$value.lastDay</p>
-                    #else
-					<p class="book-info">可借时间：$value.lastDay</p>
-                    #end
-				</div>
-				<img class="arrow-right" src="${rc.contextPath}/resources/images/arrow-right.png"></img>
-			</div>
-		</li>
-		#end
-	</ul>
-	#else
-		<div class="no-item">
-			<img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
-			<p>这位大侠，您还没有可供借阅的图书哦！</p>
-		</div>
-	#end
+    #if($!{borrowAbleList.size()}>0)
+        <ul>
+            #foreach($value in $!borrowAbleList)
+                <li onclick="javascript:$('#qrBookForm$!velocityCount').submit()">
+                    <form id="qrBookForm$!velocityCount" action="${rc.contextPath}/qrBook/borrow" method="POST">
+                        <input type="hidden" name="bookId" value="$value.id">
+                        <input type="hidden" name="ownerId" value="$value.ownerId">
+                        <input type="hidden" name="bookName" value="$value.bookName">
+                        <input type="hidden" name="lastDay" value="$value.lastDay">
+                        <input type="hidden" name="bookCover" value="$value.cover">
+                        <input type="hidden" name="borrowType" value="$value.borrowType">
+                    </form>
+                    <div class="available-list-item">
+                        <img class="book-pic" src="$value.cover"></img>
+
+                        <div class="availabel-item-info">
+                            <p class="book-name">$value.bookName</p>
+                            #if($value.borrowType == "02")
+                                <p class="book-info">可借数量：$value.lastDay</p>
+                            #else
+                                <p class="book-info">可借时间：$value.lastDay</p>
+                            #end
+                        </div>
+                        <img class="arrow-right" src="${rc.contextPath}/resources/images/arrow-right.png"></img>
+                    </div>
+                </li>
+            #end
+        </ul>
+    #else
+        <div class="no-item">
+            <img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
+
+            <p>这位大侠，您还没有可供借阅的图书哦！</p>
+        </div>
+    #end
 </div>

@@ -86,7 +86,7 @@
             <http-method>TRACE</http-method>
             <http-method>OPTIONS</http-method>
         </web-resource-collection>
-        <auth-constraint />
+        <auth-constraint/>
     </security-constraint>
     <security-constraint>
         <web-resource-collection>
@@ -94,7 +94,7 @@
             <description>Forbidden all VM access</description>
             <url-pattern>*.vm</url-pattern>
         </web-resource-collection>
-        <auth-constraint />
+        <auth-constraint/>
     </security-constraint>
 
     <session-config>

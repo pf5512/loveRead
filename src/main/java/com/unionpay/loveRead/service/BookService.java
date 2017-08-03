@@ -227,7 +227,7 @@ public class BookService {
         Timestamp createTime = new Timestamp(System.currentTimeMillis());
         book.setCreateTime(createTime);
         //图书名称
-        String bookName =  reqParam.get("title");
+        String bookName = reqParam.get("title");
         book.setBookName(bookName);
         //isbn号
         String isbn = reqParam.get("isbn13");

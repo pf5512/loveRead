@@ -1,27 +1,25 @@
 package com.unionpay.loveRead.controller;
 
 import com.unionpay.loveRead.bean.BookDetail;
-import com.unionpay.loveRead.bean.BorrowHistory;
 import com.unionpay.loveRead.bean.UserBorrowInfo;
 import com.unionpay.loveRead.constants.AppConfig;
 import com.unionpay.loveRead.constants.Constants;
 import com.unionpay.loveRead.domain.Book;
+import com.unionpay.loveRead.domain.BookBorrowFlow;
 import com.unionpay.loveRead.domain.BookInfoView;
 import com.unionpay.loveRead.domain.ScoreFlow;
-import com.unionpay.loveRead.service.BookService;
-import com.unionpay.loveRead.service.BorrowService;
-import com.unionpay.loveRead.service.ScoreFlowService;
+import com.unionpay.loveRead.service.*;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,6 +37,12 @@ public class UserHomeController extends BaseController {
 
     @Autowired
     BookService bookService;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    BorrowFlowService borrowFlowService;
 
     @Autowired
     BorrowService borrowService;
@@ -100,7 +104,8 @@ public class UserHomeController extends BaseController {
         logger.info("----------我的待还图书列表----------");
         //获取用户id
         String uid = getSessionUid(request);
-        List<BorrowHistory> historyList = new ArrayList<>();
+        List<BookBorrowFlow> historyList = borrowFlowService.getUserBorrowList(uid);
+        logger.info("待还图书本数：" + historyList.size());
         List<UserBorrowInfo> returnList = borrowService.getBorrowIngBookList(historyList);
         model.addAttribute("returnList", returnList);
         logger.info("----------我的待还图书本数:" + returnList.size() + "----------");
@@ -120,7 +125,7 @@ public class UserHomeController extends BaseController {
         logger.info("----------查看我的借阅记录----------");
         //获取用户id
         String uid = getSessionUid(request);
-        List<BorrowHistory> historyList = new ArrayList<>();
+        List<BookBorrowFlow> historyList = borrowFlowService.getUserBorrowList(uid);
         List<UserBorrowInfo> borrowList = borrowService.getBorrowHistory(historyList);
         model.addAttribute("borrowHistoryList", borrowList);
         logger.info("----------我的借阅记录数:" + borrowList.size() + "----------");
@@ -156,16 +161,15 @@ public class UserHomeController extends BaseController {
      * 某用户的书库
      *
      * @param model
-     * @param request
      *
      * @return
      */
-    @RequestMapping(value = "userBookList")
-    public String search(Model model, HttpServletRequest request) {
-        String uid = request.getParameter("uid");
+    @RequestMapping(value = "userBookList/{uid}")
+    public String search(Model model, @PathVariable("uid") String uid) {
+        //根据uid
         List<BookInfoView> bookList = bookService.getBooInfoListByUid(uid);
         model.addAttribute("bookDetailList", bookList);
-        model.addAttribute("userName", "test");
+        model.addAttribute("userName", userService.getUserByOpenId(uid).getNickName());
         return "userHome/userBookList";
     }
 

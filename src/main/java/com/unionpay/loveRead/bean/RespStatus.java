@@ -35,6 +35,7 @@ public enum RespStatus {
 
     private String code;
     private String message;
+
     private RespStatus(final String code, final String message) {
         this.code = code;
         this.message = message;

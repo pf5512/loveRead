@@ -3,7 +3,11 @@
 <div class="swiper-container home-drawer-swiper">
     <div class="swiper-wrapper">
         <div class="swiper-slide menu-drawer">
-            <img id="headerIcon" src="$!headerIcon"></img>
+            #if( "$!headerIcon" == "")
+                <img id="headerIcon" src="${rc.contextPath}/resources/images/hackthon/user_header_icon.png"></img>
+            #else
+                <img id="headerIcon" src="$!headerIcon"></img>
+            #end
             <ul>
                 <li onclick="javascript:window.location.href='${rc.contextPath}/userHome/myBookList'"><p>我的图书</p></li>
                 <li onclick="javascript:window.location.href='${rc.contextPath}/userHome/borrowHistory'"><p>借阅记录</p>
@@ -123,25 +127,31 @@
             });
 
             wx.ready(function () {
+                //图书上传
                 $("#uploadBook").click(function () {
-                    //扫一扫
-                    wx.scanQRCode({
-                        // 默认为0，扫描结果由微信处理，1则直接返回扫描结果
-                        needResult: 1,
-                        scanType: ["qrCode", "barCode"],
-                        success: function (res) {
-                            var resultStr = res.resultStr;
-                            var isbn = resultStr;
-                            //图书条形码，取","后面的
-                            if (resultStr.indexOf(",") >= 0) {
-                                var tempArray = resultStr.split(',');
-                                isbn = tempArray[1];
-                            }
-                            //赋值
-                            $("#isbnInput").val(isbn);
-                            uploadBookInfoFromBouban();
-                        }
-                    });
+                    zzrw.confirm("扫描图书背面isbn号即可完成图书上传",
+                            function () {
+                                //扫一扫
+                                wx.scanQRCode({
+                                    // 默认为0，扫描结果由微信处理，1则直接返回扫描结果
+                                    needResult: 1,
+                                    scanType: ["qrCode", "barCode"],
+                                    success: function (res) {
+                                        var resultStr = res.resultStr;
+                                        var isbn = resultStr;
+                                        //图书条形码，取","后面的
+                                        if (resultStr.indexOf(",") >= 0) {
+                                            var tempArray = resultStr.split(',');
+                                            isbn = tempArray[1];
+                                        }
+                                        //赋值
+                                        $("#isbnInput").val(isbn);
+                                        uploadBookInfoFromBouban();
+                                    }
+                                });
+                            }, function () {
+                                return false;
+                            });
                 });
             });
         }
@@ -223,7 +233,7 @@
     })
 
     function jumpDetail(id) {
-        window.location.href = "${rc.contextPath}/book/bookDetail?bookId=" + id;
+        window.location.href = "${rc.contextPath}/book/bookDetail/" + id;
     }
 
     function uploadBookInfoFromBouban() {

@@ -1,5 +1,6 @@
 package com.unionpay.loveRead.dao;
 
+import com.unionpay.loveRead.constants.Constants;
 import com.unionpay.loveRead.domain.BookBorrowFlow;
 import com.unionpay.loveRead.plugins.HibernateBaseDao;
 import org.springframework.stereotype.Repository;
@@ -28,4 +29,18 @@ public class BorrowFlowDao extends HibernateBaseDao<BookBorrowFlow, Serializable
         }
         return null;
     }
+
+    /**
+     * 获取用户在借列表
+     *
+     * @param readerId
+     *
+     * @return
+     */
+    public List<BookBorrowFlow> findUserBorrowList(String readerId) {
+        String hql = "from BookBorrowFlow where readerId = ? and status = ?";
+        List<BookBorrowFlow> recordList = find(hql, readerId, Constants.BORROW_ING);
+        return recordList;
+    }
+
 }

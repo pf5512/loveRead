@@ -1,43 +1,46 @@
-<img class="qr-code-title-img" src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:history.back();"></img><p class="qr-code-title-p">码上借</p>
+<img class="qr-code-title-img" src="${rc.contextPath}/resources/images/arrow-left.png"
+     onclick="javascript:history.back();"></img><p class="qr-code-title-p">码上借</p>
 <div class="qr-code-container shadow-block">
-	<img src="${rc.contextPath}/qrBook/generate?text=$!borrowUrl"></img>
+    <img src="${rc.contextPath}/qrBook/generate?type=qr&text=$!borrowUrl"></img>
 </div>
 <div class="qr-book-item shadow-block">
-	<img src="$!bookCover"></img>
-	<div class="qr-book-info">
-		<p style="color:#000;">书名：$!bookName</p>
-		<p>所有者：$!userName - $!team</p>
+    <img src="$!bookCover"></img>
+
+    <div class="qr-book-info">
+        <p style="color:#000;">书名：$!bookName</p>
+
+        <p>所有者：$!userName</p>
         #if($!borrowType == "02")
             <p>可赠送数量：$!lastDay</p>
         #else
-    		<p>可借天数：$!lastDay</p>
+            <p>可借天数：$!lastDay</p>
         #end
-	</div>
-	<input type="hidden" value="$!bookId" id="bookIdInput">
+    </div>
+    <input type="hidden" value="$!bookId" id="bookIdInput">
 </div>
 <script>
-$(document).ready(function(){
-	$("body").css('height',$(window).height());
-	setInterval(queryBookState,2000);
-});
+    $(document).ready(function () {
+        $("body").css('height', $(window).height());
+        setInterval(queryBookState, 3000);
+    });
 
-function queryBookState(){
-	var bid = $("#bookIdInput").val();
-	$.ajax({
-		url:"${rc.contextPath}/qrBook/getBookState",
-		data:{
-			bookId:bid,
-			type:1
-		},
-		dataType:'json',
-		type:'post',
-		success:function(data){
-			if(data.code == '0') {
-                window.location.href="${rc.contextPath}/";
-			}
-		},
-		error:function(){
-		}
-	});
-}
+    function queryBookState() {
+        var bid = $("#bookIdInput").val();
+        $.ajax({
+            url: "${rc.contextPath}/qrBook/getBookState",
+            data: {
+                bookId: bid,
+                type: 1
+            },
+            dataType: 'json',
+            type: 'post',
+            success: function (data) {
+                if (data.code == '0') {
+                    window.location.href = "${rc.contextPath}/";
+                }
+            },
+            error: function () {
+            }
+        });
+    }
 </script>

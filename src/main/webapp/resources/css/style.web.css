@@ -1,278 +1,1575 @@
-body{font-family:PingFang SC,STHeiti Light,Microsoft YaHei;padding:0;font-size: 16px;}
-ul{list-style:none;margin:0;padding:0}
-ul li{list-style:none;margin:0;padding:0}
-a,a:hover,a:focus{text-decoration:none;}
+body {
+    font-family: PingFang SC, STHeiti Light, Microsoft YaHei;
+    padding: 0;
+    font-size: 16px;
+}
 
-.qr-code-body{position:relative;background-image:url('../images/hackthon/qr_code_bg.png');background-size:100%;}
-.qr-code-title-img{position:absolute;top:14px;left:10px;}
-.qr-code-title-p{height:50px;line-height:50px;font-size:20px;margin:0;color:#fff;text-align:center;}
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0
+}
 
-.container{z-index:1;padding:0;position:relative;height:100%;}
-.shadow-block{-webkit-box-shadow:0 1px 10px rgba(0, 0, 0, .5);  -moz-box-shadow:0 1px 10px rgba(0, 0, 0, .5);  box-shadow:0 1px 10px rgba(0, 0, 0, .5);}
-.top-menu{text-align:center;height:210px;background-image:url("../images/hackthon/index_header_bg.png");background-size:100% 100%;background-repeat:no-repeat;}
-.top-menu .home-logo{height:40px;margin-top:-5px;}
-.search-bar{height:50px;position:relative}
-.search-bar .menu-icon{position:absolute;height:20px;width:25px;top:15px;left:15px;}
-.search-bar p{position:relative;top:10px;margin:0 15px 0 55px;width:auto;background:#30477b;border-radius:6px;height:30px;}
-.search-bar .search-icon{height:20px;width:18px;position:absolute;top:5px;left:5px;}
-.search-bar input[type=text]{outline:none;height:30px;border:none;padding-left:30px;background: #586780;line-height: 30px;width: 100%;border-radius: 6px;color: #fff;}
-.search-bar ::-webkit-input-placeholder{color:#fff !important; } 
+ul li {
+    list-style: none;
+    margin: 0;
+    padding: 0
+}
 
-.main-oper-bar{margin-top:20px;}
-.main-oper-bar ul li{width:33.3%;float:left;}
-.main-list-item{position:relative;text-align:center;height:100px;width:100px;background-image:url("../images/hackthon/index_header_icon_bg.png");margin:0 auto;background-size:100% 100%;}
-.main-list-item img{width:50px;height:50px;position:absolute;top:20px;left:50%;margin-left:-25px;}
-.main-list-item p{color:#fff;padding-top:70px;margin-bottom:0;font-size:14px;}
-.main-list-item .score{position:absolute;width:100%;top:10px;left:0;font-size:50px;color:#fff;}
+a, a:hover, a:focus {
+    text-decoration: none;
+}
 
-.second-oper-bar{height:120px;width:100%;text-align:center;padding-left:20px;padding-right:20px;padding-top:25px;border-bottom:2px solid #d3d3d3;}
-.second-oper-bar ul{text-align:center;}
-.second-oper-bar ul li{width:25%;float:left;}
-.second-list-item{text-align:center;}
-.second-list-item img{width:40px;height:40px;}
-.second-list-item p{color:#565656;margin-bottom:0;}
+.qr-code-body {
+    position: relative;
+    background-image: url('../images/hackthon/qr_code_bg.png');
+    background-size: 100%;
+}
 
-.home-top-rank{margin-top:10px;text-align:center;position:relative;color:#1c4182;}
-.home-top-rank a{position:absolute;right:2px;font-size:14px;}
-.home-rank-swiper{margin-top:10px;}
-.top-rank-item{text-align:center;}
-.top-rank-item img{height:100px;width:80px;}
-.top-rank-item p{font-size:14px;margin:0;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}
-.top-rank-logo{height:40px;}
-.home-top-title{font-size:16px;font-weight:700;margin-bottom:0;}
+.qr-code-title-img {
+    position: absolute;
+    top: 14px;
+    left: 10px;
+}
 
-.guess-you-like{width:100%;text-align:center;margin-top:20px;position:relative;color:#1c4182;}
-.guess-you-like-logo{height:40px;}
-.guess-you-like a{position:absolute;right:2px;font-size:14px;}
-.guess-you-like ul{margin-top:10px;}
-.guess-you-like ul li{text-align:left;margin:10px;position:relative;border-bottom:1px solid #dbdbdb;}
-.guess-you-like ul li .book-cover{width:40px;height:50px;top:10px;position:absolute;left:0;}
-.guess-you-like ul li .book-name{padding-top:10px;height:40px;line-height:30px;margin-left:50px;margin-bottom:0;font-size:16px;font-weight:700;}
-.guess-you-like ul li .book-owner{font-size:12px;margin-left:50px;margin-bottom:0;color:#888;}
-.guess-you-like ul li .book-desc{font-size:14px;margin-top:10px;color:#666;margin-bottom:0;height:60px;}
-.guess-you-like .book-other-icon{height:20px;text-align:right;margin-right:10px;margin-bottom:5px;}
-.guess-you-like .book-other-icon span{color:#888;font-size:14px;height:20px;line-height:20px;position:relative;padding-left:20px;display:inline-block;}
-.guess-you-like .book-other-icon span img{width:16px;height:16px;position:absolute;top:2px;left:2px;}
-.guess-you-like .book-item-a{right:-8px;top:10px;}
+.qr-code-title-p {
+    height: 50px;
+    line-height: 50px;
+    font-size: 20px;
+    margin: 0;
+    color: #fff;
+    text-align: center;
+}
+
+.container {
+    z-index: 1;
+    padding: 0;
+    position: relative;
+    height: 100%;
+}
+
+.shadow-block {
+    -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, .5);
+    -moz-box-shadow: 0 1px 10px rgba(0, 0, 0, .5);
+    box-shadow: 0 1px 10px rgba(0, 0, 0, .5);
+}
+
+.top-menu {
+    text-align: center;
+    height: 210px;
+    background-image: url("../images/hackthon/index_header_bg.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.top-menu .home-logo {
+    height: 40px;
+    margin-top: -5px;
+}
+
+.search-bar {
+    height: 50px;
+    position: relative
+}
+
+.search-bar .menu-icon {
+    position: absolute;
+    height: 20px;
+    width: 25px;
+    top: 15px;
+    left: 15px;
+}
+
+.search-bar p {
+    position: relative;
+    top: 10px;
+    margin: 0 15px 0 55px;
+    width: auto;
+    background: #30477b;
+    border-radius: 6px;
+    height: 30px;
+}
+
+.search-bar .search-icon {
+    height: 20px;
+    width: 18px;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+.search-bar input[type=text] {
+    outline: none;
+    height: 30px;
+    border: none;
+    padding-left: 30px;
+    background: #586780;
+    line-height: 30px;
+    width: 100%;
+    border-radius: 6px;
+    color: #fff;
+}
+
+.search-bar ::-webkit-input-placeholder {
+    color: #fff !important;
+}
+
+.main-oper-bar {
+    margin-top: 20px;
+}
+
+.main-oper-bar ul li {
+    width: 33.3%;
+    float: left;
+}
+
+.main-list-item {
+    position: relative;
+    text-align: center;
+    height: 100px;
+    width: 100px;
+    background-image: url("../images/hackthon/index_header_icon_bg.png");
+    margin: 0 auto;
+    background-size: 100% 100%;
+}
+
+.main-list-item img {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    margin-left: -25px;
+}
+
+.main-list-item p {
+    color: #fff;
+    padding-top: 70px;
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+.main-list-item .score {
+    position: absolute;
+    width: 100%;
+    top: 10px;
+    left: 0;
+    font-size: 50px;
+    color: #fff;
+}
+
+.second-oper-bar {
+    height: 120px;
+    width: 100%;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 25px;
+    border-bottom: 2px solid #d3d3d3;
+}
+
+.second-oper-bar ul {
+    text-align: center;
+}
+
+.second-oper-bar ul li {
+    width: 25%;
+    float: left;
+}
+
+.second-list-item {
+    text-align: center;
+}
+
+.second-list-item img {
+    width: 40px;
+    height: 40px;
+}
+
+.second-list-item p {
+    color: #565656;
+    margin-bottom: 0;
+}
+
+.home-top-rank {
+    margin-top: 10px;
+    text-align: center;
+    position: relative;
+    color: #1c4182;
+}
+
+.home-top-rank a {
+    position: absolute;
+    right: 2px;
+    font-size: 14px;
+}
+
+.home-rank-swiper {
+    margin-top: 10px;
+}
+
+.top-rank-item {
+    text-align: center;
+}
+
+.top-rank-item img {
+    height: 100px;
+    width: 80px;
+}
+
+.top-rank-item p {
+    font-size: 14px;
+    margin: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.top-rank-logo {
+    height: 40px;
+}
+
+.home-top-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.guess-you-like {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    position: relative;
+    color: #1c4182;
+}
+
+.guess-you-like-logo {
+    height: 40px;
+}
+
+.guess-you-like a {
+    position: absolute;
+    right: 2px;
+    font-size: 14px;
+}
+
+.guess-you-like ul {
+    margin-top: 10px;
+}
+
+.guess-you-like ul li {
+    text-align: left;
+    margin: 10px;
+    position: relative;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.guess-you-like ul li .book-cover {
+    width: 40px;
+    height: 50px;
+    top: 10px;
+    position: absolute;
+    left: 0;
+}
+
+.guess-you-like ul li .book-name {
+    padding-top: 10px;
+    height: 40px;
+    line-height: 30px;
+    margin-left: 50px;
+    margin-bottom: 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.guess-you-like ul li .book-owner {
+    font-size: 12px;
+    margin-left: 50px;
+    margin-bottom: 0;
+    color: #888;
+}
+
+.guess-you-like ul li .book-desc {
+    font-size: 14px;
+    margin-top: 10px;
+    color: #666;
+    margin-bottom: 0;
+    height: 60px;
+}
+
+.guess-you-like .book-other-icon {
+    height: 20px;
+    text-align: right;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.guess-you-like .book-other-icon span {
+    color: #888;
+    font-size: 14px;
+    height: 20px;
+    line-height: 20px;
+    position: relative;
+    padding-left: 20px;
+    display: inline-block;
+}
+
+.guess-you-like .book-other-icon span img {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+}
+
+.guess-you-like .book-item-a {
+    right: -8px;
+    top: 10px;
+}
 
 /*.menu-drawer{-webkit-transition: all .5s ease-in-out;-moz-transition: all .5s ease-in-out;-ms-transition: all .5s ease-in-out;-o-transition: all .5s ease-in-out;transition: all .5s ease-in-out;z-index:4;color:#fff;text-align:center;width:200px;background:#444444;height:100%;position:absolute;top:0;left:-200px;}
 */
-.menu-drawer{z-index:9999;color:#fff;text-align:center;width:50%;background:#444444;}
-.menu-drawer img{height:70px;width:70px;margin-top:100px;border-radius:70px;}
-.menu-drawer ul{margin-top:30px;}
-.menu-drawer ul li{border-bottom:1px solid #fff;margin-left:30px;margin-right:30px;}
-.menu-drawer p{height:50px;margin:0;font-size:16px;line-height:50px;}
-
-.menu-drawer-shadow{width:100%;background:#000;height:100%;display:none;position:absolute;top:0;left:0;opacity:0.5;z-index:9000;}
-
-.qr-code-title{color:#fff;font-size:20px;margin-top:60px;margin-bottom:40px;text-align:center;}
-.qr-code-container{margin:0 auto;margin-top:50px;width:280px;height:280px;background:#fff;border-radius:6px;overflow:hidden;}
-.qr-code-container img{width:300px;height:300px;margin-top:-10px;margin-left:-10px;border-radius:6px;}
-
-.qr-book-item{position:relative;margin-left:10px;margin-right:10px;margin-top:50px;height:120px;background:#fff;border-radius:6px;}
-.qr-book-item img{height:100px;width:80px;position:absolute;top:10px;left:10px;}
-.qr-book-info{position:relative;top:17px;left:0px;}
-.qr-book-info p{margin:0 0 2px 0;color:#5f5f5f;font-size:14px;padding-left:100px;}
-
-.title-bar{height:50px;background-image:url("../images/hackthon/index_header_bg.png");background-size:100%;color:#fff;position:fixed;text-align:center;width:100%;z-index:9000;}
-.title-bar img{position:absolute;top:14px;left:10px;}
-.title-bar p{height:50px;line-height:50px;font-size:18px;margin:0;}
-.title-bar a{display:block;height:50px;width:50px;position:absolute;top:0;right:0;line-height:50px;color:#fff;}
-.title-bar a img{width:16px;height:16px;position:static;}
-
-.book-detail-img{position:relative;background:#fff;margin-top:50px;}
-.book-detail-img .book-pic{display:block;margin:0 auto;padding-top:2px;max-width:100%;}
-.book-detail-img .book-tag{position:absolute;top:10px;right:20px;height:70px;}
-.book-detail-img .book-status-pic{position:absolute;bottom:10px;right:10px;width:50px;z-index:8000;}
-.book-detail-info{padding-left:10px;padding-right:10px;background:#fff;}
-.book-detail-info .book-title{word-wrap:break-word;margin-bottom: 0;font-size: 18px;font-weight: bold;padding-left: 10px;padding-top: 20px;}
-.book-detail-info .book-owner{font-size:12px;color:#8d8d8d;padding-left:10px;margin:0;height:32px;line-height:32px;}
-.book-detail-info .book-owner span{color:#888;padding-right:10px;float:right;height:32px;line-height:32px;}
-.book-detail-info .book-desc{min-height:50px;font-size:14px;margin:20px 0 0 0;padding-left:10px;padding-right:10px;text-align:justify;}
-.book-detail-info ul{margin-top:20px;}
-.book-detail-info ul li{padding-left:10px;}
-.book-detail-info ul li p{margin:0;height:30px;line-height:30px;}
-
-.book-other-info{margin:10px;border-top:1px solid #dbdbdb;font-size:14px;}
-.book-other-info p{margin:10px;color:#8d8d8d;}
-.book-other-info p span{float:right;color:#000;}
-
-.book-comment-info{margin-top:20px;font-size:14px;background:#eee;color:#8d8d8d;padding:10px;}
-.book-comment-info .title{margin:10px;position:relative;text-align:center;}
-.book-comment-info .title:before{content:'';border-top: 1px solid #dbdbdb;display: inline-block;width: 125px;margin-bottom:5px;margin-right:5px;}
-.book-comment-info .title:after{content:'';border-top: 1px solid #dbdbdb;display: inline-block;width: 125px;margin-bottom:5px;margin-left:5px;}
-@media screen and (max-device-width: 320px) {
-	.book-comment-info .title:before{content:'';border-top: 1px solid #dbdbdb;display: inline-block;width: 100px;margin-bottom:5px;margin-right:5px;}
-	.book-comment-info .title:after{content:'';border-top: 1px solid #dbdbdb;display: inline-block;width: 100px;margin-bottom:5px;margin-left:5px;}
+.menu-drawer {
+    z-index: 9999;
+    color: #fff;
+    text-align: center;
+    width: 50%;
+    background: #444444;
 }
-.book-comment-info li{margin-bottom:10px;}
-.book-comment-info div{position:relative;}
-.book-comment-info img{position:absolute;top:10px;left:10px;height:40px;width:40px;}
-.book-comment-info .review-user{margin:0;padding-top:10px;margin-left:60px;font-size:16px;color:#333;}
-.book-comment-info .review-content{margin:0;margin-left:60px;color:#666;word-wrap:break-word;}
-.book-comment-info .review-time{margin:0;font-size:12px;text-align:right;}
 
-.book-upload-info{background:#fff;margin:20px 10px 10px 10px;font-size:14px;}
-.book-upload-info .form-group{margin-bottom:10px;}
-.book-upload-info table{margin-top:0;}
-.book-upload-info tr{height:35px;line-height:35px;}
-.book-upload-info tr .t-label{width:30%;text-align:right;}
-.book-upload-info tr .t-input{width:70%;padding-left:10px;}
-.submit-btn{border-radius:6px;display:block;border:none;background-image:url("../images/hackthon/index_header_bg.png");background-size:100%;width:80%;margin:0 auto;height:40px;color:#fff;}
+.menu-drawer img {
+    height: 70px;
+    width: 70px;
+    margin-top: 100px;
+    border-radius: 70px;
+}
 
-.rank-list{overflow:auto;}
-.rank-list ul li{height:120px;background:#fff;border-bottom:1px solid #dbdbdb;}
+.menu-drawer ul {
+    margin-top: 30px;
+}
 
-.list-item-info p{margin-bottom:0px;font-size:14px;}
-.list-item-info .book-title-p{font-size:16px;font-weight:bold;word-break:break-word;color:#1c4182;}
-.list-item-info div{position:relative;height:30px;}
-.list-item-info i{width:25px;height:30px;background-position:center;background-size:15px 20px;background-repeat:no-repeat;position:absolute;background-image:url(../images/hackthon/hot_icon.png);}
+.menu-drawer ul li {
+    border-bottom: 1px solid #fff;
+    margin-left: 30px;
+    margin-right: 30px;
+}
 
-.book-list{margin-top:50px;}
-.book-list ul li{height:120px;background:#fff;}
-.book-list-item{position:relative;}
-.book-list-item .book-pic{width:80px;height:100px;margin-top:10px;position:absolute;left:10px;}
-.book-list-item .book-pic-status{width:30px;height:30px;position:absolute;left:55px;bottom:15px;z-index:8888;}
-.book-list-item .list-item-info{margin-left:100px;height:120px;padding-top:10px;}
-.book-list-item .book-like{position:absolute;height:16px;width:16px;top:80px;right:15px;}
-.book-list-item .book-count-p{position:absolute;color:#888;bottom:10px;height:20px;line-height:20px;}
-.book-list-item .book-count-p span{height:20px;line-height:20px;}
-.book-list-item button{color:#fff;height:30px;border-radius:4px;background-image:url("../images/hackthon/index_header_bg.png");background-size:100%;position:absolute;top:15px;right:10px;}
-.book-list-item .bookDown{color:#fff;height:30px;background-image:url("../images/hackthon/index_header_bg.png");background-size:100%;border-radius:4px;position:absolute;top:60px;right:10px;}
-.book-list-item .arrow-right{position:absolute;top:50%;margin-top:-12px;right:5px;}
+.menu-drawer p {
+    height: 50px;
+    margin: 0;
+    font-size: 16px;
+    line-height: 50px;
+}
 
-.available-list{margin-top:50px;}
-.available-list ul li{height:120px;background:#fff;margin-top:5px;margin-bottom:5px;border-top:1px solid #dbdbdb;border-bottom:1px solid #dbdbdb;}
-.available-list-item{position:relative;}
-.available-list-item .book-pic{width:80px;height:100px;margin-top:10px;position:absolute;left:10px;}
-.availabel-item-info{margin-left:110px;height:120px;margin-bottom:0;padding-top:10px;padding-right:10px;}
-.available-list-item .book-name{font-size:16px;overflow:hidden;text-overflow:ellipsis;height:30px;line-height:30px;margin-bottom:0}
-.available-list-item .book-info{font-size:14px;height:20px;line-height:20px;margin-bottom:0}
-.available-list-item .arrow-right{top:48px;right:10px;position:absolute;}
+.menu-drawer-shadow {
+    width: 100%;
+    background: #000;
+    height: 100%;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+    z-index: 9000;
+}
 
-.mbook-top-block{position:fixed;height:210px;width:100%;background-size:100% 100%;background-repeat:no-repeat;background-image:url('../images/hackthon/index_header_bg.png');color:#fff;text-align:center;z-index:10;}
-.mbook-top-block .back-icon{position:absolute;top:14px;left:10px;}
-.mbook-top-block .user-header{height:70px;width:70px;position:absolute;top:30px;left:50%;margin-left:-35px;border-radius:70px;}
-.mbook-top-block .user-name{margin-top:105px;margin-bottom:0;width:100%;}
-.mbook-top-block .user-team{margin-bottom:0;width:100%;font-size:12px;color:rgba(255,255,255,0.8);}
-.mbook-top-block ul{position:absolute;bottom:15px;width:100%;}
-.mbook-top-block ul li{float:left;}
-.mbook-top-block .tag-number{margin:0;}
-.mbook-center-menu{height:80px;width:100%;position:fixed;top:250px;z-index:10;background:#f6f7fc;}
-.mbook-center-menu button{width:40%;height:50px;top:15px;position:absolute;border:none;border-radius:50px;color:rgba(255,255,255,0.8);}
-.mbook-center-menu .left{background:#dfe3ec;left:-20%;}
-.mbook-center-menu .right{background:#dfe3ec;right:-20%;}
-.mbook-center-menu .center{background:#5c7593;left:50%;margin-left:-20%;box-shadow:0 5px 12px #dbdbdb;}
-.mbook-list{position:absolute;top:210px;width:100%;z-index:1;}
-.mbook-list ul li{height:160px;position:relative;margin-left:10px;margin-right:10px;border-bottom:1px solid #dbdbdb;}
-.mbook-list ul li img{position:absolute;height:120px;max-width:90px;top:20px;right:10px;}
-.mbook-list p{width:100%;margin-left:10px;padding-right:120px;}
-.mbook-list .upload-time{margin-bottom:5px;padding-top:20px;font-size:12px;color:#888888;}
-.mbook-list .mbook-title{margin-bottom:20px;font-size:16px;color:#597290;}
-.mbook-list .mbook-desc{font-size:14px;color:#888888;}
+.qr-code-title {
+    color: #fff;
+    font-size: 20px;
+    margin-top: 60px;
+    margin-bottom: 40px;
+    text-align: center;
+}
 
-.score-tab{width:100%;margin-top:5px;height:40px;background:#fff;}
-.score-tab ul{height:40px;line-height:40px;}
-.score-tab ul li{width:33.3%;float:left;text-align:center;}
-.score-tab ul li a{display:block;height:40px;margin-bottom:0;border-bottom:1px solid #dbdbdb;color:#888}
-.score-tab .active-a{border-bottom:2px solid #2a4883;color:#2a4883;}
-.score-hitory{overflow:auto;}
-.score-hitory ul{padding:10px;}
-.score-hitory ul li{position:relative;height:55px;margin-bottom:5px;padding-bottom:5px;border-bottom:1px solid #eee;}
-.score-hitory .score-action{height:30px;line-height:30px;margin-bottom:0;}
-.score-hitory .score-date{height:20px;line-height:20px;font-size:14px;margin-bottom:0;color:#888;}
-.score-hitory .score-num{position:absolute;display:inline-block;right:0;height:50px;top:0;line-height:50px;}
-.score-hitory .positive-num{color:green;}
-.score-hitory .negative-num{color:red;}
+.qr-code-container {
+    margin: 0 auto;
+    margin-top: 50px;
+    width: 280px;
+    height: 280px;
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+}
 
-.no-item{width:100%;text-align:center;}
-.no-item img{margin-top:80px;width:80px;}
-.no-item p{font-size:14px;color:#888;}
+.qr-code-container img {
+    width: 300px;
+    height: 300px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 6px;
+}
 
-.content-tab{position:fixed;top:50px;left:0;width:100%;height:40px;background:#fff;z-index:9000;}
-.content-tab ul{height:40px;line-height:40px;}
-.content-tab ul li{width:50%;float:left;text-align:center;}
-.content-tab ul li a{display:block;height:40px;margin-bottom:0;border-bottom:1px solid #dbdbdb;color:#888}
-.content-tab .active-a{border-bottom:2px solid #2a4883;color:#2a4883;}
-.rank-swiper{margin-top:90px;}
+.qr-book-item {
+    position: relative;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 50px;
+    height: 120px;
+    background: #fff;
+    border-radius: 6px;
+}
 
-.score-rule{padding:10px;font-size:14px;color:#888;overflow:auto;}
-.score-exchange{overflow:auto;}
+.qr-book-item img {
+    height: 100px;
+    width: 80px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
 
-.all-book-swiper{margin-top:90px;}
-.all-book-list ul li{height:120px;background:#fff;}
+.qr-book-info {
+    position: relative;
+    top: 17px;
+    left: 0px;
+}
 
-#userRankList ul li{height:70px;}
-.user-list-item{height:70px;position:relative;}
-.user-list-item p{margin-bottom:0;margin-left:70px;}
-.user-list-item .user-header{position:absolute;left:10px;height:50px;width:50px;top:10px;border-radius:40px;}
-.user-list-item .user-name{height:40px;line-height:30px;padding-top:10px;}
-.user-list-item .user-team{height:20px;line-height:20px;font-size:14px;color:#888;}
-.user-list-item .user-score{position:absolute;height:45px;line-height:38px;top:15px;right:5px;text-align:center;width:36px;}
-.user-list-item .prize-metal{background-size:100%;background-position:center;background-repeat:no-repeat;}
+.qr-book-info p {
+    margin: 0 0 2px 0;
+    color: #5f5f5f;
+    font-size: 14px;
+    padding-left: 100px;
+}
 
-.book-pic-rank{position:absolute;top:12px;height:30px;width:24px;left:64px}
-.index-notice{text-align:center;height:25px;}
-.index-notice li{height:25px;line-height:25px;font-size:14px;}
+.title-bar {
+    height: 50px;
+    background-image: url("../images/hackthon/index_header_bg.png");
+    background-size: 100%;
+    color: #fff;
+    position: fixed;
+    text-align: center;
+    width: 100%;
+    z-index: 9000;
+}
 
-.book-operation-item{height:120px;width:80px;background-color:#d9534f;text-align:center;line-height:120px;color:#fff;}
-.book-operation-item:link,.book-operation-item:hover,.book-operation-item:visited{color:#fff}
+.title-bar img {
+    position: absolute;
+    top: 14px;
+    left: 10px;
+}
 
-.oper-tips{text-align:center;height:20px;line-height:20px;}
-.oper-tips span{font-size:12px;color:#888;height:20px;line-height:20px;}
+.title-bar p {
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    margin: 0;
+}
 
-.help-block{font-size:12px;}
+.title-bar a {
+    display: block;
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    line-height: 50px;
+    color: #fff;
+}
 
-.book-user{position:fixed;top:50px;left:0;width:100%;height:40px;background:#fff;z-index:9000;}
-.book-user ul{height:40px;line-height:40px;}
-.book-user ul li{width:50%;float:left;text-align:center;}
-.book-user ul li a{display:block;height:40px;margin-bottom:0;border-bottom:1px solid #dbdbdb;color:#888}
-.book-user .active-a{border-bottom:2px solid #2a4883;color:#2a4883;}
-#allUserList li{height:70px;}
+.title-bar a img {
+    width: 16px;
+    height: 16px;
+    position: static;
+}
 
-.score-exchange .turnplate{width:300px;height:300px;position:relative;margin:10px auto;background-image:url("../images/hackthon/turnplate-bg.png");background-size:100%;}
-.score-exchange .turnplate .pointer{width:66px;position:absolute;top:50%;left:50%;margin-left:-33px;margin-top:-50px;}
+.book-detail-img {
+    position: relative;
+    background: #fff;
+    margin-top: 50px;
+}
 
-.book-review-swiper{margin-top:90px;}
-.review-list-item{background:#fff;border-bottom:1px solid #dbdbdb;}
-.my-review-list li{margin-bottom:10px;}
-.review-item-li{margin-bottom:10px;}
-.review-title{height:50px;position:relative;}
-.review-title img{width:30px;height:30px;position:absolute;top:10px;left:10px;}
-.review-name{height:30px;line-height:30px;color:#2a4883;margin-left:50px;margin-bottom:0;}
-.review-team{height:15px;line-height:15px;margin-left:50px;margin-bottom:0;color:#888;font-size:12px;}
-.review-date{font-size:12px;color:#888;position:absolute;top:5px;right:5px;margin-bottom:0;}
-.review-body{margin-left:50px;font-size:14px;}
-.review-book{margin-bottom:0;}
-.review-book span{color:#2a4883;}
-.review-body .review-content{word-break:break-word;margin-right:5px;}
-.review-body img{width:80%;margin-top:5px;margin-bottom:5px;}
-.review-operation{position:relative;text-align:right;border-bottom:1px solid #dbdbdb;margin-left:10px;padding-right:5px;padding-bottom:5px;}
-.review-operation img{width:16px;}
-.review-operation span{font-size:12px;line-height:16px;width:20px;display:inline-block;text-align:left;}
-.review-operation span+img{width:26px;}
-.review-operation .delete-operation{position:absolute;height:16px;line-height:16px;top:3px;left:40px;font-size:12px;color:#2a4883;}
-.review-operation .delete-operation:linked, .review-operation .delete-operation:active{color:#2a4883;}
-.review-operation .delete-operation img{vertical-align:text-bottom;}
-.review-reply{min-height:20px;padding:10px;}
-.review-reply li{margin-bottom:0;}
-.review-reply li p{font-size:12px;margin-bottom:0;}
-.review-reply li p span{color:#2a4883;}
-.workmate-review-list .last-item{height:40px;line-height:40px;background:#fff;text-align:center;margin-top:-10px;font-size:14px;}
+.book-detail-img .book-pic {
+    display: block;
+    margin: 0 auto;
+    padding-top: 2px;
+    max-width: 100%;
+}
 
-.comment-modal{width:100%;background:#fff;position:absolute;top:50px;left:0;z-index:10000;display:none;font-size:14px;}
-.comment-modal .form-group{margin-bottom:10px;}
-.comment-modal button{display:block;margin:0 auto;width:90%;border:none;border-radius:6px;color:#fff;height:35px;margin-bottom:10px;}
-.comment-modal select{display:block;width:80%;padding:6px 12px;border: 1px solid #ddd;border-radius: 6px;-webkit-appearance: auto;margin: 10px 0px 5px 5px;}
-.comment-modal textarea{display:block;width:100%;padding:6px 12px;border:none;height:100px;}
+.book-detail-img .book-tag {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    height: 70px;
+}
 
-.reply-modal{width:100%;background:#fff;position:absolute;top:50px;left:0;z-index:10000;display:none;font-size:14px;}
-.reply-modal .form-group{margin-bottom:10px;}
-.reply-modal button{display:block;margin:0 auto;width:90%;border:none;border-radius:6px;color:#fff;height:35px;margin-bottom:10px;}
-.reply-modal textarea{display:block;width:100%;padding:6px 12px;border:none;height:100px;}
+.book-detail-img .book-status-pic {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 50px;
+    z-index: 8000;
+}
 
-.comment-button{position:absolute;bottom:5%;left:5%;z-index:9999;height:50px;width:50px;}
-.comment-button button{background-image:url("../images/hackthon/comment_icon.png");width:50px;height:50px;background-size:100%;border:none;background-color:transparent;padding:0;}
+.book-detail-info {
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #fff;
+}
+
+.book-detail-info .book-title {
+    word-wrap: break-word;
+    margin-bottom: 0;
+    font-size: 18px;
+    font-weight: bold;
+    padding-left: 10px;
+    padding-top: 20px;
+}
+
+.book-detail-info .book-owner {
+    font-size: 12px;
+    color: #8d8d8d;
+    padding-left: 10px;
+    margin: 0;
+    height: 32px;
+    line-height: 32px;
+}
+
+.book-detail-info .book-owner span {
+    color: #888;
+    padding-right: 10px;
+    float: right;
+    height: 32px;
+    line-height: 32px;
+}
+
+.book-detail-info .book-desc {
+    min-height: 50px;
+    font-size: 14px;
+    margin: 20px 0 0 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: justify;
+}
+
+.book-detail-info ul {
+    margin-top: 20px;
+}
+
+.book-detail-info ul li {
+    padding-left: 10px;
+}
+
+.book-detail-info ul li p {
+    margin: 0;
+    height: 30px;
+    line-height: 30px;
+}
+
+.book-other-info {
+    margin: 10px;
+    border-top: 1px solid #dbdbdb;
+    font-size: 14px;
+}
+
+.book-other-info p {
+    margin: 10px;
+    color: #8d8d8d;
+}
+
+.book-other-info p span {
+    float: right;
+    color: #000;
+}
+
+.book-comment-info {
+    margin-top: 20px;
+    font-size: 14px;
+    background: #eee;
+    color: #8d8d8d;
+    padding: 10px;
+}
+
+.book-comment-info .title {
+    margin: 10px;
+    position: relative;
+    text-align: center;
+}
+
+.book-comment-info .title:before {
+    content: '';
+    border-top: 1px solid #dbdbdb;
+    display: inline-block;
+    width: 125px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.book-comment-info .title:after {
+    content: '';
+    border-top: 1px solid #dbdbdb;
+    display: inline-block;
+    width: 125px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+@media screen and (max-device-width: 320px) {
+    .book-comment-info .title:before {
+        content: '';
+        border-top: 1px solid #dbdbdb;
+        display: inline-block;
+        width: 100px;
+        margin-bottom: 5px;
+        margin-right: 5px;
+    }
+
+    .book-comment-info .title:after {
+        content: '';
+        border-top: 1px solid #dbdbdb;
+        display: inline-block;
+        width: 100px;
+        margin-bottom: 5px;
+        margin-left: 5px;
+    }
+}
+
+.book-comment-info li {
+    margin-bottom: 10px;
+}
+
+.book-comment-info div {
+    position: relative;
+}
+
+.book-comment-info img {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    height: 40px;
+    width: 40px;
+}
+
+.book-comment-info .review-user {
+    margin: 0;
+    padding-top: 10px;
+    margin-left: 60px;
+    font-size: 16px;
+    color: #333;
+}
+
+.book-comment-info .review-content {
+    margin: 0;
+    margin-left: 60px;
+    color: #666;
+    word-wrap: break-word;
+}
+
+.book-comment-info .review-time {
+    margin: 0;
+    font-size: 12px;
+    text-align: right;
+}
+
+.book-upload-info {
+    background: #fff;
+    margin: 20px 10px 10px 10px;
+    font-size: 14px;
+}
+
+.book-upload-info .form-group {
+    margin-bottom: 10px;
+}
+
+.book-upload-info table {
+    margin-top: 0;
+}
+
+.book-upload-info tr {
+    height: 35px;
+    line-height: 35px;
+}
+
+.book-upload-info tr .t-label {
+    width: 30%;
+    text-align: right;
+}
+
+.book-upload-info tr .t-input {
+    width: 70%;
+    padding-left: 10px;
+}
+
+.submit-btn {
+    border-radius: 6px;
+    display: block;
+    border: none;
+    background-image: url("../images/hackthon/index_header_bg.png");
+    background-size: 100%;
+    width: 80%;
+    margin: 0 auto;
+    height: 40px;
+    color: #fff;
+}
+
+.rank-list {
+    overflow: auto;
+}
+
+.rank-list ul li {
+    height: 120px;
+    background: #fff;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.list-item-info p {
+    margin-bottom: 0px;
+    font-size: 14px;
+}
+
+.list-item-info .book-title-p {
+    font-size: 16px;
+    font-weight: bold;
+    word-break: break-word;
+    color: #1c4182;
+}
+
+.list-item-info div {
+    position: relative;
+    height: 30px;
+}
+
+.list-item-info i {
+    width: 25px;
+    height: 30px;
+    background-position: center;
+    background-size: 15px 20px;
+    background-repeat: no-repeat;
+    position: absolute;
+    background-image: url(../images/hackthon/hot_icon.png);
+}
+
+.book-list {
+    margin-top: 50px;
+}
+
+.book-list ul li {
+    height: 120px;
+    background: #fff;
+}
+
+.book-list-item {
+    position: relative;
+}
+
+.book-list-item .book-pic {
+    width: 80px;
+    height: 100px;
+    margin-top: 10px;
+    position: absolute;
+    left: 10px;
+}
+
+.book-list-item .book-pic-status {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 55px;
+    bottom: 15px;
+    z-index: 8888;
+}
+
+.book-list-item .list-item-info {
+    margin-left: 100px;
+    height: 120px;
+    padding-top: 10px;
+}
+
+.book-list-item .book-like {
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    top: 80px;
+    right: 15px;
+}
+
+.book-list-item .book-count-p {
+    position: absolute;
+    color: #888;
+    bottom: 10px;
+    height: 20px;
+    line-height: 20px;
+}
+
+.book-list-item .book-count-p span {
+    height: 20px;
+    line-height: 20px;
+}
+
+.book-list-item button {
+    color: #fff;
+    height: 30px;
+    border-radius: 4px;
+    background-image: url("../images/hackthon/index_header_bg.png");
+    background-size: 100%;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+}
+
+.book-list-item .bookDown {
+    color: #fff;
+    height: 30px;
+    background-image: url("../images/hackthon/index_header_bg.png");
+    background-size: 100%;
+    border-radius: 4px;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+}
+
+.book-list-item .arrow-right {
+    position: absolute;
+    top: 50%;
+    margin-top: -12px;
+    right: 5px;
+}
+
+.available-list {
+    margin-top: 50px;
+}
+
+.available-list ul li {
+    height: 120px;
+    background: #fff;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-top: 1px solid #dbdbdb;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.available-list-item {
+    position: relative;
+}
+
+.available-list-item .book-pic {
+    width: 80px;
+    height: 100px;
+    margin-top: 10px;
+    position: absolute;
+    left: 10px;
+}
+
+.availabel-item-info {
+    margin-left: 110px;
+    height: 120px;
+    margin-bottom: 0;
+    padding-top: 10px;
+    padding-right: 10px;
+}
+
+.available-list-item .book-name {
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 0
+}
+
+.available-list-item .book-info {
+    font-size: 14px;
+    height: 20px;
+    line-height: 20px;
+    margin-bottom: 0
+}
+
+.available-list-item .arrow-right {
+    top: 48px;
+    right: 10px;
+    position: absolute;
+}
+
+.mbook-top-block {
+    position: fixed;
+    height: 210px;
+    width: 100%;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-image: url('../images/hackthon/index_header_bg.png');
+    color: #fff;
+    text-align: center;
+    z-index: 10;
+}
+
+.mbook-top-block .back-icon {
+    position: absolute;
+    top: 14px;
+    left: 10px;
+}
+
+.mbook-top-block .user-header {
+    height: 70px;
+    width: 70px;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    margin-left: -35px;
+    border-radius: 70px;
+}
+
+.mbook-top-block .user-name {
+    margin-top: 105px;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.mbook-top-block .user-team {
+    margin-bottom: 0;
+    width: 100%;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.mbook-top-block ul {
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+}
+
+.mbook-top-block ul li {
+    float: left;
+}
+
+.mbook-top-block .tag-number {
+    margin: 0;
+}
+
+.mbook-center-menu {
+    height: 80px;
+    width: 100%;
+    position: fixed;
+    top: 250px;
+    z-index: 10;
+    background: #f6f7fc;
+}
+
+.mbook-center-menu button {
+    width: 40%;
+    height: 50px;
+    top: 15px;
+    position: absolute;
+    border: none;
+    border-radius: 50px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.mbook-center-menu .left {
+    background: #dfe3ec;
+    left: -20%;
+}
+
+.mbook-center-menu .right {
+    background: #dfe3ec;
+    right: -20%;
+}
+
+.mbook-center-menu .center {
+    background: #5c7593;
+    left: 50%;
+    margin-left: -20%;
+    box-shadow: 0 5px 12px #dbdbdb;
+}
+
+.mbook-list {
+    position: absolute;
+    top: 210px;
+    width: 100%;
+    z-index: 1;
+}
+
+.mbook-list ul li {
+    height: 160px;
+    position: relative;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.mbook-list ul li img {
+    position: absolute;
+    height: 120px;
+    max-width: 90px;
+    top: 20px;
+    right: 10px;
+}
+
+.mbook-list p {
+    width: 100%;
+    margin-left: 10px;
+    padding-right: 120px;
+}
+
+.mbook-list .upload-time {
+    margin-bottom: 5px;
+    padding-top: 20px;
+    font-size: 12px;
+    color: #888888;
+}
+
+.mbook-list .mbook-title {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #597290;
+}
+
+.mbook-list .mbook-desc {
+    font-size: 14px;
+    color: #888888;
+}
+
+.score-tab {
+    width: 100%;
+    margin-top: 5px;
+    height: 40px;
+    background: #fff;
+}
+
+.score-tab ul {
+    height: 40px;
+    line-height: 40px;
+}
+
+.score-tab ul li {
+    width: 33.3%;
+    float: left;
+    text-align: center;
+}
+
+.score-tab ul li a {
+    display: block;
+    height: 40px;
+    margin-bottom: 0;
+    border-bottom: 1px solid #dbdbdb;
+    color: #888
+}
+
+.score-tab .active-a {
+    border-bottom: 2px solid #2a4883;
+    color: #2a4883;
+}
+
+.score-hitory {
+    overflow: auto;
+}
+
+.score-hitory ul {
+    padding: 10px;
+}
+
+.score-hitory ul li {
+    position: relative;
+    height: 55px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.score-hitory .score-action {
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 0;
+}
+
+.score-hitory .score-date {
+    height: 20px;
+    line-height: 20px;
+    font-size: 14px;
+    margin-bottom: 0;
+    color: #888;
+}
+
+.score-hitory .score-num {
+    position: absolute;
+    display: inline-block;
+    right: 0;
+    height: 50px;
+    top: 0;
+    line-height: 50px;
+}
+
+.score-hitory .positive-num {
+    color: green;
+}
+
+.score-hitory .negative-num {
+    color: red;
+}
+
+.no-item {
+    width: 100%;
+    text-align: center;
+}
+
+.no-item img {
+    margin-top: 80px;
+    width: 80px;
+}
+
+.no-item p {
+    font-size: 14px;
+    color: #888;
+}
+
+.content-tab {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: #fff;
+    z-index: 9000;
+}
+
+.content-tab ul {
+    height: 40px;
+    line-height: 40px;
+}
+
+.content-tab ul li {
+    width: 50%;
+    float: left;
+    text-align: center;
+}
+
+.content-tab ul li a {
+    display: block;
+    height: 40px;
+    margin-bottom: 0;
+    border-bottom: 1px solid #dbdbdb;
+    color: #888
+}
+
+.content-tab .active-a {
+    border-bottom: 2px solid #2a4883;
+    color: #2a4883;
+}
+
+.rank-swiper {
+    margin-top: 90px;
+}
+
+.score-rule {
+    padding: 10px;
+    font-size: 14px;
+    color: #888;
+    overflow: auto;
+}
+
+.score-exchange {
+    overflow: auto;
+}
+
+.all-book-swiper {
+    margin-top: 90px;
+}
+
+.all-book-list ul li {
+    height: 120px;
+    background: #fff;
+}
+
+#userRankList ul li {
+    height: 70px;
+}
+
+.user-list-item {
+    height: 70px;
+    position: relative;
+}
+
+.user-list-item p {
+    margin-bottom: 0;
+    margin-left: 70px;
+}
+
+.user-list-item .user-header {
+    position: absolute;
+    left: 10px;
+    height: 50px;
+    width: 50px;
+    top: 10px;
+    border-radius: 40px;
+}
+
+.user-list-item .user-name {
+    height: 40px;
+    line-height: 30px;
+    padding-top: 10px;
+}
+
+.user-list-item .user-team {
+    height: 20px;
+    line-height: 20px;
+    font-size: 14px;
+    color: #888;
+}
+
+.user-list-item .user-score {
+    position: absolute;
+    height: 45px;
+    line-height: 38px;
+    top: 15px;
+    right: 5px;
+    text-align: center;
+    width: 36px;
+}
+
+.user-list-item .prize-metal {
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.book-pic-rank {
+    position: absolute;
+    top: 12px;
+    height: 30px;
+    width: 24px;
+    left: 64px
+}
+
+.index-notice {
+    text-align: center;
+    height: 25px;
+}
+
+.index-notice li {
+    height: 25px;
+    line-height: 25px;
+    font-size: 14px;
+}
+
+.book-operation-item {
+    height: 120px;
+    width: 80px;
+    background-color: #d9534f;
+    text-align: center;
+    line-height: 120px;
+    color: #fff;
+}
+
+.book-operation-item:link, .book-operation-item:hover, .book-operation-item:visited {
+    color: #fff
+}
+
+.oper-tips {
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+}
+
+.oper-tips span {
+    font-size: 12px;
+    color: #888;
+    height: 20px;
+    line-height: 20px;
+}
+
+.help-block {
+    font-size: 12px;
+}
+
+.book-user {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: #fff;
+    z-index: 9000;
+}
+
+.book-user ul {
+    height: 40px;
+    line-height: 40px;
+}
+
+.book-user ul li {
+    width: 50%;
+    float: left;
+    text-align: center;
+}
+
+.book-user ul li a {
+    display: block;
+    height: 40px;
+    margin-bottom: 0;
+    border-bottom: 1px solid #dbdbdb;
+    color: #888
+}
+
+.book-user .active-a {
+    border-bottom: 2px solid #2a4883;
+    color: #2a4883;
+}
+
+#allUserList li {
+    height: 70px;
+}
+
+.score-exchange .turnplate {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    margin: 10px auto;
+    background-image: url("../images/hackthon/turnplate-bg.png");
+    background-size: 100%;
+}
+
+.score-exchange .turnplate .pointer {
+    width: 66px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -33px;
+    margin-top: -50px;
+}
+
+.book-review-swiper {
+    margin-top: 90px;
+}
+
+.review-list-item {
+    background: #fff;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.my-review-list li {
+    margin-bottom: 10px;
+}
+
+.review-item-li {
+    margin-bottom: 10px;
+}
+
+.review-title {
+    height: 50px;
+    position: relative;
+}
+
+.review-title img {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.review-name {
+    height: 30px;
+    line-height: 30px;
+    color: #2a4883;
+    margin-left: 50px;
+    margin-bottom: 0;
+}
+
+.review-team {
+    height: 15px;
+    line-height: 15px;
+    margin-left: 50px;
+    margin-bottom: 0;
+    color: #888;
+    font-size: 12px;
+}
+
+.review-date {
+    font-size: 12px;
+    color: #888;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    margin-bottom: 0;
+}
+
+.review-body {
+    margin-left: 50px;
+    font-size: 14px;
+}
+
+.review-book {
+    margin-bottom: 0;
+}
+
+.review-book span {
+    color: #2a4883;
+}
+
+.review-body .review-content {
+    word-break: break-word;
+    margin-right: 5px;
+}
+
+.review-body img {
+    width: 80%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.review-operation {
+    position: relative;
+    text-align: right;
+    border-bottom: 1px solid #dbdbdb;
+    margin-left: 10px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+}
+
+.review-operation img {
+    width: 16px;
+}
+
+.review-operation span {
+    font-size: 12px;
+    line-height: 16px;
+    width: 20px;
+    display: inline-block;
+    text-align: left;
+}
+
+.review-operation span + img {
+    width: 26px;
+}
+
+.review-operation .delete-operation {
+    position: absolute;
+    height: 16px;
+    line-height: 16px;
+    top: 3px;
+    left: 40px;
+    font-size: 12px;
+    color: #2a4883;
+}
+
+.review-operation .delete-operation:linked, .review-operation .delete-operation:active {
+    color: #2a4883;
+}
+
+.review-operation .delete-operation img {
+    vertical-align: text-bottom;
+}
+
+.review-reply {
+    min-height: 20px;
+    padding: 10px;
+}
+
+.review-reply li {
+    margin-bottom: 0;
+}
+
+.review-reply li p {
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+.review-reply li p span {
+    color: #2a4883;
+}
+
+.workmate-review-list .last-item {
+    height: 40px;
+    line-height: 40px;
+    background: #fff;
+    text-align: center;
+    margin-top: -10px;
+    font-size: 14px;
+}
+
+.comment-modal {
+    width: 100%;
+    background: #fff;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    z-index: 10000;
+    display: none;
+    font-size: 14px;
+}
+
+.comment-modal .form-group {
+    margin-bottom: 10px;
+}
+
+.comment-modal button {
+    display: block;
+    margin: 0 auto;
+    width: 90%;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    height: 35px;
+    margin-bottom: 10px;
+}
+
+.comment-modal select {
+    display: block;
+    width: 80%;
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    -webkit-appearance: auto;
+    margin: 10px 0px 5px 5px;
+}
+
+.comment-modal textarea {
+    display: block;
+    width: 100%;
+    padding: 6px 12px;
+    border: none;
+    height: 100px;
+}
+
+.reply-modal {
+    width: 100%;
+    background: #fff;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    z-index: 10000;
+    display: none;
+    font-size: 14px;
+}
+
+.reply-modal .form-group {
+    margin-bottom: 10px;
+}
+
+.reply-modal button {
+    display: block;
+    margin: 0 auto;
+    width: 90%;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    height: 35px;
+    margin-bottom: 10px;
+}
+
+.reply-modal textarea {
+    display: block;
+    width: 100%;
+    padding: 6px 12px;
+    border: none;
+    height: 100px;
+}
+
+.comment-button {
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    z-index: 9999;
+    height: 50px;
+    width: 50px;
+}
+
+.comment-button button {
+    background-image: url("../images/hackthon/comment_icon.png");
+    width: 50px;
+    height: 50px;
+    background-size: 100%;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+}
 
 
 

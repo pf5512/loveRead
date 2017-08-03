@@ -1,133 +1,757 @@
-body{font-family:PingFang SC,STHeiti Light,Microsoft YaHei;padding:0;font-size: 14px;}
-ul{list-style:none;margin:0;padding:0}
-ul li{list-style:none;}
-a,a:hover,a:focus{text-decoration: none;}
-select{background-color:#fff;background-image:none;outline:0;}
+body {
+    font-family: PingFang SC, STHeiti Light, Microsoft YaHei;
+    padding: 0;
+    font-size: 14px;
+}
 
-.container{min-height:450px;}
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0
+}
 
-icon.arrow-right{display:inline-block;width:9px;height:12px;background:url(../images/arrow-right.png);background-size:100% 100%;}
+ul li {
+    list-style: none;
+}
 
-/** 琛ㄥ崟鏍峰紡 **/
-.form-mobile-a{padding:0;margin-bottom:10px;}
-.form-mobile-a .form-inner{background:#fff;padding:0 0 0 15px;border-bottom:1px solid #e5e5e6;border-top:1px solid #e5e5e6;}
-.form-mobile-a .form-group {position:relative;margin:0;}
-.form-mobile-a .form-group p{margin:0;}
-.form-mobile-a .form-group label{position:absolute;left:0px;top:0px;margin:0;width:50px;height:41px;line-height:43px;vertical-align:middle;font-size:14px;background:#fff;color:#3a3a3a;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.form-mobile-a .form-group.last .form-control{border:0 none;}
-.form-mobile-a .form-group:last-child .form-control{border:0 none;}
-.form-mobile-a .form-group .form-control{text-indent:48px;height:43px;line-height:29px;vertical-align:middle;border:0 none;border-bottom:1px solid #e5e5e6;}
-.form-mobile-a .form-group .form-control,.form-mobile-a .form-group .form-control:focus{border-radius:0;border-left:0 none;border-right:0 none;box-shadow:none;-webkit-box-shadow:none;transition:0 none;-webkit-transition:0 none;-o-transition:0 none;}
-.form-mobile-a .form-group a.action{position:absolute;right:1px;top:1px;display:block;width:39px;height:41px;pointer-events:none;}
-.form-mobile-a .form-group a.action.select{width: 12px;height: 7px;top:18px;right:15px;background: url("../images/henan_ico3.png") -155px -1px;background-size:167px 50px;}
-.form-mobile-a .form-group a.action.search{background:url(../images/search-icon.png) no-repeat 24px 13px;background-size:16px 15px;pointer-events:auto;}
-.form-mobile-a .form-group a.action.date{background:url(../images/date-icon.png) no-repeat;pointer-events:auto;}
-.form-mobile-a .form-group textarea.form-control{height:auto;}
-.form-mobile-a .form-group .btn{margin-top:20px;}
+a, a:hover, a:focus {
+    text-decoration: none;
+}
 
-.form-mobile-a .form-group.zzrw_display .form-control{height:auto;text-indent:0px;padding-left:97px;text-align:left;color:#333;font-weight:500;}
-.form-mobile-a .form-group.zzrw_display label{width:90px;top:50%;margin-top:-21px;}
-.form-mobile-a .form-group.zzrw_input .form-control{text-indent:84px;}
-.form-mobile-a .form-group.zzrw_input label{width:90px;}
-.form-mobile-a .form-group.zzrw_textarea .form-control{text-indent:3px;}
-.form-mobile-a .form-group.zzrw_textarea label{position:relative;width:100%;top:0;border-bottom:1px solid #e5e5e6;}
-.form-mobile-a .form-group.zzrw_date {margin-right:-15px;}
-.form-mobile-a .form-group.zzrw_date .form-control{text-indent:68px;}
-.form-mobile-a .form-group.zzrw_date label{width:70px;height:43px;}
-.form-mobile-a .form-group.zzrw_select .form-control{text-indent:84px;}
-.form-mobile-a .form-group.zzrw_select .form-control.android{text-indent:80px;}
-.form-mobile-a .form-group.zzrw_select label{width:90px;}
-.form-mobile-a .form-group.zzrw_randCode .form-control{text-indent:84px;}
-.form-mobile-a .form-group.zzrw_randCode label{width:90px;}
-.form-mobile-a .form-group.zzrw_randCode img{position: absolute;top:7px;right:4px;}
-.form-mobile-a .form-group.zzrw_table {padding-top:36px;}
-.form-mobile-a .form-group.zzrw_table label{left:0;width:100%;height:43px;line-height:43px;border-radius:0;}
-.form-mobile-a .form-group.zzrw_table table{position:relative;top:8px;background:#fff;border-color:#e5e5e6;}
-.form-mobile-a .form-group.zzrw_table table tr.selected{background-color:#dff0d8;}
-.form-mobile-a .form-group.zzrw_table table tr.disabled{background-color:#f9f9f9;color:#ccc;}
-.form-mobile-a .form-group.zzrw_table table td, .form-mobile-a .form-group.zzrw_table table th{border-color:#e5e5e6;}
-.form-group .table>tbody>tr>td, .form-group .table>tbody>tr>th, .form-group .table>tfoot>tr>td, .form-group .table>tfoot>tr>th, .form-group .table>thead>tr>td, .form-group .table>thead>tr>th{padding:3px;line-height:34px;height:34px;vertical-align:middle;text-align:left;word-break:break-word;word-wrap:break-word;}
-.form-mobile-a .form-group.zzrw_area{height:43px;padding-top:36px;}
-.form-mobile-a .form-group.zzrw_area label{left:0;width:100%;height:43px;line-height:43px;border-radius:0;}
-.form-mobile-a .form-group.zzrw_area .form-control{padding:0;height:auto;text-indent:0px;border:0 none;}
-.form-mobile-a .form-group.zzrw_area .form-area{position:relative;display:inline-block;padding: 5px 0;width: 33%;height:41px;border:0 none;}
-.form-mobile-a .form-group.zzrw_area .form-area select{width:100%;text-indent:0px;border:0 none;background-color:#fff;background-image:none;}
-.form-mobile-a .form-group.zzrw_area .form-area a.action.select{right:15px;}
+select {
+    background-color: #fff;
+    background-image: none;
+    outline: 0;
+}
 
-.panel{border:1px solid #f5f4f6;}
-.panel-success> .panel-heading{background-color:#e9f5e9;}
-.form-mobile-a .form-group.zzrw_table .panel-group{margin-top:7px;}
-.form-mobile-a .form-group.zzrw_table .panel .panel-heading{position:relative;padding:0 10px;color:#333;}
-.form-mobile-a .form-group.zzrw_table .panel .panel-heading.selectable{position:relative;padding:0 10px 0 21px;}
-.form-mobile-a .form-group.zzrw_table .panel .panel-title{position:relative;height:37px;line-height:37px;vertical-align:middle;font-size:14px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
-.form-mobile-a .form-group.zzrw_table .panel .panel-dropdown{position:absolute;display:inline-block;width:36px;height:37px;top:0;right:-8px;background:url(../images/arrow-up.png) no-repeat;background-size:11px 8px;background-position:12px 14px;}
-.form-mobile-a .form-group.zzrw_table .panel .panel-dropdown.collapsed{background-image:url(../images/arrow-down.png);}
-.form-mobile-a .form-group.zzrw_table .panel .panel-select{position:absolute;display:inline-block;width:36px;height:37px;top:0;left:-8px;background:url(../images/select-invalid.png) no-repeat;background-size:15px 15px;background-position:10px 12px;pointer-events:none;}
-.form-mobile-a .form-group.zzrw_table .panel.panel-success .panel-select{background-image:url(../images/select-valid.png);}
-.form-mobile-a .form-group.zzrw_table .panel .panel-body{color:#999;}
-.form-mobile-a .form-group.zzrw_table .panel .panel-th{display:inline-block;width:35%;text-align:left;}
-.form-mobile-a .form-group.zzrw_table .panel .panel-td{display:inline-block;width:65%;text-align:right;}
-.form-mobile-a .form-group.zzrw_checkbox{padding-top:40px;text-align:right;}
-.form-mobile-a .form-group.zzrw_checkbox label{width:90px;text-align:left;}
-.form-mobile-a .form-group.zzrw_checkbox input{display:none;}
-.form-mobile-a .form-group.zzrw_checkbox label.zzrw_checkbox{position:relative;margin:4px;width:82px;text-align:center;border:1px solid #21ad27;border-radius:4px;padding:0;}
-.form-mobile-a .form-group.zzrw_checkbox label.zzrw_checkbox.selected{color:#fff;background:#21ad27;}
-.form-mobile-a .form-group.zzrw_radio{padding-top:40px;text-align:right;}
-.form-mobile-a .form-group.zzrw_radio label{width:100%;text-align:left;border-bottom:1px solid #e5e5e6;}
-.form-mobile-a .form-group.zzrw_radio label.zzrw_radio input{position:absolute;left:0;top:12px;display:inline-block;margin:0;width:20px;height:20px;outline:0;border:0 none;background:url("../images/henan_ico2.png") -25px -83px no-repeat;pointer-events:none;}
-.form-mobile-a .form-group.zzrw_radio label.zzrw_radio.selected input{background:url("../images/henan_ico2.png") -25px -62px;}
-.form-mobile-a .form-group.zzrw_radio label.zzrw_radio{position:relative;text-indent:30px;line-height:41px;margin-top:1px;width:100%;font-weight:normal;border-bottom:1px solid #e5e5e6;padding:0;}
-.form-mobile-a .form-group.zzrw_radio label.zzrw_radio.selected{}
-.form-mobile-a .form-group.zzrw_button{padding:0 15px;text-align:center;text-indent:0;}
-.form-mobile-a .form-group.zzrw_button .btn.invalid{background-color:#9dcae5;}
-.form-mobile-a .form-group.zzrw_button .btn{width:100%;height:44px;font-size:16px;border: 0 none;}
-.form-mobile-a .form-group.zzrw_button .btn.btn-primary{background-color:#0095ed;}
+.container {
+    min-height: 450px;
+}
+
+icon.arrow-right {
+    display: inline-block;
+    width: 9px;
+    height: 12px;
+    background: url(../images/arrow-right.png);
+    background-size: 100% 100%;
+}
 
 /** 琛ㄥ崟鏍峰紡 **/
-.form-mobile-b{padding:0;margin-bottom:10px;}
-.form-mobile-b .form-inner{border-top:1px solid #f5f4f6;}
-.form-mobile-b .form-group {position:relative;margin:0;margin-bottom:20px;background:#fff;}
-.form-mobile-b .form-group p{margin:0;}
-.form-mobile-b .form-group label{position:absolute;left:0px;top:0px;margin:0;width:50px;padding-left:15px;height:41px;line-height:43px;vertical-align:middle;font-size:14px;background:#fff;color:#3a3a3a;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.form-mobile-b .form-group.last .form-control{border:0 none;}
-.form-mobile-b .form-group .form-control{text-indent:48px;height:43px;line-height:29px;vertical-align:middle;border:0 none;}
-.form-mobile-b .form-group .form-control,.form-mobile-b .form-group .form-control:focus{border-radius:0;border-left:0 none;border-right:0 none;box-shadow:none;-webkit-box-shadow:none;transition:0 none;-webkit-transition:0 none;-o-transition:0 none;}
-.form-mobile-b .form-group a.action{position:absolute;right:1px;top:1px;display:block;width:39px;height:41px;pointer-events:none;}
-.form-mobile-b .form-group a.action.select{width: 12px;height: 7px;top:19px;right:15px;background: url("../images/henan_ico3.png") -155px -1px;background-size:167px 50px;}
-.form-mobile-b .form-group a.action.search{background:url(../images/search-icon.png) no-repeat 24px 13px;background-size:16px 15px;pointer-events:auto;}
-.form-mobile-b .form-group a.action.date{background:url(../images/date-icon.png) no-repeat;pointer-events:auto;}
-.form-mobile-b .form-group textarea.form-control{height:auto;}
-.form-mobile-b .form-group .btn{}
+.form-mobile-a {
+    padding: 0;
+    margin-bottom: 10px;
+}
 
-.form-mobile-b .form-group.zzrw_hidden{display:none;}
-.form-mobile-b .form-group.zzrw_display .form-control{height:auto;text-indent:0px;padding-left:97px;text-align:left;color:#333;font-weight:500;}
-.form-mobile-b .form-group.zzrw_display label{width:90px;top:50%;margin-top:-21px;}
-.form-mobile-b .form-group.zzrw_input .form-control{text-indent:84px;}
-.form-mobile-b .form-group.zzrw_input label{width:90px;}
-.form-mobile-b .form-group.zzrw_textarea .form-control{text-indent:3px;}
-.form-mobile-b .form-group.zzrw_textarea label{position:relative;width:100%;padding:0;margin-left:15px;top:0;border-bottom:1px solid #e5e5e6;}
-.form-mobile-b .form-group.zzrw_date {margin-right:-15px;}
-.form-mobile-b .form-group.zzrw_date .form-control{text-indent:68px;}
-.form-mobile-b .form-group.zzrw_date label{width:70px;height:43px;}
-.form-mobile-b .form-group.zzrw_select .form-control{text-indent:84px;}
-.form-mobile-b .form-group.zzrw_select .form-control.android{text-indent:80px;}
-.form-mobile-b .form-group.zzrw_select label{width:90px;}
-.form-mobile-b .form-group.zzrw_randCode .form-control{text-indent:84px;}
-.form-mobile-b .form-group.zzrw_randCode label{width:90px;}
-.form-mobile-b .form-group.zzrw_randCode img{position: absolute;top:7px;right:4px;}
-.form-mobile-b .form-group.zzrw_table {padding-top:36px;}
-.form-mobile-b .form-group.zzrw_table label{left:0;width:100%;height:43px;line-height:43px;border-radius:0;}
-.form-mobile-b .form-group.zzrw_table table{position:relative;top:8px;background:#fff;border-color:#f5f4f6;}
-.form-mobile-b .form-group.zzrw_table table tr.selected{background-color:#dff0d8;}
-.form-mobile-b .form-group.zzrw_table table tr.disabled{background-color:#f9f9f9;color:#ccc;}
-.form-mobile-b .form-group.zzrw_table table td, .form-mobile-b .form-group.zzrw_table table th{border-color:#f5f4f6;}
-.form-group .table>tbody>tr>td, .form-group .table>tbody>tr>th, .form-group .table>tfoot>tr>td, .form-group .table>tfoot>tr>th, .form-group .table>thead>tr>td, .form-group .table>thead>tr>th{padding:3px;line-height:34px;height:34px;vertical-align:middle;text-align:left;word-break:break-word;word-wrap:break-word;}
-.form-mobile-b .form-group.zzrw_area{padding-top:37px;}
-.form-mobile-b .form-group.zzrw_area label{left:0;width:100%;height:43px;line-height:43px;border-radius:0;border-bottom:1px solid #e5e5e5;}
-.form-mobile-b .form-group.zzrw_area .form-control{margin-left:15px;padding:0;height:auto;text-indent:0px;border-top:1px solid #e5e5e5;}
-.form-mobile-b .form-group.zzrw_area .form-area{position:relative;display:inline-block;padding: 5px 0;width: 33%;height:41px;border:0 none;}
-.form-mobile-b .form-group.zzrw_area .form-area select{width:100%;text-indent:5px;border:0 none;background-color:#fff;background-image:none;}
-.form-mobile-b .form-group.zzrw_button{padding:0 15px;text-align:center;text-indent:0;border:0 none;background:0 none;}
-.form-mobile-b .form-group.zzrw_button .btn.invalid{background-color:#9dcae5;}
-.form-mobile-b .form-group.zzrw_button .btn{width:100%;height:44px;font-size:16px;border: 0 none;}
-.form-mobile-b .form-group.zzrw_button .btn.btn-primary{background-color:#fc4a6e;}
+.form-mobile-a .form-inner {
+    background: #fff;
+    padding: 0 0 0 15px;
+    border-bottom: 1px solid #e5e5e6;
+    border-top: 1px solid #e5e5e6;
+}
+
+.form-mobile-a .form-group {
+    position: relative;
+    margin: 0;
+}
+
+.form-mobile-a .form-group p {
+    margin: 0;
+}
+
+.form-mobile-a .form-group label {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    margin: 0;
+    width: 50px;
+    height: 41px;
+    line-height: 43px;
+    vertical-align: middle;
+    font-size: 14px;
+    background: #fff;
+    color: #3a3a3a;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.form-mobile-a .form-group.last .form-control {
+    border: 0 none;
+}
+
+.form-mobile-a .form-group:last-child .form-control {
+    border: 0 none;
+}
+
+.form-mobile-a .form-group .form-control {
+    text-indent: 48px;
+    height: 43px;
+    line-height: 29px;
+    vertical-align: middle;
+    border: 0 none;
+    border-bottom: 1px solid #e5e5e6;
+}
+
+.form-mobile-a .form-group .form-control, .form-mobile-a .form-group .form-control:focus {
+    border-radius: 0;
+    border-left: 0 none;
+    border-right: 0 none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    transition: 0 none;
+    -webkit-transition: 0 none;
+    -o-transition: 0 none;
+}
+
+.form-mobile-a .form-group a.action {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    display: block;
+    width: 39px;
+    height: 41px;
+    pointer-events: none;
+}
+
+.form-mobile-a .form-group a.action.select {
+    width: 12px;
+    height: 7px;
+    top: 18px;
+    right: 15px;
+    background: url("../images/henan_ico3.png") -155px -1px;
+    background-size: 167px 50px;
+}
+
+.form-mobile-a .form-group a.action.search {
+    background: url(../images/search-icon.png) no-repeat 24px 13px;
+    background-size: 16px 15px;
+    pointer-events: auto;
+}
+
+.form-mobile-a .form-group a.action.date {
+    background: url(../images/date-icon.png) no-repeat;
+    pointer-events: auto;
+}
+
+.form-mobile-a .form-group textarea.form-control {
+    height: auto;
+}
+
+.form-mobile-a .form-group .btn {
+    margin-top: 20px;
+}
+
+.form-mobile-a .form-group.zzrw_display .form-control {
+    height: auto;
+    text-indent: 0px;
+    padding-left: 97px;
+    text-align: left;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-mobile-a .form-group.zzrw_display label {
+    width: 90px;
+    top: 50%;
+    margin-top: -21px;
+}
+
+.form-mobile-a .form-group.zzrw_input .form-control {
+    text-indent: 84px;
+}
+
+.form-mobile-a .form-group.zzrw_input label {
+    width: 90px;
+}
+
+.form-mobile-a .form-group.zzrw_textarea .form-control {
+    text-indent: 3px;
+}
+
+.form-mobile-a .form-group.zzrw_textarea label {
+    position: relative;
+    width: 100%;
+    top: 0;
+    border-bottom: 1px solid #e5e5e6;
+}
+
+.form-mobile-a .form-group.zzrw_date {
+    margin-right: -15px;
+}
+
+.form-mobile-a .form-group.zzrw_date .form-control {
+    text-indent: 68px;
+}
+
+.form-mobile-a .form-group.zzrw_date label {
+    width: 70px;
+    height: 43px;
+}
+
+.form-mobile-a .form-group.zzrw_select .form-control {
+    text-indent: 84px;
+}
+
+.form-mobile-a .form-group.zzrw_select .form-control.android {
+    text-indent: 80px;
+}
+
+.form-mobile-a .form-group.zzrw_select label {
+    width: 90px;
+}
+
+.form-mobile-a .form-group.zzrw_randCode .form-control {
+    text-indent: 84px;
+}
+
+.form-mobile-a .form-group.zzrw_randCode label {
+    width: 90px;
+}
+
+.form-mobile-a .form-group.zzrw_randCode img {
+    position: absolute;
+    top: 7px;
+    right: 4px;
+}
+
+.form-mobile-a .form-group.zzrw_table {
+    padding-top: 36px;
+}
+
+.form-mobile-a .form-group.zzrw_table label {
+    left: 0;
+    width: 100%;
+    height: 43px;
+    line-height: 43px;
+    border-radius: 0;
+}
+
+.form-mobile-a .form-group.zzrw_table table {
+    position: relative;
+    top: 8px;
+    background: #fff;
+    border-color: #e5e5e6;
+}
+
+.form-mobile-a .form-group.zzrw_table table tr.selected {
+    background-color: #dff0d8;
+}
+
+.form-mobile-a .form-group.zzrw_table table tr.disabled {
+    background-color: #f9f9f9;
+    color: #ccc;
+}
+
+.form-mobile-a .form-group.zzrw_table table td, .form-mobile-a .form-group.zzrw_table table th {
+    border-color: #e5e5e6;
+}
+
+.form-group .table > tbody > tr > td, .form-group .table > tbody > tr > th, .form-group .table > tfoot > tr > td, .form-group .table > tfoot > tr > th, .form-group .table > thead > tr > td, .form-group .table > thead > tr > th {
+    padding: 3px;
+    line-height: 34px;
+    height: 34px;
+    vertical-align: middle;
+    text-align: left;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+.form-mobile-a .form-group.zzrw_area {
+    height: 43px;
+    padding-top: 36px;
+}
+
+.form-mobile-a .form-group.zzrw_area label {
+    left: 0;
+    width: 100%;
+    height: 43px;
+    line-height: 43px;
+    border-radius: 0;
+}
+
+.form-mobile-a .form-group.zzrw_area .form-control {
+    padding: 0;
+    height: auto;
+    text-indent: 0px;
+    border: 0 none;
+}
+
+.form-mobile-a .form-group.zzrw_area .form-area {
+    position: relative;
+    display: inline-block;
+    padding: 5px 0;
+    width: 33%;
+    height: 41px;
+    border: 0 none;
+}
+
+.form-mobile-a .form-group.zzrw_area .form-area select {
+    width: 100%;
+    text-indent: 0px;
+    border: 0 none;
+    background-color: #fff;
+    background-image: none;
+}
+
+.form-mobile-a .form-group.zzrw_area .form-area a.action.select {
+    right: 15px;
+}
+
+.panel {
+    border: 1px solid #f5f4f6;
+}
+
+.panel-success > .panel-heading {
+    background-color: #e9f5e9;
+}
+
+.form-mobile-a .form-group.zzrw_table .panel-group {
+    margin-top: 7px;
+}
+
+.form-mobile-a .form-group.zzrw_table .panel .panel-heading {
+    position: relative;
+    padding: 0 10px;
+    color: #333;
+}
+
+.form-mobile-a .form-group.zzrw_table .panel .panel-heading.selectable {
+    position: relative;
+    padding: 0 10px 0 21px;
+}
+
+.form-mobile-a .form-group.zzrw_table .panel .panel-title {
+    position: relative;
+    height: 37px;
+    line-height: 37px;
+    vertical-align: middle;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.form-mobile-a .form-group.zzrw_table .panel .panel-dropdown {
+    position: absolute;
+    display: inline-block;
+    width: 36px;
+    height: 37px;
+    top: 0;
+    right: -8px;
+    background: url(../images/arrow-up.png) no-repeat;
+    background-size: 11px 8px;
+    background-position: 12px 14px;
+}
+
+.form-mobile-a .form-group.zzrw_table .panel .panel-dropdown.collapsed {
+    background-image: url(../images/arrow-down.png);
+}
+
+.form-mobile-a .form-group.zzrw_table .panel .panel-select {
+    position: absolute;
+    display: inline-block;
+    width: 36px;
+    height: 37px;
+    top: 0;
+    left: -8px;
+    background: url(../images/select-invalid.png) no-repeat;
+    background-size: 15px 15px;
+    background-position: 10px 12px;
+    pointer-events: none;
+}
+
+.form-mobile-a .form-group.zzrw_table .panel.panel-success .panel-select {
+    background-image: url(../images/select-valid.png);
+}
+
+.form-mobile-a .form-group.zzrw_table .panel .panel-body {
+    color: #999;
+}
+
+.form-mobile-a .form-group.zzrw_table .panel .panel-th {
+    display: inline-block;
+    width: 35%;
+    text-align: left;
+}
+
+.form-mobile-a .form-group.zzrw_table .panel .panel-td {
+    display: inline-block;
+    width: 65%;
+    text-align: right;
+}
+
+.form-mobile-a .form-group.zzrw_checkbox {
+    padding-top: 40px;
+    text-align: right;
+}
+
+.form-mobile-a .form-group.zzrw_checkbox label {
+    width: 90px;
+    text-align: left;
+}
+
+.form-mobile-a .form-group.zzrw_checkbox input {
+    display: none;
+}
+
+.form-mobile-a .form-group.zzrw_checkbox label.zzrw_checkbox {
+    position: relative;
+    margin: 4px;
+    width: 82px;
+    text-align: center;
+    border: 1px solid #21ad27;
+    border-radius: 4px;
+    padding: 0;
+}
+
+.form-mobile-a .form-group.zzrw_checkbox label.zzrw_checkbox.selected {
+    color: #fff;
+    background: #21ad27;
+}
+
+.form-mobile-a .form-group.zzrw_radio {
+    padding-top: 40px;
+    text-align: right;
+}
+
+.form-mobile-a .form-group.zzrw_radio label {
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid #e5e5e6;
+}
+
+.form-mobile-a .form-group.zzrw_radio label.zzrw_radio input {
+    position: absolute;
+    left: 0;
+    top: 12px;
+    display: inline-block;
+    margin: 0;
+    width: 20px;
+    height: 20px;
+    outline: 0;
+    border: 0 none;
+    background: url("../images/henan_ico2.png") -25px -83px no-repeat;
+    pointer-events: none;
+}
+
+.form-mobile-a .form-group.zzrw_radio label.zzrw_radio.selected input {
+    background: url("../images/henan_ico2.png") -25px -62px;
+}
+
+.form-mobile-a .form-group.zzrw_radio label.zzrw_radio {
+    position: relative;
+    text-indent: 30px;
+    line-height: 41px;
+    margin-top: 1px;
+    width: 100%;
+    font-weight: normal;
+    border-bottom: 1px solid #e5e5e6;
+    padding: 0;
+}
+
+.form-mobile-a .form-group.zzrw_radio label.zzrw_radio.selected {
+}
+
+.form-mobile-a .form-group.zzrw_button {
+    padding: 0 15px;
+    text-align: center;
+    text-indent: 0;
+}
+
+.form-mobile-a .form-group.zzrw_button .btn.invalid {
+    background-color: #9dcae5;
+}
+
+.form-mobile-a .form-group.zzrw_button .btn {
+    width: 100%;
+    height: 44px;
+    font-size: 16px;
+    border: 0 none;
+}
+
+.form-mobile-a .form-group.zzrw_button .btn.btn-primary {
+    background-color: #0095ed;
+}
+
+/** 琛ㄥ崟鏍峰紡 **/
+.form-mobile-b {
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.form-mobile-b .form-inner {
+    border-top: 1px solid #f5f4f6;
+}
+
+.form-mobile-b .form-group {
+    position: relative;
+    margin: 0;
+    margin-bottom: 20px;
+    background: #fff;
+}
+
+.form-mobile-b .form-group p {
+    margin: 0;
+}
+
+.form-mobile-b .form-group label {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    margin: 0;
+    width: 50px;
+    padding-left: 15px;
+    height: 41px;
+    line-height: 43px;
+    vertical-align: middle;
+    font-size: 14px;
+    background: #fff;
+    color: #3a3a3a;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.form-mobile-b .form-group.last .form-control {
+    border: 0 none;
+}
+
+.form-mobile-b .form-group .form-control {
+    text-indent: 48px;
+    height: 43px;
+    line-height: 29px;
+    vertical-align: middle;
+    border: 0 none;
+}
+
+.form-mobile-b .form-group .form-control, .form-mobile-b .form-group .form-control:focus {
+    border-radius: 0;
+    border-left: 0 none;
+    border-right: 0 none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    transition: 0 none;
+    -webkit-transition: 0 none;
+    -o-transition: 0 none;
+}
+
+.form-mobile-b .form-group a.action {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    display: block;
+    width: 39px;
+    height: 41px;
+    pointer-events: none;
+}
+
+.form-mobile-b .form-group a.action.select {
+    width: 12px;
+    height: 7px;
+    top: 19px;
+    right: 15px;
+    background: url("../images/henan_ico3.png") -155px -1px;
+    background-size: 167px 50px;
+}
+
+.form-mobile-b .form-group a.action.search {
+    background: url(../images/search-icon.png) no-repeat 24px 13px;
+    background-size: 16px 15px;
+    pointer-events: auto;
+}
+
+.form-mobile-b .form-group a.action.date {
+    background: url(../images/date-icon.png) no-repeat;
+    pointer-events: auto;
+}
+
+.form-mobile-b .form-group textarea.form-control {
+    height: auto;
+}
+
+.form-mobile-b .form-group .btn {
+}
+
+.form-mobile-b .form-group.zzrw_hidden {
+    display: none;
+}
+
+.form-mobile-b .form-group.zzrw_display .form-control {
+    height: auto;
+    text-indent: 0px;
+    padding-left: 97px;
+    text-align: left;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-mobile-b .form-group.zzrw_display label {
+    width: 90px;
+    top: 50%;
+    margin-top: -21px;
+}
+
+.form-mobile-b .form-group.zzrw_input .form-control {
+    text-indent: 84px;
+}
+
+.form-mobile-b .form-group.zzrw_input label {
+    width: 90px;
+}
+
+.form-mobile-b .form-group.zzrw_textarea .form-control {
+    text-indent: 3px;
+}
+
+.form-mobile-b .form-group.zzrw_textarea label {
+    position: relative;
+    width: 100%;
+    padding: 0;
+    margin-left: 15px;
+    top: 0;
+    border-bottom: 1px solid #e5e5e6;
+}
+
+.form-mobile-b .form-group.zzrw_date {
+    margin-right: -15px;
+}
+
+.form-mobile-b .form-group.zzrw_date .form-control {
+    text-indent: 68px;
+}
+
+.form-mobile-b .form-group.zzrw_date label {
+    width: 70px;
+    height: 43px;
+}
+
+.form-mobile-b .form-group.zzrw_select .form-control {
+    text-indent: 84px;
+}
+
+.form-mobile-b .form-group.zzrw_select .form-control.android {
+    text-indent: 80px;
+}
+
+.form-mobile-b .form-group.zzrw_select label {
+    width: 90px;
+}
+
+.form-mobile-b .form-group.zzrw_randCode .form-control {
+    text-indent: 84px;
+}
+
+.form-mobile-b .form-group.zzrw_randCode label {
+    width: 90px;
+}
+
+.form-mobile-b .form-group.zzrw_randCode img {
+    position: absolute;
+    top: 7px;
+    right: 4px;
+}
+
+.form-mobile-b .form-group.zzrw_table {
+    padding-top: 36px;
+}
+
+.form-mobile-b .form-group.zzrw_table label {
+    left: 0;
+    width: 100%;
+    height: 43px;
+    line-height: 43px;
+    border-radius: 0;
+}
+
+.form-mobile-b .form-group.zzrw_table table {
+    position: relative;
+    top: 8px;
+    background: #fff;
+    border-color: #f5f4f6;
+}
+
+.form-mobile-b .form-group.zzrw_table table tr.selected {
+    background-color: #dff0d8;
+}
+
+.form-mobile-b .form-group.zzrw_table table tr.disabled {
+    background-color: #f9f9f9;
+    color: #ccc;
+}
+
+.form-mobile-b .form-group.zzrw_table table td, .form-mobile-b .form-group.zzrw_table table th {
+    border-color: #f5f4f6;
+}
+
+.form-group .table > tbody > tr > td, .form-group .table > tbody > tr > th, .form-group .table > tfoot > tr > td, .form-group .table > tfoot > tr > th, .form-group .table > thead > tr > td, .form-group .table > thead > tr > th {
+    padding: 3px;
+    line-height: 34px;
+    height: 34px;
+    vertical-align: middle;
+    text-align: left;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+.form-mobile-b .form-group.zzrw_area {
+    padding-top: 37px;
+}
+
+.form-mobile-b .form-group.zzrw_area label {
+    left: 0;
+    width: 100%;
+    height: 43px;
+    line-height: 43px;
+    border-radius: 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.form-mobile-b .form-group.zzrw_area .form-control {
+    margin-left: 15px;
+    padding: 0;
+    height: auto;
+    text-indent: 0px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.form-mobile-b .form-group.zzrw_area .form-area {
+    position: relative;
+    display: inline-block;
+    padding: 5px 0;
+    width: 33%;
+    height: 41px;
+    border: 0 none;
+}
+
+.form-mobile-b .form-group.zzrw_area .form-area select {
+    width: 100%;
+    text-indent: 5px;
+    border: 0 none;
+    background-color: #fff;
+    background-image: none;
+}
+
+.form-mobile-b .form-group.zzrw_button {
+    padding: 0 15px;
+    text-align: center;
+    text-indent: 0;
+    border: 0 none;
+    background: 0 none;
+}
+
+.form-mobile-b .form-group.zzrw_button .btn.invalid {
+    background-color: #9dcae5;
+}
+
+.form-mobile-b .form-group.zzrw_button .btn {
+    width: 100%;
+    height: 44px;
+    font-size: 16px;
+    border: 0 none;
+}
+
+.form-mobile-b .form-group.zzrw_button .btn.btn-primary {
+    background-color: #fc4a6e;
+}

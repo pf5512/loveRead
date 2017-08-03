@@ -1,12 +1,15 @@
 <div class="top-menu">
     <div class="title-bar" style="background:transparent;position:inherit;">
-    	<img src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:history.back();"></img><p>我的积分</p>
+        <img src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:history.back();"></img>
+
+        <p>我的积分</p>
     </div>
     <div class="main-oper-bar">
         <ul>
             <li style="width:100%;">
                 <div class="main-list-item">
-					<span class="score">#if($!score)$!score#else 0 #end</span>
+                    <span class="score">#if($!score)$!score#else 0 #end</span>
+
                     <p>积分</p>
                 </div>
             </li>
@@ -14,170 +17,173 @@
     </div>
 </div>
 <div class="score-tab">
-	<ul>
-		<li><a href="javascript:tabClick(0);" class="active-a" id="scoreHitoryA">我的积分</a></li>
-		<li><a href="javascript:tabClick(1);" id="scoreChangeA">积分抽奖</a></li>
-		<li><a href="javascript:tabClick(2);" id="scoreRuleA">积分规则</a></li>
-	</ul>
+    <ul>
+        <li><a href="javascript:tabClick(0);" class="active-a" id="scoreHitoryA">我的积分</a></li>
+        <li><a href="javascript:tabClick(1);" id="scoreChangeA">积分抽奖</a></li>
+        <li><a href="javascript:tabClick(2);" id="scoreRuleA">积分规则</a></li>
+    </ul>
 </div>
 <div class="swiper-container score-swiper">
-	<div class="swiper-wrapper">
-        
-		<div class="swiper-slide score-hitory">
-			#if($!scoreList.size() > 0)
-			<ul>
-				#foreach($value in $!scoreList)
-				<li>
-					<p class="score-action">$!value.action</p>
-					<p class="score-date">$!date.format('yyyy-MM-dd HH:mm:ss', $value.recCrtTs)</p>
-					<span class="score-num #if($!value.score >= 0)positive-num#else negative-num #end">#if($!value.score >= 0)+#end$!value.score</span>
-				</li>
-				#end
-			</ul>
-			#else
-			<div class="no-item">
-				<img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
-				<p>大侠，你还没有积分哦，快去赚取积分吧！</p>
-			</div>
-			#end
-		</div>
-        
-		<div class="swiper-slide score-exchange">
+    <div class="swiper-wrapper">
+
+        <div class="swiper-slide score-hitory">
+            #if($!scoreList.size() > 0)
+                <ul>
+                    #foreach($value in $!scoreList)
+                        <li>
+                            <p class="score-action">$!value.action</p>
+
+                            <p class="score-date">$!date.format('yyyy-MM-dd HH:mm:ss', $value.recCrtTs)</p>
+                            <span class="score-num #if($!value.score >= 0)positive-num#else negative-num #end">#if($!value.score >= 0)
+                                +#end$!value.score</span>
+                        </li>
+                    #end
+                </ul>
+            #else
+                <div class="no-item">
+                    <img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
+
+                    <p>大侠，你还没有积分哦，快去赚取积分吧！</p>
+                </div>
+            #end
+        </div>
+
+        <div class="swiper-slide score-exchange">
             <div id="tipsDiv" style="margin:5px;text-align:center;display:none;">
-                <p id="activityTips" style="font-size:14px;margin:5px;text-align:center;"></p>     
+                <p id="activityTips" style="font-size:14px;margin:5px;text-align:center;"></p>
             </div>
-            
-			<div class="turnplate">
+
+            <div class="turnplate">
                 <canvas class="item" id="wheelcanvas" width="300px" height="300px"></canvas>
                 <img class="pointer" src="$!{rc.contextPath}/resources/images/hackthon/turnplate-pointer.png"/>
-    			<!-- <p style="font-size:14px;margin:5px;text-align:center;">每次抽奖消耗$!lotteryCost积分</p> -->
-    			<p style="font-size:14px;margin:5px;text-align:center;">享读会活动期间每人每天有10次抽奖机会哦！</p>
+                <!-- <p style="font-size:14px;margin:5px;text-align:center;">每次抽奖消耗$!lotteryCost积分</p> -->
+                <p style="font-size:14px;margin:5px;text-align:center;">享读会活动期间每人每天有10次抽奖机会哦！</p>
             </div>
-		</div>
-        
-		<div class="swiper-slide score-rule">
-			<ul>
-				#foreach($value in $!ruleList)
-					<li><p>$value</p></li>
-				#end
-				<li>如有疑问，请联系管理员严克文(15856927791)</li>
-				<li>奖品兑换问题，请联系支付学院：于兆鹏（50361516）</li>
-            </ul>
-		</div>
-	</div>
-</div>
-<script src="${rc.contextPath}/resources/js/lottery/awardRotate.js?v=$!staticVersion" ></script>
-<script src="${rc.contextPath}/resources/js/lottery/drawLottery.js?v=$!staticVersion" ></script>
-<script>
-var scoreSwiper;
-$(document).ready(function(){
-	$('.score-swiper').css('height',$(window).height() - 255);
-	
-	scoreSwiper = new Swiper('.score-swiper', {
-        slidesPerView: 'auto',
-		onSlideNextStart: function(swiper){
-			if(swiper.activeIndex == 1){
-				$("#scoreHitoryA").removeAttr('class');
-				$("#scoreChangeA").attr('class','active-a');
-				$("#scoreRuleA").removeAttr('class');
-			}else if(swiper.activeIndex == 2){
-				$("#scoreHitoryA").removeAttr('class');
-				$("#scoreChangeA").removeAttr('class');
-				$("#scoreRuleA").attr('class','active-a');
-			}else{
-				$("#scoreHitoryA").attr('class','active-a');
-				$("#scoreChangeA").removeAttr('class');
-				$("#scoreRuleA").removeAttr('class');
-			}
-		},
-		onSlidePrevStart: function(swiper){
-			if(swiper.activeIndex == 0){
-				$("#scoreHitoryA").attr('class','active-a');
-				$("#scoreChangeA").removeAttr('class');
-				$("#scoreRuleA").removeAttr('class');
-			}else if(swiper.activeIndex == 1){
-				$("#scoreHitoryA").removeAttr('class');
-				$("#scoreChangeA").attr('class','active-a');
-				$("#scoreRuleA").removeAttr('class');
-			}else{
-				$("#scoreHitoryA").removeAttr('class');
-				$("#scoreChangeA").removeAttr('class');
-				$("#scoreRuleA").attr('class','active-a');
-			}
-		}
-    });
-	
-	// 获取奖品信息
-	$.ajax({
-		url:'${rc.contextPath}/lottery/getPrize',
-		dataType:'json',
-		success:function(data){
-		
-			if(data.code != 0){
-                //隐藏大转盘
-                $(".turnplate").css("display","none");
-                //显示相关信息
-                $("#activityTips").text(data.message);
-                $("#tipsDiv").css("display","block");
-				return;
-			}
-		
-			// 配置奖品信息
-			for(var x = 0;x < data.data.length; x++){
-				prizeNameList = prizeNameList.concat(data.data[x].prizeName);
-			}
-			
-			// 动态添加大转盘的奖品与奖品区域背景颜色
-        	setTurnplate();
-        	// 构建转盘
-        	drawRouletteWheel(turnplate.canvasWidth, turnplate.canvasHeight);
-        
-        	$('.pointer').click(function() {
-        		if (turnplate.bRotate)
-        			return;
-        			
-        		$.ajax({
-        			url:'${rc.contextPath}/lottery/start',
-        			dataType:'json',
-        			success:function(data){
-        				if(data.code == 0){
-        					var item = data.data.result;
-							var winIndex = 0;
-							$.each(prizeNameList, function(index){
-								if(item == prizeNameList[index]){
-									winIndex = index;
-									return false;
-								}
-							});
-							console.info(item + ";" + winIndex);
-							if(winIndex > 0) {
-								turnplate.bRotate = !turnplate.bRotate;
-                    			rotateFn(winIndex + 1, prizePrefixHint + turnplate.restaraunts[winIndex]);
-                    		} else {
-								turnplate.bRotate = !turnplate.bRotate;
-								rotateFn(1, noGetPrize);
-                    		}
-							//更新积分
-							$(".score").html(data.data.score);
-        				}else{
-							zzrw.alert(data.message);
-						}
-        			}
-        		});
-        	});
-		},
-		error:function(){
-			var html = '<div class="no-item">'
-				+ '<img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>'
-				+ '<p>积分兑换暂未上线，敬请期待！</p></div>';
-			$(".score-exchange").empty();
-			$(".score-exchange").append(html);
-		}
-	});
-	
-});
+        </div>
 
-function tabClick(i){
-	scoreSwiper.slideTo(i);
-}
+        <div class="swiper-slide score-rule">
+            <ul>
+                #foreach($value in $!ruleList)
+                    <li><p>$value</p></li>
+                #end
+                <li>如有疑问，请联系管理员严克文(15856927791)</li>
+                <li>奖品兑换问题，请联系支付学院：于兆鹏（50361516）</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script src="${rc.contextPath}/resources/js/lottery/awardRotate.js?v=$!staticVersion"></script>
+<script src="${rc.contextPath}/resources/js/lottery/drawLottery.js?v=$!staticVersion"></script>
+<script>
+    var scoreSwiper;
+    $(document).ready(function () {
+        $('.score-swiper').css('height', $(window).height() - 255);
+
+        scoreSwiper = new Swiper('.score-swiper', {
+            slidesPerView: 'auto',
+            onSlideNextStart: function (swiper) {
+                if (swiper.activeIndex == 1) {
+                    $("#scoreHitoryA").removeAttr('class');
+                    $("#scoreChangeA").attr('class', 'active-a');
+                    $("#scoreRuleA").removeAttr('class');
+                } else if (swiper.activeIndex == 2) {
+                    $("#scoreHitoryA").removeAttr('class');
+                    $("#scoreChangeA").removeAttr('class');
+                    $("#scoreRuleA").attr('class', 'active-a');
+                } else {
+                    $("#scoreHitoryA").attr('class', 'active-a');
+                    $("#scoreChangeA").removeAttr('class');
+                    $("#scoreRuleA").removeAttr('class');
+                }
+            },
+            onSlidePrevStart: function (swiper) {
+                if (swiper.activeIndex == 0) {
+                    $("#scoreHitoryA").attr('class', 'active-a');
+                    $("#scoreChangeA").removeAttr('class');
+                    $("#scoreRuleA").removeAttr('class');
+                } else if (swiper.activeIndex == 1) {
+                    $("#scoreHitoryA").removeAttr('class');
+                    $("#scoreChangeA").attr('class', 'active-a');
+                    $("#scoreRuleA").removeAttr('class');
+                } else {
+                    $("#scoreHitoryA").removeAttr('class');
+                    $("#scoreChangeA").removeAttr('class');
+                    $("#scoreRuleA").attr('class', 'active-a');
+                }
+            }
+        });
+
+        // 获取奖品信息
+        $.ajax({
+            url: '${rc.contextPath}/lottery/getPrize',
+            dataType: 'json',
+            success: function (data) {
+
+                if (data.code != 0) {
+                    //隐藏大转盘
+                    $(".turnplate").css("display", "none");
+                    //显示相关信息
+                    $("#activityTips").text(data.message);
+                    $("#tipsDiv").css("display", "block");
+                    return;
+                }
+
+                // 配置奖品信息
+                for (var x = 0; x < data.data.length; x++) {
+                    prizeNameList = prizeNameList.concat(data.data[x].prizeName);
+                }
+
+                // 动态添加大转盘的奖品与奖品区域背景颜色
+                setTurnplate();
+                // 构建转盘
+                drawRouletteWheel(turnplate.canvasWidth, turnplate.canvasHeight);
+
+                $('.pointer').click(function () {
+                    if (turnplate.bRotate)
+                        return;
+
+                    $.ajax({
+                        url: '${rc.contextPath}/lottery/start',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.code == 0) {
+                                var item = data.data.result;
+                                var winIndex = 0;
+                                $.each(prizeNameList, function (index) {
+                                    if (item == prizeNameList[index]) {
+                                        winIndex = index;
+                                        return false;
+                                    }
+                                });
+                                console.info(item + ";" + winIndex);
+                                if (winIndex > 0) {
+                                    turnplate.bRotate = !turnplate.bRotate;
+                                    rotateFn(winIndex + 1, prizePrefixHint + turnplate.restaraunts[winIndex]);
+                                } else {
+                                    turnplate.bRotate = !turnplate.bRotate;
+                                    rotateFn(1, noGetPrize);
+                                }
+                                //更新积分
+                                $(".score").html(data.data.score);
+                            } else {
+                                zzrw.alert(data.message);
+                            }
+                        }
+                    });
+                });
+            },
+            error: function () {
+                var html = '<div class="no-item">'
+                        + '<img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>'
+                        + '<p>积分兑换暂未上线，敬请期待！</p></div>';
+                $(".score-exchange").empty();
+                $(".score-exchange").append(html);
+            }
+        });
+
+    });
+
+    function tabClick(i) {
+        scoreSwiper.slideTo(i);
+    }
 </script>

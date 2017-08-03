@@ -1,10 +1,10 @@
-<script src="${rc.contextPath}/resources/js/jquery-1.11.2.min.js?v=$!staticVersion" ></script>
-<script src="${rc.contextPath}/resources/js/app.upchat.js?v=$!staticVersion" ></script>
+<script src="${rc.contextPath}/resources/js/jquery-1.11.2.min.js?v=$!staticVersion"></script>
+<script src="${rc.contextPath}/resources/js/app.upchat.js?v=$!staticVersion"></script>
 
 <div class="container"></div>
 
 <script type="text/javascript">
-	$(function(){
+    $(function () {
         //成功后回调函数
         var _success = function (result) {
             UPCHAT.M.NAPI.dismiss();
@@ -41,5 +41,5 @@
         } else {
             toApp();
         }
-	});
+    });
 </script>

@@ -11,25 +11,27 @@ import java.util.List;
 
 @Repository
 public class UserDao extends HibernateBaseDao<WxUser, Serializable> {
-    
+
     /**
      * 根据openId获取用户信息
+     *
      * @param openId
+     *
      * @return
      */
-    public WxUser findUser(String openId){
-    	String hql ="from WxUser where openId = ?";
-    	List<WxUser> userList = find(hql,openId);
-        if(userList.size()>0){
+    public WxUser findUser(String openId) {
+        String hql = "from WxUser where openId = ?";
+        List<WxUser> userList = find(hql, openId);
+        if (userList.size() > 0) {
             return userList.get(0);
         }
         return null;
     }
-    
-    public String findUserIdByOpenId(String openId){
-    	String hql = "from WxUser where openId = ?";
-    	List<WxUser> userList = find(hql,openId);
-        if(userList.size()>0){
+
+    public String findUserIdByOpenId(String openId) {
+        String hql = "from WxUser where openId = ?";
+        List<WxUser> userList = find(hql, openId);
+        if (userList.size() > 0) {
             return userList.get(0).getOpenId();
         }
         return null;
@@ -37,7 +39,9 @@ public class UserDao extends HibernateBaseDao<WxUser, Serializable> {
 
     /**
      * 根据积分获取用户排行
+     *
      * @param numInt
+     *
      * @return
      */
     public List<WxUser> findUserListOrderByScore(int numInt) {
@@ -47,27 +51,31 @@ public class UserDao extends HibernateBaseDao<WxUser, Serializable> {
         }
         return find(hql);
     }
-    
+
     /**
-     *分页查询所有用户 
+     * 分页查询所有用户
+     *
      * @param start
+     *
      * @return
      */
-	@SuppressWarnings("unchecked")
-	public List<WxUser> findUserListByLimits(Integer start) {
-		String hql = "from WxUser where 1=1 ";
-		Query query = null;
-		if(start!=null){
-			query = this.createQuery(hql).setFirstResult(start).setMaxResults(Constants.PAGE_SIZE);
-		}else{
-			query = this.createQuery(hql);
-		}
-		return query.list();
-	}
+    @SuppressWarnings("unchecked")
+    public List<WxUser> findUserListByLimits(Integer start) {
+        String hql = "from WxUser where 1=1 ";
+        Query query = null;
+        if (start != null) {
+            query = this.createQuery(hql).setFirstResult(start).setMaxResults(Constants.PAGE_SIZE);
+        } else {
+            query = this.createQuery(hql);
+        }
+        return query.list();
+    }
 
     /**
      * 根据uid列表查询用户信息
+     *
      * @param uidList
+     *
      * @return
      */
     @SuppressWarnings("unchecked")

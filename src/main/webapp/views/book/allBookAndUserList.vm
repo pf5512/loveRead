@@ -1,289 +1,306 @@
 <style>
-body{
-	background:#e9e9e9;
-}
+    body {
+        background: #e9e9e9;
+    }
 </style>
 <div class="title-bar">
-	<img src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:history.back();"></img><p>所有</p>
+    <img src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:history.back();"></img>
+
+    <p>所有</p>
 </div>
 <div class="content-tab">
-	<ul>
-		<li><a href="javascript:tabClick(0);" class="active-a" id="allBookA">图书</a></li>
-		<li><a href="javascript:tabClick(2);" id="allUser">用户</a></li>
-	</ul>
+    <ul>
+        <li><a href="javascript:tabClick(0);" class="active-a" id="allBookA">图书</a></li>
+        <li><a href="javascript:tabClick(2);" id="allUser">用户</a></li>
+    </ul>
 </div>
 <div class="swiper-container all-book-swiper">
-	<div class="swiper-wrapper">
+    <div class="swiper-wrapper">
         <div class="swiper-slide all-book-list swiper-no-swiping" id="allBookList">
             #if($!{bookDetailList.size()}>0)
-        	   <ul style="position:relative;z-index:2;">
-            		#foreach($value in $!bookDetailList)
-            		<li>
-            			<div class="book-list-item">
-            				<img class="book-pic" src="$value.cover" onclick="window.location.href='${rc.contextPath}/book/bookDetail?bookId=$!{value.bookId}'"></img>
-            				#if($!{value.status} == "00")
-            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/borrowable_icon.png"></img>
-            				#elseif($!{value.status} == "01")
-            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/lent_icon.png"></img>
-            				#else
-            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/down_icon.png"></img>
-            				#end
-            				<div class="list-item-info">
-            					<p class="book-title-p">$!{value.bookName}</p>
-            					<p>$!{value.ownerName}</p>
-            					<p class="book-count-p">
-            						<img src="${rc.contextPath}/resources/images/hackthon/like_icon.png" style="width:16px;"></img>
-            						#if($!{value.likeNums})
-            						$!value.likeNums
-            						#else
-            						0
-            						#end
-                                    &nbsp;
-            						<img src="${rc.contextPath}/resources/images/hackthon/borrow_icon.png" style="width:18px;margin-left:5px;"></img>
-            						#if($!{value.borrowNums})
-            						$!value.borrowNums
-            						#else
-            						0
-            						#end
-            					</p>
-            				</div>
-            			</div>
-            		</li>
+                <ul style="position:relative;z-index:2;">
+                    #foreach($value in $!bookDetailList)
+                        <li>
+                            <div class="book-list-item">
+                                <img class="book-pic" src="$value.cover"
+                                     onclick="window.location.href='${rc.contextPath}/book/bookDetail/$!{value.bookId}'"></img>
+                                #if($!{value.status} == "00")
+                                    <img class="book-pic-status"
+                                         src="${rc.contextPath}/resources/images/hackthon/borrowable_icon.png"></img>
+                                #elseif($!{value.status} == "01")
+                                    <img class="book-pic-status"
+                                         src="${rc.contextPath}/resources/images/hackthon/lent_icon.png"></img>
+                                #else
+                                    <img class="book-pic-status"
+                                         src="${rc.contextPath}/resources/images/hackthon/down_icon.png"></img>
+                                #end
+                                <div class="list-item-info">
+                                    <p class="book-title-p">$!{value.bookName}</p>
+
+                                    <p>$!{value.ownerName}</p>
+
+                                    <p class="book-count-p">
+                                        <img src="${rc.contextPath}/resources/images/hackthon/like_icon.png"
+                                             style="width:16px;"></img>
+                                        #if($!{value.likeNums})
+                                            $!value.likeNums
+                                        #else
+                                            0
+                                        #end
+                                        &nbsp;
+                                        <img src="${rc.contextPath}/resources/images/hackthon/borrow_icon.png"
+                                             style="width:18px;margin-left:5px;"></img>
+                                        #if($!{value.borrowNums})
+                                            $!value.borrowNums
+                                        #else
+                                            0
+                                        #end
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
                     #end
-        	   </ul>
-			   <p id="loadMoreP" style="color:#888;z-index:1;height:40px;line-height:40px;position:absolute;width:100%;bottom:0;margin:0;text-align:center;">上滑加载更多</p>
+                </ul>
+                <p id="loadMoreP"
+                   style="color:#888;z-index:1;height:40px;line-height:40px;position:absolute;width:100%;bottom:0;margin:0;text-align:center;">
+                    上滑加载更多</p>
             #else
                 <div class="no-item">
                     <img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
+
                     <p>大侠，暂时还没有图书哦！</p>
                 </div>
-			#end
+            #end
         </div>
-        
+
         <div class="swiper-slide rank-list swiper-no-swiping" id="allUserList">
             #if($!{userList.size()}>0)
-            	<ul style="position:relative;z-index:2;">
-            		#foreach($value in $!userList)
-            		<li>
-            			<div class="user-list-item" onclick="javascript:gotoUserBookList('$!value.uid')">
-    						#if($!value.headImgUrl)
-            				<img class="user-header" src="$!value.headImgUrl"></img>
-    						#else
-    						<img class="user-header" src="${rc.contextPath}/resources/images/hackthon/user_header_icon.png"></img>
-    						#end
-            				<p class="user-name">$!{value.empName}</p>
+                <ul style="position:relative;z-index:2;">
+                    #foreach($value in $!userList)
+                        <li>
+                            <div class="user-list-item" onclick="javascript:gotoUserBookList('$!value.openId')">
+                                #if("$!value.headImgUrl" == "")
+                                    <img class="user-header"
+                                         src="${rc.contextPath}/resources/images/hackthon/user_header_icon.png"></img>
+                                #else
+                                    <img class="user-header" src="$!value.headImgUrl"></img>
+                                #end
+                                <p class="user-name">$!{value.nickName}</p>
     						<span class="user-score prize-metal">
     							$!{value.score}本
 							</span>
-            			</div>
-            		</li>
-            		#end
-            	</ul>
-				<p id="loadMoreUserP" style="color:#888;z-index:1;height:40px;line-height:40px;position:absolute;width:100%;bottom:0;margin:0;text-align:center;">上滑加载更多</p>
+                            </div>
+                        </li>
+                    #end
+                </ul>
+                <p id="loadMoreUserP"
+                   style="color:#888;z-index:1;height:40px;line-height:40px;position:absolute;width:100%;bottom:0;margin:0;text-align:center;">
+                    上滑加载更多</p>
             #else
                 <div class="no-item">
                     <img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
+
                     <p>咦，人都去哪儿了！</p>
                 </div>
             #end
         </div>
-        
-	</div>
+
+    </div>
 </div>
 <script>
-var bookSwiper;
-$(document).ready(function(){
-	$('.all-book-swiper').css('height',$(window).height() - 90);
-	bookSwiper = new Swiper('.all-book-swiper', {
-        slidesPerView: 'auto',
-		effect : 'flip',
-		noSwiping: true,
-		onSlideNextStart: function(swiper){
-            if(swiper.activeIndex == 0){
-                $("#allBookA").attr('class','active-a');
-                $("#allUser").removeAttr('class');
-            }else{
-                $("#allBookA").removeAttr('class');
-                $("#allUser").attr('class','active-a');
+    var bookSwiper;
+    $(document).ready(function () {
+        $('.all-book-swiper').css('height', $(window).height() - 90);
+        bookSwiper = new Swiper('.all-book-swiper', {
+            slidesPerView: 'auto',
+            effect: 'flip',
+            noSwiping: true,
+            onSlideNextStart: function (swiper) {
+                if (swiper.activeIndex == 0) {
+                    $("#allBookA").attr('class', 'active-a');
+                    $("#allUser").removeAttr('class');
+                } else {
+                    $("#allBookA").removeAttr('class');
+                    $("#allUser").attr('class', 'active-a');
+                }
+            },
+            onSlidePrevStart: function (swiper) {
+                if (swiper.activeIndex == 0) {
+                    $("#allBookA").attr('class', 'active-a');
+                    $("#allUser").removeAttr('class');
+                } else {
+                    $("#allBookA").removeAttr('class');
+                    $("#allUser").attr('class', 'active-a');
+                }
             }
-		},
-		onSlidePrevStart: function(swiper){
-			if(swiper.activeIndex == 0){
-				$("#allBookA").attr('class','active-a');
-				$("#allUser").removeAttr('class');
-			}else{
-				$("#allBookA").removeAttr('class');
-				$("#allUser").attr('class','active-a');
-			}
-		}
+        });
     });
-});
 
-var bookIScroll,userIScroll;
-var moreBook=true,loadFlag=false,moreUser=true,loadUserFlag=false;
-$(window).load(function() { 
-    bookIScroll = new IScroll("#allBookList", {
-		disableMouse: false,
-		disablePointer: false,
-		disableTouch: false,
-		click: true,
-		probeType: 2
-	});
-	
-	bookIScroll.on('scroll', bookScroll);
-	
-	bookIScroll.on('scrollEnd', bookScrollEnd);
-	
-	userIScroll = new IScroll("#allUserList", {
-		disableMouse: false,
-		disablePointer: false,
-		disableTouch: false,
-		click: true,
-		probeType: 2
-	});
-	
-	userIScroll.on('scroll', userScroll);
-	
-	userIScroll.on('scrollEnd', userScrollEnd);
-}); 
+    var bookIScroll, userIScroll;
+    var moreBook = true, loadFlag = false, moreUser = true, loadUserFlag = false;
+    $(window).load(function () {
+        bookIScroll = new IScroll("#allBookList", {
+            disableMouse: false,
+            disablePointer: false,
+            disableTouch: false,
+            click: true,
+            probeType: 2
+        });
 
-function bookScroll(){
-	if(bookIScroll.maxScrollY - this.y <= 60 && moreBook){
-		$("#loadMoreP").html("上拉加载更多");
-		loadFlag=false;
-	}else if(moreBook){
-		$("#loadMoreP").html("释放立即加载");
-		loadFlag=true;
-	}
-}
+        bookIScroll.on('scroll', bookScroll);
 
-function bookScrollEnd(){
-	if(loadFlag && moreBook){
-		console.log("开始加载");
-		showPersistLoading();
-		$.ajax({
-			url:"${rc.contextPath}/book/getMoreBook",
-			data:{
-				start: $("#allBookList li").length
-			},
-			type:"POST",
-			dataType:"json",
-			success:function(data){
-				if(data.result == "success"){
-					appendBookItem(data.bookList, "allBookList");
-					if(data.bookList.length < 10){
-						moreBook=false;
-						$("#loadMoreP").html("已无更多");
-					}
-				}else{
-					moreBook=false;
-					$("#loadMoreP").html("已无更多");
-				}
-				bookIScroll.refresh();
-				removeLoading();
-			},
-			error:function(){
-				removeLoading();
-			}
-		});
-	}
-}
+        bookIScroll.on('scrollEnd', bookScrollEnd);
 
-function userScroll(){
-	if(userIScroll.maxScrollY - this.y <= 60 && moreUser){
-		$("#loadMoreUserP").html("上拉加载更多");
-		loadUserFlag=false;
-	}else if(moreUser){
-		$("#loadMoreUserP").html("释放立即加载");
-		loadUserFlag=true;
-	}
-}
+        userIScroll = new IScroll("#allUserList", {
+            disableMouse: false,
+            disablePointer: false,
+            disableTouch: false,
+            click: true,
+            probeType: 2
+        });
 
-function userScrollEnd(){
-	if(loadUserFlag && moreUser){
-		console.log("开始加载");
-		showPersistLoading();
-		$.ajax({
-			url:"${rc.contextPath}/userHome/getMoreUser",
-			data:{
-				start: $("#allUserList li").length
-			},
-			type:"POST",
-			dataType:"json",
-			success:function(data){
-				if(data.result == "success"){
-					appendUserItem(data.userList, "allUserList");
-					if(data.userList.length < 10){
-						moreUser=false;
-						$("#loadMoreUserP").html("已无更多");
-					}
-				}else{
-					moreUser=false;
-					$("#loadMoreUserP").html("已无更多");
-				}
-				userIScroll.refresh();
-				removeLoading();
-			},
-			error:function(){
-				removeLoading();
-			}
-		});
-	}
-}
+        userIScroll.on('scroll', userScroll);
 
-function tabClick(i){
-	bookSwiper.slideTo(i);
-}
+        userIScroll.on('scrollEnd', userScrollEnd);
+    });
 
-function appendBookItem(bookList, id){
-	var htmlStr = "";
-	for(i = 0; i<bookList.length; i++){
-    	htmlStr += "<li><div class='book-list-item'>";
-    	htmlStr = htmlStr + "<img class='book-pic' src='" + bookList[i].cover + "' onclick='showBookDetail(" + bookList[i].bookId + ")'></img>";
-		if(bookList[i].status == "00")
-			htmlStr = htmlStr + "<img class='book-pic-status' src='" + webRoot + "/resources/images/hackthon/borrowable_icon.png'></img>";
-		else if(bookList[i].status == "01")
-			htmlStr = htmlStr + "<img class='book-pic-status' src='" + webRoot + "/resources/images/hackthon/lent_icon.png'></img>";
-		else
-			htmlStr = htmlStr + "<img class='book-pic-status' src='" + webRoot + "/resources/images/hackthon/down_icon.png'></img>";
-		htmlStr += "<div class='list-item-info'>";
-		htmlStr = htmlStr + "<p class='book-title-p'>" + bookList[i].bookName + "</p>";
-		htmlStr = htmlStr + "<p>" + bookList[i].ownerName + "</p>";
-		htmlStr = htmlStr + "<p class='book-count-p'><img src='" + webRoot + "/resources/images/hackthon/like_icon.png' style='width:16px;'></img>";
-		if(bookList[i].likeNums != null && bookList[i].likeNums != undefined && bookList[i].likeNums != "")
-			htmlStr = htmlStr + "&nbsp;" + bookList[i].likeNums;
-		else
-			htmlStr += '&nbsp;0';
-		htmlStr = htmlStr + "&nbsp;&nbsp;&nbsp;<img src='" + webRoot + "/resources/images/hackthon/borrow_icon.png' style='width:18px;margin-left:5px;'></img>";
-		if(bookList[i].borrowNums != null && bookList[i].borrowNums != undefined && bookList[i].borrowNums != "")
-			htmlStr = htmlStr + "&nbsp;" + bookList[i].borrowNums;
-		else
-			htmlStr += '&nbsp;0';
-		htmlStr += "</p>";
-		htmlStr += "</div>";
-		htmlStr += "</div></li>";
-	}
-	$("#"+id+" ul").append(htmlStr);
-}
+    function bookScroll() {
+        if (bookIScroll.maxScrollY - this.y <= 60 && moreBook) {
+            $("#loadMoreP").html("上拉加载更多");
+            loadFlag = false;
+        } else if (moreBook) {
+            $("#loadMoreP").html("释放立即加载");
+            loadFlag = true;
+        }
+    }
 
-function gotoUserBookList(uid){
-	window.location.href ="${rc.contextPath}/userHome/userBookList?uid="+uid;
-}
+    function bookScrollEnd() {
+        if (loadFlag && moreBook) {
+            console.log("开始加载");
+            showPersistLoading();
+            $.ajax({
+                url: "${rc.contextPath}/book/getMoreBook",
+                data: {
+                    start: $("#allBookList li").length
+                },
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    if (data.result == "success") {
+                        appendBookItem(data.bookList, "allBookList");
+                        if (data.bookList.length < 10) {
+                            moreBook = false;
+                            $("#loadMoreP").html("已无更多");
+                        }
+                    } else {
+                        moreBook = false;
+                        $("#loadMoreP").html("已无更多");
+                    }
+                    bookIScroll.refresh();
+                    removeLoading();
+                },
+                error: function () {
+                    removeLoading();
+                }
+            });
+        }
+    }
 
-function appendUserItem(userList, id){
-	var htmlStr = "";
-	for(i = 0; i<userList.length; i++){
-    	htmlStr += "<li>";
-		htmlStr = htmlStr + "<div class='user-list-item' onclick=\"gotoUserBookList(\'"+userList[i].uid+"\')\">";
-		htmlStr = htmlStr + "<img class='user-header' src='"+userList[i].headImgUrl+"'></img>";
-		htmlStr = htmlStr + "<p class='user-name'>"+userList[i].empName+"</p>";
-    	htmlStr = htmlStr + "<span class='user-score prize-metal'>"+userList[i].score+"本</span>";
-		htmlStr += "</div></li>";
-	}
-	$("#"+id+" ul").append(htmlStr);
-}
+    function userScroll() {
+        if (userIScroll.maxScrollY - this.y <= 60 && moreUser) {
+            $("#loadMoreUserP").html("上拉加载更多");
+            loadUserFlag = false;
+        } else if (moreUser) {
+            $("#loadMoreUserP").html("释放立即加载");
+            loadUserFlag = true;
+        }
+    }
 
-function showBookDetail(id){
-	window.location.href="${rc.contextPath}/book/bookDetail?bookId="+id;
-}
+    function userScrollEnd() {
+        if (loadUserFlag && moreUser) {
+            console.log("开始加载");
+            showPersistLoading();
+            $.ajax({
+                url: "${rc.contextPath}/userHome/getMoreUser",
+                data: {
+                    start: $("#allUserList li").length
+                },
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    if (data.result == "success") {
+                        appendUserItem(data.userList, "allUserList");
+                        if (data.userList.length < 10) {
+                            moreUser = false;
+                            $("#loadMoreUserP").html("已无更多");
+                        }
+                    } else {
+                        moreUser = false;
+                        $("#loadMoreUserP").html("已无更多");
+                    }
+                    userIScroll.refresh();
+                    removeLoading();
+                },
+                error: function () {
+                    removeLoading();
+                }
+            });
+        }
+    }
+
+    function tabClick(i) {
+        bookSwiper.slideTo(i);
+    }
+
+    function appendBookItem(bookList, id) {
+        var htmlStr = "";
+        for (i = 0; i < bookList.length; i++) {
+            htmlStr += "<li><div class='book-list-item'>";
+            htmlStr = htmlStr + "<img class='book-pic' src='" + bookList[i].cover + "' onclick='showBookDetail(" + bookList[i].bookId + ")'></img>";
+            if (bookList[i].status == "00")
+                htmlStr = htmlStr + "<img class='book-pic-status' src='" + webRoot + "/resources/images/hackthon/borrowable_icon.png'></img>";
+            else if (bookList[i].status == "01")
+                htmlStr = htmlStr + "<img class='book-pic-status' src='" + webRoot + "/resources/images/hackthon/lent_icon.png'></img>";
+            else
+                htmlStr = htmlStr + "<img class='book-pic-status' src='" + webRoot + "/resources/images/hackthon/down_icon.png'></img>";
+            htmlStr += "<div class='list-item-info'>";
+            htmlStr = htmlStr + "<p class='book-title-p'>" + bookList[i].bookName + "</p>";
+            htmlStr = htmlStr + "<p>" + bookList[i].ownerName + "</p>";
+            htmlStr = htmlStr + "<p class='book-count-p'><img src='" + webRoot + "/resources/images/hackthon/like_icon.png' style='width:16px;'></img>";
+            if (bookList[i].likeNums != null && bookList[i].likeNums != undefined && bookList[i].likeNums != "")
+                htmlStr = htmlStr + "&nbsp;" + bookList[i].likeNums;
+            else
+                htmlStr += '&nbsp;0';
+            htmlStr = htmlStr + "&nbsp;&nbsp;&nbsp;<img src='" + webRoot + "/resources/images/hackthon/borrow_icon.png' style='width:18px;margin-left:5px;'></img>";
+            if (bookList[i].borrowNums != null && bookList[i].borrowNums != undefined && bookList[i].borrowNums != "")
+                htmlStr = htmlStr + "&nbsp;" + bookList[i].borrowNums;
+            else
+                htmlStr += '&nbsp;0';
+            htmlStr += "</p>";
+            htmlStr += "</div>";
+            htmlStr += "</div></li>";
+        }
+        $("#" + id + " ul").append(htmlStr);
+    }
+
+    function gotoUserBookList(uid) {
+        window.location.href = "${rc.contextPath}/userHome/userBookList/" + uid;
+    }
+
+    function appendUserItem(userList, id) {
+        var htmlStr = "";
+        for (i = 0; i < userList.length; i++) {
+            htmlStr += "<li>";
+            htmlStr = htmlStr + "<div class='user-list-item' onclick=\"gotoUserBookList(\'" + userList[i].uid + "\')\">";
+            htmlStr = htmlStr + "<img class='user-header' src='" + userList[i].headImgUrl + "'></img>";
+            htmlStr = htmlStr + "<p class='user-name'>" + userList[i].nickName + "</p>";
+            htmlStr = htmlStr + "<span class='user-score prize-metal'>" + userList[i].score + "本</span>";
+            htmlStr += "</div></li>";
+        }
+        $("#" + id + " ul").append(htmlStr);
+    }
+
+    function showBookDetail(id) {
+        window.location.href = "${rc.contextPath}/book/bookDetail/" + id;
+    }
 </script>

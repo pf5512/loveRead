@@ -1,42 +1,44 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<!-- 缓存 -->
-		<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate" />
-		<meta http-equiv="Pragma" content="no-cache" />
-		<meta http-equiv="Expires" content="0" />
-		
-		<meta name="renderer" content="webkit"/>
-		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>
-		
-		<meta name="Keywords" Content="银联，爱读,开心借，UnionPay，UpLib"/>
-		
-		<title>爱读-I Do</title>
-		
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/css/zzrw.common.min.css?v=$!staticVersion"/>
-		
-		<link rel="stylesheet" href="${rc.contextPath}/resources/css/common.web.css?v=$!staticVersion">
-		<link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/css/style.web.css?v=$!staticVersion"/>
-		
-		<!-- jQuery & Bootstrap JS -->
-		<script type="text/javascript" src="${rc.contextPath}/resources/js/zzrw.common.min.js?v=$!staticVersion"></script>
-		<script type="text/javascript" src="${rc.contextPath}/resources/js/unionpay.zzrw.js?v=$!staticVersion"></script>
-		<script type="text/javascript" src="${rc.contextPath}/resources/js/common.web.js?v=$!staticVersion"></script>
-		<script type="text/javascript" src="${rc.contextPath}/resources/js/iscroll-probe.js?v=$!staticVersion"></script>
-		
-		<script type="text/javascript">
-			var webRoot = '${rc.contextPath}';
-			var baseUrl = '${baseUrl}';
-		</script>
-	</head>
-	
-	<body class="$!bodyClass">
-		<div class="container">
-			$screen_content
-		</div>
-		#parse("common/modal.vm")
-	</body>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- 缓存 -->
+    <meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+
+    <meta name="renderer" content="webkit"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>
+
+    <meta name="Keywords" Content="银联，爱读,开心借，UnionPay，UpLib"/>
+
+    <title>爱读-I Do</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css"
+          href="${rc.contextPath}/resources/css/zzrw.common.min.css?v=$!staticVersion"/>
+
+    <link rel="stylesheet" href="${rc.contextPath}/resources/css/common.web.css?v=$!staticVersion">
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/css/style.web.css?v=$!staticVersion"/>
+
+    <!-- jQuery & Bootstrap JS -->
+    <script type="text/javascript" src="${rc.contextPath}/resources/js/zzrw.common.min.js?v=$!staticVersion"></script>
+    <script type="text/javascript" src="${rc.contextPath}/resources/js/unionpay.zzrw.js?v=$!staticVersion"></script>
+    <script type="text/javascript" src="${rc.contextPath}/resources/js/common.web.js?v=$!staticVersion"></script>
+    <script type="text/javascript" src="${rc.contextPath}/resources/js/iscroll-probe.js?v=$!staticVersion"></script>
+
+    <script type="text/javascript">
+        var webRoot = '${rc.contextPath}';
+        var baseUrl = '${baseUrl}';
+    </script>
+</head>
+
+<body class="$!bodyClass">
+<div class="container">
+    $screen_content
+</div>
+    #parse("common/modal.vm")
+</body>
 
 </html>

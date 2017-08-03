@@ -1,40 +1,45 @@
-<img class="qr-code-title-img" src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:history.back();"></img><p class="qr-code-title-p">码上还</p>
+<img class="qr-code-title-img" src="${rc.contextPath}/resources/images/arrow-left.png"
+     onclick="javascript:history.back();"></img><p class="qr-code-title-p">码上还</p>
 <div class="qr-code-container shadow-block">
-	<img src="${rc.contextPath}/qrBook/generate?text=$!returnUrl"></img>
+    <img src="${rc.contextPath}/qrBook/generate?type=qr&text=$!returnUrl"></img>
 </div>
 <div class="qr-book-item shadow-block">
-	<img src="$!bookCover"></img>
-	<div class="qr-book-info">
-		<p style="color:#000;">书名：$!bookName</p>
-		<p>所有者：$!userName - $!team</p>
-		<p>借阅者：$!borrowerName - $!borrowerTeam</p>
-		<p>借出时间：$!startTs</p>
-	</div>
-	<input type="hidden" value="$!bookId" id="bookIdInput">
+    <img src="$!bookCover"></img>
+
+    <div class="qr-book-info">
+        <p style="color:#000;">书名：$!bookName</p>
+
+        <p>所有者：$!userName</p>
+
+        <p>借阅者：$!borrowerName</p>
+
+        <p>借出时间：$!startTs</p>
+    </div>
+    <input type="hidden" value="$!bookId" id="bookIdInput">
 </div>
 <script>
-$(document).ready(function(){
-	$("body").css('height',$(window).height());
-	setInterval(queryBookState,2000);
-});
+    $(document).ready(function () {
+        $("body").css('height', $(window).height());
+        setInterval(queryBookState, 2000);
+    });
 
-function queryBookState(){
-	var bid = $("#bookIdInput").val();
-	$.ajax({
-		url:"${rc.contextPath}/qrBook/getBookState",
-		data:{
-			bookId:bid,
-			type:2
-		},
-		dataType:'json',
-		type:'post',
-		success:function(data){
-			if(data.code == '0') {
-                window.location.href="${rc.contextPath}/";
+    function queryBookState() {
+        var bid = $("#bookIdInput").val();
+        $.ajax({
+            url: "${rc.contextPath}/qrBook/getBookState",
+            data: {
+                bookId: bid,
+                type: 2
+            },
+            dataType: 'json',
+            type: 'post',
+            success: function (data) {
+                if (data.code == '0') {
+                    window.location.href = "${rc.contextPath}/";
+                }
+            },
+            error: function () {
             }
-		},
-		error:function(){
-		}
-	});
-}
+        });
+    }
 </script>

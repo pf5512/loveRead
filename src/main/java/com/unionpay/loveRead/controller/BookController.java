@@ -2,6 +2,7 @@ package com.unionpay.loveRead.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.unionpay.loveRead.bean.BaseResponse;
+import com.unionpay.loveRead.bean.BookDetail;
 import com.unionpay.loveRead.bean.BorrowHistory;
 import com.unionpay.loveRead.bean.RespStatus;
 import com.unionpay.loveRead.constants.AppConfig;
@@ -17,10 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,8 +37,7 @@ import java.util.*;
 @Controller
 @RequestMapping(value = "book")
 public class BookController extends BaseController {
-    private static Logger logger = LoggerFactory
-            .getLogger(BookController.class);
+    private static Logger logger = LoggerFactory.getLogger(BookController.class);
 
     @Autowired
     BookService bookService;
@@ -67,6 +64,26 @@ public class BookController extends BaseController {
         model.addAttribute("bookDetailList", bookList);
         logger.info("----------搜索结果:共" + bookList.size() + "本书-------");
         return "book/bookList";
+    }
+
+    /**
+     * 通过bookId获取图书详情
+     *
+     * @param model
+     * @param bookId
+     */
+
+    @RequestMapping(value = "bookDetail/{bookId}", method = RequestMethod.GET)
+    public String getBookDetail(ModelMap model, @PathVariable("bookId") String bookId) {
+        logger.info("-------查询图书：" + bookId + " 详情----------");
+        BookInfoView bookInfo = bookService.getBookDetailByBookId(bookId);
+        BookDetail bookDetail;
+        // TODO 如果在借，则添加借阅信息
+        bookDetail = new BookDetail(bookInfo);
+        model.addAttribute("bookDetail", bookDetail);
+
+        //TODO 查询该书的相关评论
+        return "book/bookDetail";
     }
 
     /**

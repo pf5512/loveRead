@@ -1,182 +1,206 @@
 <style>
-body{
-	background:#e9e9e9;
-}
+    body {
+        background: #e9e9e9;
+    }
 </style>
 <div class="title-bar">
-	<img src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:history.back();"></img><p>Top10 排行</p>
+    <img src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:history.back();"></img>
+
+    <p>Top10 排行</p>
 </div>
 <div class="content-tab">
-	<ul>
-		<li><a href="javascript:tabClick(0);" class="active-a" id="likeRankA">人气排行</a></li>
-		<li><a href="javascript:tabClick(1);" id="hotRankA">借阅排行</a></li>
-		<li><a href="javascript:tabClick(2);" id="scoreRankA">积分排行</a></li>
-	</ul>
+    <ul>
+        <li><a href="javascript:tabClick(0);" class="active-a" id="likeRankA">人气排行</a></li>
+        <li><a href="javascript:tabClick(1);" id="hotRankA">借阅排行</a></li>
+        <li><a href="javascript:tabClick(2);" id="scoreRankA">积分排行</a></li>
+    </ul>
 </div>
 <div class="swiper-container rank-swiper">
-	<div class="swiper-wrapper">
-		<div class="swiper-slide rank-list">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide rank-list">
             #if($!{bookLikeList.size()}>0)
-            	<ul>
-            		#foreach($value in $!bookLikeList)
-            		<li>
-            			<div class="book-list-item">
-            				<img class="book-pic" src="$value.cover" onclick="window.location.href='${rc.contextPath}/book/bookDetail?bookId=$!{value.bookId}'"></img>
-            				#if($!{value.status} == "00")
-            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/borrowable_icon.png"></img>
-            				#elseif($!{value.status} == "01")
-            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/lent_icon.png"></img>
-            				#else
-            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/down_icon.png"></img>
-            				#end
-            				<div class="list-item-info">
-            					<p class="book-title-p">$!{value.bookName}</p>
-            					<p>$!{value.ownerName} - $!{value.ownerTeam}</p>
-            					<p class="book-count-p">
-            						<img src="${rc.contextPath}/resources/images/hackthon/like_icon.png" style="width:16px;"></img>
-            						#if($!{value.likeNums})
-            						$!value.likeNums
-            						#else
-            						0
-            						#end
-                                    &nbsp;
-            						<img src="${rc.contextPath}/resources/images/hackthon/borrow_icon.png" style="width:18px;margin-left:5px;"></img>
-            						#if($!{value.borrowNums})
-            						$!value.borrowNums
-            						#else
-            						0
-            						#end
-            					</p>
-            				</div>
-            			</div>
-            		</li>
-            		#end
-            	</ul>
+                <ul>
+                    #foreach($value in $!bookLikeList)
+                        <li>
+                            <div class="book-list-item">
+                                <img class="book-pic" src="$value.cover"
+                                     onclick="window.location.href='${rc.contextPath}/book/bookDetail?bookId=$!{value.bookId}'"></img>
+                                #if($!{value.status} == "00")
+                                    <img class="book-pic-status"
+                                         src="${rc.contextPath}/resources/images/hackthon/borrowable_icon.png"></img>
+                                #elseif($!{value.status} == "01")
+                                    <img class="book-pic-status"
+                                         src="${rc.contextPath}/resources/images/hackthon/lent_icon.png"></img>
+                                #else
+                                    <img class="book-pic-status"
+                                         src="${rc.contextPath}/resources/images/hackthon/down_icon.png"></img>
+                                #end
+                                <div class="list-item-info">
+                                    <p class="book-title-p">$!{value.bookName}</p>
+
+                                    <p>$!{value.ownerName} - $!{value.ownerTeam}</p>
+
+                                    <p class="book-count-p">
+                                        <img src="${rc.contextPath}/resources/images/hackthon/like_icon.png"
+                                             style="width:16px;"></img>
+                                        #if($!{value.likeNums})
+                                            $!value.likeNums
+                                        #else
+                                            0
+                                        #end
+                                        &nbsp;
+                                        <img src="${rc.contextPath}/resources/images/hackthon/borrow_icon.png"
+                                             style="width:18px;margin-left:5px;"></img>
+                                        #if($!{value.borrowNums})
+                                            $!value.borrowNums
+                                        #else
+                                            0
+                                        #end
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    #end
+                </ul>
             #else
                 <div class="no-item">
                     <img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
+
                     <p>大侠，暂时还没有排名哦！</p>
                 </div>
             #end
         </div>
-		<div class="swiper-slide rank-list">
+        <div class="swiper-slide rank-list">
             #if($!{bookBorrowList.size()}>0)
-            	<ul>
-            		#foreach($value in $!bookBorrowList)
-            		<li>
-            			<div class="book-list-item">
-            				<img class="book-pic" src="$value.cover" onclick="window.location.href='${rc.contextPath}/book/bookDetail?bookId=$!{value.bookId}'"></img>
-            				#if($!{value.status} == "00")
-            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/borrowable_icon.png"></img>
-            				#elseif($!{value.status} == "01")
-            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/lent_icon.png"></img>
-            				#else
-            				<img class="book-pic-status" src="${rc.contextPath}/resources/images/hackthon/down_icon.png"></img>
-            				#end
-            				<div class="list-item-info">
-            					<p class="book-title-p">$!{value.bookName}</p>
-            					<p>$!{value.ownerName} - $!{value.ownerTeam}</p>
-            					<p class="book-count-p">
-            						<img src="${rc.contextPath}/resources/images/hackthon/like_icon.png" style="width:16px;"></img>
-            						#if($!{value.likeNums})
-            						$!value.likeNums
-            						#else
-            						0
-            						#end
-                                    &nbsp;
-            						<img src="${rc.contextPath}/resources/images/hackthon/borrow_icon.png" style="width:18px;margin-left:5px;"></img>
-            						#if($!{value.borrowNums})
-            						$!value.borrowNums
-            						#else
-            						0
-            						#end
-            					</p>
-            				</div>
-            			</div>
-            		</li>
-            		#end
-            	</ul>
+                <ul>
+                    #foreach($value in $!bookBorrowList)
+                        <li>
+                            <div class="book-list-item">
+                                <img class="book-pic" src="$value.cover"
+                                     onclick="window.location.href='${rc.contextPath}/book/bookDetail?bookId=$!{value.bookId}'"></img>
+                                #if($!{value.status} == "00")
+                                    <img class="book-pic-status"
+                                         src="${rc.contextPath}/resources/images/hackthon/borrowable_icon.png"></img>
+                                #elseif($!{value.status} == "01")
+                                    <img class="book-pic-status"
+                                         src="${rc.contextPath}/resources/images/hackthon/lent_icon.png"></img>
+                                #else
+                                    <img class="book-pic-status"
+                                         src="${rc.contextPath}/resources/images/hackthon/down_icon.png"></img>
+                                #end
+                                <div class="list-item-info">
+                                    <p class="book-title-p">$!{value.bookName}</p>
+
+                                    <p>$!{value.ownerName} - $!{value.ownerTeam}</p>
+
+                                    <p class="book-count-p">
+                                        <img src="${rc.contextPath}/resources/images/hackthon/like_icon.png"
+                                             style="width:16px;"></img>
+                                        #if($!{value.likeNums})
+                                            $!value.likeNums
+                                        #else
+                                            0
+                                        #end
+                                        &nbsp;
+                                        <img src="${rc.contextPath}/resources/images/hackthon/borrow_icon.png"
+                                             style="width:18px;margin-left:5px;"></img>
+                                        #if($!{value.borrowNums})
+                                            $!value.borrowNums
+                                        #else
+                                            0
+                                        #end
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    #end
+                </ul>
             #else
                 <div class="no-item">
                     <img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
+
                     <p>大侠，暂时还没有排名哦！</p>
                 </div>
             #end
         </div>
-		<div class="swiper-slide rank-list" id="userRankList">
+        <div class="swiper-slide rank-list" id="userRankList">
             #if($!{userList.size()}>0)
-            	<ul>
-            		#foreach($value in $!userList)
-            		<li>
-            			<div class="user-list-item">
-    						#if($!value.icon)
-            				<img class="user-header" src="$!value.icon"></img>
-    						#else
-    						<img class="user-header" src="${rc.contextPath}/resources/images/hackthon/user_header_icon.png"></img>
-    						#end
-            				<p class="user-name">$!{value.empName}</p>
-            				<p class="user-team">$!{value.team}</p>
+                <ul>
+                    #foreach($value in $!userList)
+                        <li>
+                            <div class="user-list-item">
+                                #if($!value.icon)
+                                    <img class="user-header" src="$!value.icon"></img>
+                                #else
+                                    <img class="user-header"
+                                         src="${rc.contextPath}/resources/images/hackthon/user_header_icon.png"></img>
+                                #end
+                                <p class="user-name">$!{value.nickName}</p>
     						<span class="user-score prize-metal"
-    							#if($velocityCount == 1) style="font-weight:bold;background-image:url('${rc.contextPath}/resources/images/hackthon/prize_gold.png');"
-    							#elseif($velocityCount == 2) style="font-weight:bold;background-image:url('${rc.contextPath}/resources/images/hackthon/prize_silver.png');"
-    							#elseif($velocityCount == 3) style="font-weight:bold;background-image:url('${rc.contextPath}/resources/images/hackthon/prize_bronze.png');"
-    							#end>$!{value.score}</span>
-            			</div>
-            		</li>
-            		#end
-            	</ul>
+                                #if($velocityCount == 1)
+                                  style="font-weight:bold;background-image:url('${rc.contextPath}/resources/images/hackthon/prize_gold.png');"
+                                #elseif($velocityCount == 2)
+                                  style="font-weight:bold;background-image:url('${rc.contextPath}/resources/images/hackthon/prize_silver.png');"
+                                #elseif($velocityCount == 3)
+                                  style="font-weight:bold;background-image:url('${rc.contextPath}/resources/images/hackthon/prize_bronze.png');"
+                                #end>$!{value.score}</span>
+                            </div>
+                        </li>
+                    #end
+                </ul>
             #else
                 <div class="no-item">
                     <img src="${rc.contextPath}/resources/images/hackthon/no_right.png"></img>
+
                     <p>大侠，暂时还没有排名哦！</p>
                 </div>
             #end
         </div>
-	</div>
+    </div>
 </div>
 <script>
-var rankSwiper;
-$(document).ready(function(){
-	
-	$('.rank-swiper').css('height',$(window).height() - 90);
+    var rankSwiper;
+    $(document).ready(function () {
 
-	rankSwiper = new Swiper('.rank-swiper', {
-        slidesPerView: 'auto',
-		effect : 'flip',
-		onSlideNextStart: function(swiper){
-			if(swiper.activeIndex == 1){
-				$("#likeRankA").removeAttr('class');
-				$("#hotRankA").attr('class','active-a');
-				$("#scoreRankA").removeAttr('class');
-			}else if(swiper.activeIndex == 2){
-				$("#likeRankA").removeAttr('class');
-				$("#hotRankA").removeAttr('class');
-				$("#scoreRankA").attr('class','active-a');
-			}else{
-				$("#scoreHitoryA").attr('class','active-a');
-				$("#hotRankA").removeAttr('class');
-				$("#scoreRankA").removeAttr('class');
-			}
-		},
-		onSlidePrevStart: function(swiper){
-			if(swiper.activeIndex == 0){
-				$("#likeRankA").attr('class','active-a');
-				$("#hotRankA").removeAttr('class');
-				$("#scoreRankA").removeAttr('class');
-			}else if(swiper.activeIndex == 1){
-				$("#likeRankA").removeAttr('class');
-				$("#hotRankA").attr('class','active-a');
-				$("#scoreRankA").removeAttr('class');
-			}else{
-				$("#likeRankA").removeAttr('class');
-				$("#hotRankA").removeAttr('class');
-				$("#scoreRankA").attr('class','active-a');
-			}
-		}
+        $('.rank-swiper').css('height', $(window).height() - 90);
+
+        rankSwiper = new Swiper('.rank-swiper', {
+            slidesPerView: 'auto',
+            effect: 'flip',
+            onSlideNextStart: function (swiper) {
+                if (swiper.activeIndex == 1) {
+                    $("#likeRankA").removeAttr('class');
+                    $("#hotRankA").attr('class', 'active-a');
+                    $("#scoreRankA").removeAttr('class');
+                } else if (swiper.activeIndex == 2) {
+                    $("#likeRankA").removeAttr('class');
+                    $("#hotRankA").removeAttr('class');
+                    $("#scoreRankA").attr('class', 'active-a');
+                } else {
+                    $("#scoreHitoryA").attr('class', 'active-a');
+                    $("#hotRankA").removeAttr('class');
+                    $("#scoreRankA").removeAttr('class');
+                }
+            },
+            onSlidePrevStart: function (swiper) {
+                if (swiper.activeIndex == 0) {
+                    $("#likeRankA").attr('class', 'active-a');
+                    $("#hotRankA").removeAttr('class');
+                    $("#scoreRankA").removeAttr('class');
+                } else if (swiper.activeIndex == 1) {
+                    $("#likeRankA").removeAttr('class');
+                    $("#hotRankA").attr('class', 'active-a');
+                    $("#scoreRankA").removeAttr('class');
+                } else {
+                    $("#likeRankA").removeAttr('class');
+                    $("#hotRankA").removeAttr('class');
+                    $("#scoreRankA").attr('class', 'active-a');
+                }
+            }
+        });
     });
-});
 
-function tabClick(i){
-	rankSwiper.slideTo(i);
-}
+    function tabClick(i) {
+        rankSwiper.slideTo(i);
+    }
 </script>

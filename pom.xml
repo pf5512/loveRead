@@ -23,7 +23,7 @@
         <version.javassist>3.8.0.GA</version.javassist>
         <version.velocity>1.7</version.velocity>
         <version.velocity.tools>2.0</version.velocity.tools>
-        <version.zxing>2.2</version.zxing>
+        <version.zxing>3.2.1</version.zxing>
         <version.httpclient>4.5.2</version.httpclient>
     </properties>
 
