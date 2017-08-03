@@ -125,7 +125,7 @@ public class UserHomeController extends BaseController {
         logger.info("----------查看我的借阅记录----------");
         //获取用户id
         String uid = getSessionUid(request);
-        List<BookBorrowFlow> historyList = borrowFlowService.getUserBorrowList(uid);
+        List<BookBorrowFlow> historyList = borrowFlowService.getUserBorrowHistory(uid);
         List<UserBorrowInfo> borrowList = borrowService.getBorrowHistory(historyList);
         model.addAttribute("borrowHistoryList", borrowList);
         logger.info("----------我的借阅记录数:" + borrowList.size() + "----------");

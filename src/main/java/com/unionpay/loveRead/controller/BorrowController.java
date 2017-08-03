@@ -9,6 +9,7 @@ import com.unionpay.loveRead.domain.WxUser;
 import com.unionpay.loveRead.enums.CodeEventEnums;
 import com.unionpay.loveRead.service.BookService;
 import com.unionpay.loveRead.service.BorrowService;
+import com.unionpay.loveRead.service.NotifyService;
 import com.unionpay.loveRead.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,9 @@ public class BorrowController extends BaseController {
 
     @Autowired
     BorrowService borrowService;
+
+    @Autowired
+    NotifyService notifyService;
 
     /**
      * 二维码借/还书
@@ -103,11 +107,13 @@ public class BorrowController extends BaseController {
                     //如果流水表插入成功
                     if (success) {
                         WxUser owner = userService.getUserByOpenId(ownerId);
-                        //TODO 给图书主人发消息
+                        //给图书主人发消息
                         String ownerContent = "出借成功！您的图书《" + book.getBookName() + "》已成功出借给" + reader.getNickName() + "!";
-                        logger.info(ownerContent);
+                        notifyService.textNotify(ownerId, ownerContent);
+                        //给借阅者发消息
+                        String readerContent = "借书成功！您已成功借阅"+owner.getNickName()+"的《"+book.getBookName()+"》!";
+                        notifyService.textNotify(readerId, readerContent);
                     } else {
-                        //TODO 插入错误流水表
                         logger.error("借书失败！");
                     }
                 } else {
@@ -140,9 +146,16 @@ public class BorrowController extends BaseController {
                     success = borrowService.returnBook(bookId, readerId, ownerId);
                     //如果流水表插入成功
                     if (success) {
+                        WxUser reader = userService.getUserByOpenId(readerId);
                         WxUser owner = userService.getUserByOpenId(ownerId);
-                        String readerContent = "还书成功！您已成功归还" + owner.getNickName() + "的《" + book.getBookName() + "》!";
-                        logger.info(readerContent);
+                        //给图书主人发消息
+                        String ownerContent = "归还成功！"+reader.getNickName()+"已将您的图书：《"+book.getBookName()+"》归还!";
+                        notifyService.textNotify(ownerId, ownerContent);
+
+                        //给借阅者发消息
+                        String readerContent = "还书成功！您已成功归还"+owner.getNickName()+"的《"+book.getBookName()+"》!";
+                        notifyService.textNotify(readerId, readerContent);
+
                     } else {
                         //插入错误流水表
                         logger.error("还书失败！");
@@ -160,5 +173,4 @@ public class BorrowController extends BaseController {
         logger.info("-----返回信息：" + response.toString());
         logger.info("----------归还结束-------");
     }
-
 }

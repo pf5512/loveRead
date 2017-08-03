@@ -204,32 +204,32 @@
             window.location.href = "${rc.contextPath}/userHome/myReturnList";
         });
 
-        //获取TOP10
-        $.ajax({
-            url: '${rc.contextPath}/getTopThree',
-            dataType: 'json',
-            success: function (data) {
-                $("#homeRankList").empty();
-                var html = "";
-                for (i = 0; i < data.books.length; i++) {
-                    html = html + "<div class='swiper-slide top-rank-item' onclick='jumpDetail(" + data.books[i].bookId + ")'>";
-                    html = html + "<p style='font-size:12px;'>" + data.books[i].ownerName + "</p>";
-                    html = html + "<img src='" + data.books[i].cover + "'></img>";
-                    html = html + "<p>" + data.books[i].bookName + "</p>";
-                    html = html + "</div>";
-                }
-                $("#homeRankList").append(html);
-
-                var swiper = new Swiper('.home-rank-swiper', {
-                    slidesPerView: 4,
-                    paginationClickable: true,
-                    spaceBetween: 10,
-                    initialSlide: 0
-                });
-            },
-            error: function () {
-            }
-        });
+##        //获取TOP10
+##        $.ajax({
+##            url: '${rc.contextPath}/getTopThree',
+##            dataType: 'json',
+##            success: function (data) {
+##                $("#homeRankList").empty();
+##                var html = "";
+##                for (i = 0; i < data.books.length; i++) {
+##                    html = html + "<div class='swiper-slide top-rank-item' onclick='jumpDetail(" + data.books[i].bookId + ")'>";
+##                    html = html + "<p style='font-size:12px;'>" + data.books[i].ownerName + "</p>";
+##                    html = html + "<img src='" + data.books[i].cover + "'></img>";
+##                    html = html + "<p>" + data.books[i].bookName + "</p>";
+##                    html = html + "</div>";
+##                }
+##                $("#homeRankList").append(html);
+##
+##                var swiper = new Swiper('.home-rank-swiper', {
+##                    slidesPerView: 4,
+##                    paginationClickable: true,
+##                    spaceBetween: 10,
+##                    initialSlide: 0
+##                });
+##            },
+##            error: function () {
+##            }
+##        });
     })
 
     function jumpDetail(id) {

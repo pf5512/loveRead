@@ -81,7 +81,7 @@ public class GlobalInterceptor extends BaseController implements HandlerIntercep
                 }
             }
         } else {
-            logger.info("Session中userId为:" + userId + ",不用重新获取用户信息。");
+                logger.info("Session中userId为:" + userId + ",不用重新获取用户信息。");
         }
         return true;
     }

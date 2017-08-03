@@ -30,4 +30,13 @@ public class BorrowFlowService {
         return borrowFlowDao.findUserBorrowList(uid);
     }
 
+    /**
+     * 获取用户的借阅历史
+     * @param uid
+     * @return
+     */
+    public List<BookBorrowFlow> getUserBorrowHistory(String uid) {
+        return borrowFlowDao.findUserBorrowHistory(uid);
+    }
+
 }

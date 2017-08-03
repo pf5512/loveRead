@@ -43,4 +43,16 @@ public class BorrowFlowDao extends HibernateBaseDao<BookBorrowFlow, Serializable
         return recordList;
     }
 
+    /**
+     * 获取用户借阅历史
+     *
+     * @param readerId
+     *
+     * @return
+     */
+    public List<BookBorrowFlow> findUserBorrowHistory(String readerId) {
+        String hql = "from BookBorrowFlow where readerId = ? order by outTime desc";
+        List<BookBorrowFlow> recordList = find(hql, readerId);
+        return recordList;
+    }
 }
