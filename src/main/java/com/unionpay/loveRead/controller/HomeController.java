@@ -15,10 +15,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -37,7 +39,7 @@ public class HomeController extends BaseController {
     private UserService userService;
 
     /**
-     * 所有图书
+     * 首页
      *
      * @param model
      * @param request
@@ -66,7 +68,7 @@ public class HomeController extends BaseController {
     }
 
     /**
-     * 所有图书和用户
+     * 所有
      *
      * @param model
      * @param request
@@ -97,6 +99,22 @@ public class HomeController extends BaseController {
         model.addAttribute("bookDetailList", bookList);
         model.addAttribute("userList", userList);
         return "book/allBookAndUserList";
+    }
+
+    /**
+     * 关于我们
+     *
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     */
+    @GetMapping(value = "aboutUs")
+    public String aboutUs(Model model, HttpServletRequest request,
+                          HttpServletResponse response) {
+        logger.info("into aboutUs!");
+        model.addAttribute("bodyClass", "qr-code-body");
+        return "aboutUs";
     }
 
     /**

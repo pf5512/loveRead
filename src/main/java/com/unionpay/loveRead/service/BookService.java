@@ -349,13 +349,4 @@ public class BookService {
         }
         return 0;
     }
-
-    /**
-     * 图书数量减1
-     *
-     * @param bookId
-     */
-    public void updateBookNums(String bookId) {
-        bookDao.modifyBookNums(bookId);
-    }
 }

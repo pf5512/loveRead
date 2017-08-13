@@ -87,7 +87,7 @@
                         </div>
                     </li>
                     <li>
-                        <div class="second-list-item" onclick="javascript:zzrw.alert('敬请期待')">
+                        <div class="second-list-item" onclick="window.location.href='${rc.contextPath}/moments/list'">
                             <img src="${rc.contextPath}/resources/images/hackthon/borrow_icon.png"></img>
 
                             <p>圈子</p>

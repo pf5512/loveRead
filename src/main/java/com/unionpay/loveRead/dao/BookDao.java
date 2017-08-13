@@ -67,26 +67,4 @@ public class BookDao extends HibernateBaseDao<Book, Serializable> {
         return find(hql, uid, isbn);
     }
 
-    @SuppressWarnings("unchecked")
-    public List<Book> findReviewBookList(List<Integer> bookIdList) {
-        if (bookIdList != null && bookIdList.size() > 0) {
-            String hql = "from Book where id in :bookIdList group by isbn";
-            // 组合参数值
-            Query query = createQuery(hql);
-            query.setParameterList("bookIdList", bookIdList);
-            return query.list();
-        }
-        return null;
-    }
-
-    /**
-     * 图书数量减1
-     *
-     * @param bookId
-     */
-    public void modifyBookNums(String bookId) {
-        Integer bookIdInt = Integer.valueOf(bookId);
-        String hql = "update Book set lastDay = lastDay - 1 where id = ?";
-        update(hql, bookIdInt);
-    }
 }

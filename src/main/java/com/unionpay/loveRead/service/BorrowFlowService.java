@@ -1,6 +1,7 @@
 package com.unionpay.loveRead.service;
 
 import com.unionpay.loveRead.dao.BorrowFlowDao;
+import com.unionpay.loveRead.domain.Book;
 import com.unionpay.loveRead.domain.BookBorrowFlow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,4 +40,12 @@ public class BorrowFlowService {
         return borrowFlowDao.findUserBorrowHistory(uid);
     }
 
+    /**
+     * 获取用户用户借阅过的图书id列表
+     * @param uid
+     * @return
+     */
+    public List<Book> getBorrowedBookList(String uid) {
+        return borrowFlowDao.findBorrowedBookList(uid);
+    }
 }

@@ -14,11 +14,6 @@ public class Constants {
     public static final String SESSION_USER = "user";
 
     /**
-     * 分页默认大小
-     */
-    public static final int PAGESIZE = 20;
-
-    /**
      * 借阅状态 00-在借 01-正常归还 02-图书超期 根据归还时间判断状态
      */
     public static final String BORROW_ING = "00";
@@ -26,7 +21,7 @@ public class Constants {
     public static final String BORROW_OVERDUE = "02";
 
     /**
-     * 订单分页操作，page当前页数，pageSize每页限时条数
+     * 分页操作，page当前页数，pageSize每页限时条数
      */
     public static final int PAGE = 1;
     public static final int PAGE_SIZE = 10;
@@ -54,6 +49,12 @@ public class Constants {
      * 图书可借阅期限 默认30天
      */
     public static final int LASTDAY = 30;
+
+    /**
+     * 朋友圈消息状态
+     */
+    public static final String MOMENTS_STATUS_NORMAL = "0";
+    public static final String MOMENTS_STATUS_DELETED = "1";
 
     /**
      * 图书点赞状态 00-点赞，01-取消赞

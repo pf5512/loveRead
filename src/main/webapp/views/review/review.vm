@@ -19,66 +19,64 @@
     <div class="swiper-wrapper">
         <!--同事评论信息-->
         <div class="swiper-slide workmate-review-list swiper-no-swiping" id="workmateReviewList">
-            #if($!{reviewInfoList.size()}>0)
+            #if($!{momentsInfoList.size()}>0)
                 <div style="position:relative;z-index:2;height:100%;" id="workmateScroll">
                     <ul>
-                        #foreach($reviewInfo in $!reviewInfoList)
-                            <li class="reviewItem${reviewInfo.reviewId} review-item-li">
+                        #foreach($momentsInfo in $!momentsInfoList)
+                            <li class="reviewItem${momentsInfo.momentId} review-item-li">
                                 <div class="review-list-item">
                                     <div class="review-title">
-                                        #if($!reviewInfo.reviewerIcon)
-                                            <img class="review-header" src="$!reviewInfo.reviewerIcon"></img>
+                                        #if($!momentsInfo.userIcon)
+                                            <img class="review-header" src="$!momentsInfo.userIcon"></img>
                                         #else
                                             <img class="review-header"
                                                  src="${rc.contextPath}/resources/images/hackthon/user_header_icon.png"></img>
                                         #end
-                                        <p class="review-name">$!{reviewInfo.reviewerName}</p>
-
-                                        <p class="review-team">$!{reviewInfo.reviewerTeam}</p>
+                                        <p class="review-name">$!{momentsInfo.userName}</p>
 
                                         <p class="review-date">$!date.format(
-                                            "yyyy-MM-dd HH:mm:ss",$!{reviewInfo.reviewTime})</p>
+                                            "yyyy-MM-dd HH:mm:ss",$!{momentsInfo.crtTs})</p>
                                     </div>
                                     <div class="review-body">
-                                        #if($!reviewInfo.bookName)
-                                            <p class="review-book">对<span>《$!{reviewInfo.bookName}》</span>发表评论：</p>
+                                        #if($!momentsInfo.bookName)
+                                            <p class="review-book">对<span>《$!{momentsInfo.bookName}》</span>发表评论：</p>
                                         #end
-                                        #if($!reviewInfo.commentImg)
-                                            <img src="${rc.contextPath}/upload/${reviewInfo.commentImg}"></img>
+                                        #if($!momentsInfo.momentsImg)
+                                            <img src="${rc.contextPath}/upload/${momentsInfo.momentsImg}"></img>
                                         #end
-                                        <p class="review-content">$!{reviewInfo.reviewContent}</p>
+                                        <p class="review-content">$!{momentsInfo.content}</p>
                                     </div>
                                     <div class="review-operation">
-                                        #if($!reviewInfo.reviewerId == $!userId)
+                                        #if($!momentsInfo.userId == $!currentUserId)
                                             <a class="delete-operation"
-                                               href="javascript:deleteComment('$reviewInfo.reviewId');"><img
+                                               href="javascript:deleteComment('$momentsInfo.momentId');"><img
                                                     src="${rc.contextPath}/resources/images/hackthon/delete_comment_icon.png"></img>
                                                 删除</a>
                                         #end
-                                        <a class="like-operation" href="javascript:addLike('$reviewInfo.reviewId')">
-                                            #if($!reviewInfo.isLike == 'yes')
-                                                <img class="likeBtnImg$reviewInfo.reviewId"
+                                        <a class="like-operation" href="javascript:addLike('$momentsInfo.momentId')">
+                                            #if($!momentsInfo.isLike == 'yes')
+                                                <img class="likeBtnImg$momentsInfo.momentId"
                                                      src="${rc.contextPath}/resources/images/hackthon/like_icon.png"></img>
                                             #else
-                                                <img class="likeBtnImg$reviewInfo.reviewId"
+                                                <img class="likeBtnImg$momentsInfo.momentId"
                                                      src="${rc.contextPath}/resources/images/hackthon/like_yet_icon.png"></img>
                                             #end
                                         </a>
-                                        <span class="like-span likeNum$reviewInfo.reviewId">$!{reviewInfo.likeNums}</span>
-                                        <img class="reply-icon" onclick="showReplyDialog('$reviewInfo.reviewId','')"
+                                        <span class="like-span likeNum$momentsInfo.momentId">$!{momentsInfo.likeNums}</span>
+                                        <img class="reply-icon" onclick="showReplyDialog('$momentsInfo.momentId','')"
                                              src="${rc.contextPath}/resources/images/hackthon/reply_icon.png"></img>
                                     </div>
                                     <div class="review-reply">
                                         <ul>
-                                            #foreach($reviewReply in $!{reviewInfo.reviewReplyList})
-                                                #if($reviewReply.replyerName)
+                                            #foreach($momentsReply in $!{momentsInfo.momentsReplyList})
+                                                #if($momentsReply.replyerName)
                                                     <li>
-                                                        <p onclick="showReplyDialog('$reviewInfo.reviewId','$reviewReply.replyerName')">
-                                                            <span>$!reviewReply.replyerName</span>
-                                                            #if($reviewReply.parentReplyName &&
-                                                                "$reviewReply.parentReplyName" != "")
-                                                                回复<span>$!reviewReply.parentReplyName</span>#end
-                                                            : $!reviewReply.replyContent
+                                                        <p onclick="showReplyDialog('$momentsInfo.momentsId','$momentsReply.replyerName')">
+                                                            <span>$!momentsReply.replyerName</span>
+                                                            #if($momentsReply.parentReplyerName &&
+                                                                "$momentsReply.parentReplyerName" != "")
+                                                                回复<span>$!momentsReply.parentReplyerName</span>#end
+                                                            : $!momentsReply.replyContent
                                                         </p>
                                                     </li>
                                                 #end
@@ -104,64 +102,62 @@
         </div>
         <!--我的评论信息-->
         <div class="swiper-slide my-review-list swiper-no-swiping" id="myReviewList" style="overflow-y:auto;">
-            #if($!{myReviewList.size()}>0)
+            #if($!{myMomentsList.size()}>0)
                 <div style="position:relative;z-index:2;height:100%;">
                     <ul>
-                        #foreach($reviewInfo in $!myReviewList)
-                            <li class="reviewItem${reviewInfo.reviewId}">
+                        #foreach($momentsInfo in $!myMomentsList)
+                            <li class="reviewItem${momentsInfo.momentId}">
                                 <div class="review-list-item">
                                     <div class="review-title">
-                                        #if($!reviewInfo.reviewerIcon)
-                                            <img class="review-header" src="$!reviewInfo.reviewerIcon"></img>
+                                        #if($!momentsInfo.userIcon)
+                                            <img class="review-header" src="$!momentsInfo.userIcon"></img>
                                         #else
                                             <img class="review-header"
                                                  src="${rc.contextPath}/resources/images/hackthon/user_header_icon.png"></img>
                                         #end
-                                        <p class="review-name">$!{reviewInfo.reviewerName}</p>
-
-                                        <p class="review-team">$!{reviewInfo.reviewerTeam}</p>
+                                        <p class="review-name">$!{momentsInfo.userName}</p>
 
                                         <p class="review-date">$!date.format(
-                                            "yyyy-MM-dd HH:mm:ss",$!{reviewInfo.reviewTime})</p>
+                                            "yyyy-MM-dd HH:mm:ss",$!{momentsInfo.crtTs})</p>
                                     </div>
                                     <div class="review-body">
-                                        #if($!reviewInfo.bookName)
-                                            <p class="review-book">对<span>《$!{reviewInfo.bookName}》</span>发表评论：</p>
+                                        #if($!momentsInfo.bookName)
+                                            <p class="review-book">对<span>《$!{momentsInfo.bookName}》</span>发表评论：</p>
                                         #end
-                                        #if($!reviewInfo.commentImg)
-                                            <img src="${rc.contextPath}/upload/${reviewInfo.commentImg}"></img>
+                                        #if($!momentsInfo.commentImg)
+                                            <img src="${rc.contextPath}/upload/${momentsInfo.momentsImg}"></img>
                                         #end
-                                        <p class="review-content">$!{reviewInfo.reviewContent}</p>
+                                        <p class="review-content">$!{momentsInfo.content}</p>
                                     </div>
                                     <div class="review-operation">
                                         <a class="delete-operation"
-                                           href="javascript:deleteComment('$reviewInfo.reviewId');"><img
+                                           href="javascript:deleteComment('$momentsInfo.momentId');"><img
                                                 src="${rc.contextPath}/resources/images/hackthon/delete_comment_icon.png"></img>
                                             删除</a>
-                                        <a class="like-operation" href="javascript:addLike('$reviewInfo.reviewId')">
-                                            #if($!reviewInfo.isLike == 'yes')
-                                                <img class="likeBtnImg$reviewInfo.reviewId"
+                                        <a class="like-operation" href="javascript:addLike('$momentsInfo.momentId')">
+                                            #if($!momentsInfo.isLike == 'yes')
+                                                <img class="likeBtnImg$momentsInfo.momentId"
                                                      src="${rc.contextPath}/resources/images/hackthon/like_icon.png"></img>
                                             #else
-                                                <img class="likeBtnImg$reviewInfo.reviewId"
+                                                <img class="likeBtnImg$momentsInfo.momentId"
                                                      src="${rc.contextPath}/resources/images/hackthon/like_yet_icon.png"></img>
                                             #end
                                         </a>
-                                        <span class="like-span likeNum$reviewInfo.reviewId">$!{reviewInfo.likeNums}</span>
-                                        <img class="reply-icon" onclick="showReplyDialog('$reviewInfo.reviewId','')"
+                                        <span class="like-span likeNum$momentsInfo.momentId">$!{momentsInfo.likeNums}</span>
+                                        <img class="reply-icon" onclick="showReplyDialog('$momentsInfo.momentId','')"
                                              src="${rc.contextPath}/resources/images/hackthon/reply_icon.png"></img>
                                     </div>
                                     <div class="review-reply">
                                         <ul>
-                                            #foreach($reviewReply in $!{reviewInfo.reviewReplyList})
-                                                #if($reviewReply.replyerName)
+                                            #foreach($momentsReply in $!{momentsInfo.momentsReplyList})
+                                                #if($momentsReply.replyerName)
                                                     <li>
-                                                        <p onclick="showReplyDialog('$reviewInfo.reviewId','$reviewReply.replyerName')">
-                                                            <span>$!reviewReply.replyerName</span>
-                                                            #if($reviewReply.parentReplyName &&
-                                                                "$reviewReply.parentReplyName" != "")
-                                                                回复<span>$!reviewReply.parentReplyName</span>#end
-                                                            : $!reviewReply.replyContent
+                                                        <p onclick="showReplyDialog('$momentsInfo.momentId','$momentsReply.replyerName')">
+                                                            <span>$!momentsReply.replyerName</span>
+                                                            #if($momentsReply.parentReplyerName &&
+                                                                "$momentsReply.parentReplyerName" != "")
+                                                                回复<span>$!momentsReply.parentReplyerName</span>#end
+                                                            : $!momentsReply.replyContent
                                                         </p>
                                                     </li>
                                                 #end
@@ -198,12 +194,10 @@
                         <option value="$book.id">$book.bookName</option>
                     #end
                 </select>
-            #else
-                您暂时无法发表书评哦
             #end
         </div>
         <div class="form-group">
-            <textarea id="reviewContentArea" name="reviewContent" placeholder="发表评论"></textarea>
+            <textarea id="contentArea" name="content" placeholder="发表评论"></textarea>
         </div>
         <div class="form-group">
             <img id="commentImg" style="margin-left:5%;"
@@ -218,7 +212,8 @@
 <!-- 回复框 -->
 <div class="reply-modal">
     <form id="replyForm" action="${rc.contextPath}/review/reply" method="post">
-        <input type="hidden" name="reviewId" id="reviewId">
+        <input type="hidden" name="momentId" id="momentId">
+        <input type="hidden" name="pReplyerId" id="pReplyerId">
         <input type="hidden" name="pReplyName" id="pReplyName">
 
         <div class="form-group">
@@ -228,7 +223,7 @@
         <button type="button" style="background-color:#f0ad4e;" onclick="hideReplyDialog()">返回</button>
     </form>
 </div>
-<input type="hidden" id="hideUid" value="$!userId">
+<input type="hidden" id="hideUid" value="$!currentUserId">
 <script type="text/javascript" src="${rc.contextPath}/resources/js/jquery.form.js?v=$!staticVersion"></script>
 <script>
     var reviewSwiper;
@@ -339,7 +334,7 @@
 
     function showCommentDialog() {
         $("#commentBookSel").val("0");
-        $("#reviewContentArea").val('');
+        $("#contentArea").val('');
         $("#commentImgInput").val('');
         $("#commentImg").attr('src', '${rc.contextPath}/resources/images/hackthon/gray_add_icon.png');
         $("#commentImg").css('width', '36px');
@@ -348,7 +343,7 @@
     }
 
     function showReplyDialog(id, name) {
-        $("#reviewId").val(id);
+        $("#momentId").val(id);
         $("#pReplyName").val(name);
         $(".reply-modal textarea").attr("placeholder", "回复" + name);
         $(".reply-modal textarea").val('');
@@ -364,12 +359,12 @@
         $(".reply-modal").css("display", "none");
     }
 
-    function addLike(reviewId) {
+    function addLike(momentId) {
         showLoading();
         $.ajax({
             url: "${rc.contextPath}/review/addLike",
             data: {
-                reviewId: reviewId
+                momentId: momentId
             },
             dataType: 'json',
             type: 'post',
@@ -378,8 +373,8 @@
                 if (data.code == 'fail') {
                     zzrw.alert("操作失败!");
                 } else {
-                    var likeNumsId = "likeNum" + reviewId;
-                    var likeBtnImgId = "likeBtnImg" + reviewId;
+                    var likeNumsId = "likeNum" + momentId;
+                    var likeBtnImgId = "likeBtnImg" + momentId;
 
                     var likeNums = $("." + likeNumsId).html();
                     var countNum = parseInt(likeNums);
@@ -409,7 +404,7 @@
         $.ajax({
             url: "${rc.contextPath}/review/delete",
             data: {
-                reviewId: id
+                momentId: id
             },
             dataType: 'json',
             success: function (data) {
@@ -425,10 +420,10 @@
     }
 
     function commentCheck() {
-        var reviewContent = $.trim($("#reviewContentArea").val());
-        if ("" == reviewContent) {
+        var content = $.trim($("#contentArea").val());
+        if ("" == content) {
             zzrw.alert("评论内容不能为空哦!");
-            $("#reviewContentArea").focus();
+            $("#contentArea").focus();
         } else {
             $("#commentForm").ajaxSubmit({
                 url: "${rc.contextPath}/review/add",
@@ -436,43 +431,42 @@
                 type: 'POST',
                 success: function (data) {
                     if (data.code == "0") {
-                        var reviewInfo = data.data;
+                        var momentsInfo = data.data;
                         var reviewItem = $('.workmate-review-list .review-item-li').eq(0).clone();
                         reviewItem.removeAttr('class');
-                        var classStr = "review-item-li reviewItem" + reviewInfo.id;
+                        var classStr = "review-item-li reviewItem" + momentsInfo.id;
                         reviewItem.attr('class', classStr);
-                        if (reviewInfo.reviewerIcon == null || reviewInfo.reviewerIcon == undefined || reviewInfo.reviewerIcon == '') {
+                        if (momentsInfo.userIcon == null || momentsInfo.userIcon == undefined || momentsInfo.userIcon == '') {
                             reviewItem.find('.review-header').attr('src', '${rc.contextPath}/resources/images/hackthon/user_header_icon.png');
                         } else {
-                            reviewItem.find('.review-header').attr('src', reviewInfo.reviewerIcon);
+                            reviewItem.find('.review-header').attr('src', momentsInfo.userIcon);
                         }
-                        reviewItem.find('.review-name').html(reviewInfo.reviewer);
-                        reviewItem.find('.review-team').html(reviewInfo.reviewerTeam);
-                        reviewItem.find('.review-date').html(convertTimeToDate(reviewInfo.reviewTime));
+                        reviewItem.find('.review-name').html(momentsInfo.userName);
+                        reviewItem.find('.review-date').html(convertTimeToDate(momentsInfo.reviewTime));
                         reviewItem.find('.review-body').empty();
                         if ($("#commentBookSel").val() != "0") {
                             var bookHtml = "<p class='review-book'>对<span>《" + $("#commentBookSel").find("option:selected").text() + "》</span>发表评论：</p>";
                             reviewItem.find('.review-body').append(bookHtml);
                         }
-                        if (reviewInfo.commentImg != null && reviewInfo.commentImg != undefined && reviewInfo.commentImg != '') {
-                            var commentImgHtml = "<img src='${rc.contextPath}/upload/" + reviewInfo.commentImg + "'></img>";
+                        if (momentsInfo.commentImg != null && momentsInfo.commentImg != undefined && momentsInfo.commentImg != '') {
+                            var commentImgHtml = "<img src='${rc.contextPath}/upload/" + momentsInfo.commentImg + "'></img>";
                             reviewItem.find('.review-body').append(commentImgHtml);
                         }
-                        var commentBodyHtml = "<p class='review-content'>" + reviewInfo.reviewContent + "</p>";
+                        var commentBodyHtml = "<p class='review-content'>" + momentsInfo.content + "</p>";
                         reviewItem.find('.review-body').append(commentBodyHtml);
                         var uid = $("#hideUid").val();
                         reviewItem.find('.delete-operation').remove();
-                        if (uid == reviewInfo.reviewerId) {
-                            var deleteHtml = "<a class='delete-operation' href='javascript:deleteComment(\"" + reviewInfo.id + "\");'><img src='${rc.contextPath}/resources/images/hackthon/delete_comment_icon.png'></img> 删除</a>";
+                        if (uid == momentsInfo.reviewerId) {
+                            var deleteHtml = "<a class='delete-operation' href='javascript:deleteComment(\"" + momentsInfo.id + "\");'><img src='${rc.contextPath}/resources/images/hackthon/delete_comment_icon.png'></img> 删除</a>";
                             reviewItem.find('.review-operation').prepend(deleteHtml);
                         }
-                        reviewItem.find('.like-operation').attr('href', "javascript:addLike('" + reviewInfo.id + "')");
+                        reviewItem.find('.like-operation').attr('href', "javascript:addLike('" + momentsInfo.id + "')");
                         reviewItem.find('.like-operation').empty();
-                        var likeHtml = "<img class='likeBtnImg" + reviewInfo.id + "' src='${rc.contextPath}/resources/images/hackthon/like_yet_icon.png'></img>";
+                        var likeHtml = "<img class='likeBtnImg" + momentsInfo.id + "' src='${rc.contextPath}/resources/images/hackthon/like_yet_icon.png'></img>";
                         reviewItem.find('.like-operation').append(likeHtml);
-                        reviewItem.find('.like-span').attr('class', 'like-span likeNum' + reviewInfo.id);
-                        reviewItem.find('.like-span').html(reviewInfo.likeNums);
-                        reviewItem.find('.reply-icon').attr('onclick', "showReplyDialog('" + reviewInfo.id + "','')");
+                        reviewItem.find('.like-span').attr('class', 'like-span likeNum' + momentsInfo.id);
+                        reviewItem.find('.like-span').html(momentsInfo.likeNums);
+                        reviewItem.find('.reply-icon').attr('onclick', "showReplyDialog('" + momentsInfo.id + "','')");
                         reviewItem.find('.review-reply ul').empty();
 
                         $('.workmate-review-list ul').eq(0).prepend(reviewItem);
@@ -510,13 +504,13 @@
                     if (data.code == "0") {
                         var replyItem = data.data;
                         var replyHtml = "<li>";
-                        replyHtml = replyHtml + "<p onclick='showReplyDialog(\"" + replyItem.reviewId + "\",\"" + replyItem.replyerName + "\")'>";
+                        replyHtml = replyHtml + "<p onclick='showReplyDialog(\"" + replyItem.momentId + "\",\"" + replyItem.replyerName + "\")'>";
                         replyHtml = replyHtml + "<span>" + replyItem.replyerName + "</span> ";
-                        if (replyItem.parentReplyName != '' && replyItem.parentReplyName != undefined && replyItem.parentReplyName != null) {
-                            replyHtml = replyHtml + "回复<span>" + replyItem.parentReplyName + "</span>";
+                        if (replyItem.parentReplyerName != '' && replyItem.parentReplyerName != undefined && replyItem.parentReplyerName != null) {
+                            replyHtml = replyHtml + "回复<span>" + replyItem.parentReplyerName + "</span>";
                         }
                         replyHtml = replyHtml + ": " + replyItem.replyContent + "</p></li>";
-                        $(".reviewItem" + replyItem.reviewId + " .review-reply").find("ul").append(replyHtml);
+                        $(".reviewItem" + replyItem.momentId + " .review-reply").find("ul").append(replyHtml);
                         hideReplyDialog();
                         reviewIScroll.refresh();
                     } else {
@@ -547,57 +541,56 @@
                     return;
                 }
                 for (var i = 0; i < data.data.length; i++) {
-                    var reviewInfo = data.data[i];
+                    var momentsInfo = data.data[i];
                     var reviewItem = $('.workmate-review-list .review-item-li').eq(0).clone();
                     reviewItem.removeAttr('class');
-                    var classStr = "review-item-li reviewItem" + reviewInfo.reviewId;
+                    var classStr = "review-item-li reviewItem" + momentsInfo.momentId;
                     reviewItem.attr('class', classStr);
-                    if (reviewInfo.reviewerIcon == null || reviewInfo.reviewerIcon == undefined || reviewInfo.reviewerIcon == '') {
+                    if (momentsInfo.userIcon == null || momentsInfo.userIcon == undefined || momentsInfo.userIcon == '') {
                         reviewItem.find('.review-header').attr('src', '${rc.contextPath}/resources/images/hackthon/user_header_icon.png');
                     } else {
-                        reviewItem.find('.review-header').attr('src', reviewInfo.reviewerIcon);
+                        reviewItem.find('.review-header').attr('src', momentsInfo.userIcon);
                     }
-                    reviewItem.find('.review-name').html(reviewInfo.reviewerName);
-                    reviewItem.find('.review-team').html(reviewInfo.reviewerTeam);
-                    reviewItem.find('.review-date').html(convertTimeToDate(reviewInfo.reviewTime));
+                    reviewItem.find('.review-name').html(momentsInfo.userName);
+                    reviewItem.find('.review-date').html(convertTimeToDate(momentsInfo.crtTs));
                     reviewItem.find('.review-body').empty();
-                    if (reviewInfo.bookName != null && reviewInfo.bookName != undefined && reviewInfo.bookName != '') {
-                        var bookHtml = "<p class='review-book'>对<span>《" + reviewInfo.bookName + "》</span>发表评论：</p>";
+                    if (momentsInfo.bookName != null && momentsInfo.bookName != undefined && momentsInfo.bookName != '') {
+                        var bookHtml = "<p class='review-book'>对<span>《" + momentsInfo.bookName + "》</span>发表评论：</p>";
                         reviewItem.find('.review-body').append(bookHtml);
                     }
-                    if (reviewInfo.commentImg != null && reviewInfo.commentImg != undefined && reviewInfo.commentImg != '') {
-                        var commentImgHtml = "<img src='${rc.contextPath}/upload/" + reviewInfo.commentImg + "'></img>";
+                    if (momentsInfo.commentImg != null && momentsInfo.commentImg != undefined && momentsInfo.commentImg != '') {
+                        var commentImgHtml = "<img src='${rc.contextPath}/upload/" + momentsInfo.commentImg + "'></img>";
                         reviewItem.find('.review-body').append(commentImgHtml);
                     }
-                    var commentBodyHtml = "<p class='review-content'>" + reviewInfo.reviewContent + "</p>";
+                    var commentBodyHtml = "<p class='review-content'>" + momentsInfo.content + "</p>";
                     reviewItem.find('.review-body').append(commentBodyHtml);
                     var uid = $("#hideUid").val();
                     reviewItem.find('.delete-operation').remove();
-                    if (uid == reviewInfo.reviewerId) {
-                        var deleteHtml = "<a class='delete-operation' href='javascript:deleteComment(\"" + reviewInfo.reviewId + "\");'><img src='${rc.contextPath}/resources/images/hackthon/delete_comment_icon.png'></img> 删除</a>";
+                    if (uid == momentsInfo.reviewerId) {
+                        var deleteHtml = "<a class='delete-operation' href='javascript:deleteComment(\"" + momentsInfo.momentId + "\");'><img src='${rc.contextPath}/resources/images/hackthon/delete_comment_icon.png'></img> 删除</a>";
                         reviewItem.find('.review-operation').prepend(deleteHtml);
                     }
-                    reviewItem.find('.like-operation').attr('href', "javascript:addLike('" + reviewInfo.reviewId + "')");
+                    reviewItem.find('.like-operation').attr('href', "javascript:addLike('" + momentsInfo.momentId + "')");
                     reviewItem.find('.like-operation').empty();
-                    if (reviewInfo.isLike == 'yes') {
-                        var likeHtml = "<img class='likeBtnImg" + reviewInfo.reviewId + "' src='${rc.contextPath}/resources/images/hackthon/like_icon.png'></img>";
+                    if (momentsInfo.isLike == 'yes') {
+                        var likeHtml = "<img class='likeBtnImg" + momentsInfo.momentId + "' src='${rc.contextPath}/resources/images/hackthon/like_icon.png'></img>";
                         reviewItem.find('.like-operation').append(likeHtml);
                     } else {
-                        var likeHtml = "<img class='likeBtnImg" + reviewInfo.reviewId + "' src='${rc.contextPath}/resources/images/hackthon/like_yet_icon.png'></img>";
+                        var likeHtml = "<img class='likeBtnImg" + momentsInfo.momentId + "' src='${rc.contextPath}/resources/images/hackthon/like_yet_icon.png'></img>";
                         reviewItem.find('.like-operation').append(likeHtml);
                     }
-                    reviewItem.find('.like-span').attr('class', 'like-span like-span likeNum' + reviewInfo.reviewId);
-                    reviewItem.find('.like-span').html(reviewInfo.likeNums);
-                    reviewItem.find('.reply-icon').attr('onclick', "showReplyDialog('" + reviewInfo.reviewId + "','')");
+                    reviewItem.find('.like-span').attr('class', 'like-span like-span likeNum' + momentsInfo.momentId);
+                    reviewItem.find('.like-span').html(momentsInfo.likeNums);
+                    reviewItem.find('.reply-icon').attr('onclick', "showReplyDialog('" + momentsInfo.momentId + "','')");
 
                     reviewItem.find('.review-reply').empty();
                     var replyHtml = "<ul>";
-                    var replyList = reviewInfo.reviewReplyList;
+                    var replyList = momentsInfo.momentsReplyList;
                     for (var j = 0; j < replyList.length; j++) {
                         var replyItem = replyList[j];
                         if (replyItem.replyerName != null && replyItem.replyerName != undefined && replyItem.replyerName != '') {
                             replyHtml += "<li>";
-                            replyHtml = replyHtml + "<p onclick='showReplyDialog(\"" + reviewInfo.reviewId + "\",\"" + replyItem.replyerName + "\")'";
+                            replyHtml = replyHtml + "<p onclick='showReplyDialog(\"" + momentsInfo.momentId + "\",\"" + replyItem.replyerName + "\")'";
                             replyHtml = replyHtml + "<span>" + replyItem.replyerName + "</span>";
                             if (replyItem.parentReplyName != null && replyItem.parentReplyName != undefined && replyItem.parentReplyName != '') {
                                 replyHtml = replyHtml + " 回复<span>" + replyItem.parentReplyName + "</span>";
@@ -638,63 +631,62 @@
                     return;
                 }
                 for (var i = 0; i < data.data.length; i++) {
-                    var reviewInfo = data.data[i];
+                    var momentsInfo = data.data[i];
                     var reviewItem = $('.workmate-review-list .review-item-li').eq(0).clone();
                     if (i == 0) {
                         $('.workmate-review-list ul').eq(0).empty();
                     }
                     reviewItem.removeAttr('class');
-                    var classStr = "review-item-li reviewItem" + reviewInfo.reviewId;
+                    var classStr = "review-item-li reviewItem" + momentsInfo.momentId;
                     reviewItem.attr('class', classStr);
-                    if (reviewInfo.reviewerIcon == null || reviewInfo.reviewerIcon == undefined || reviewInfo.reviewerIcon == '') {
+                    if (momentsInfo.reviewerIcon == null || momentsInfo.reviewerIcon == undefined || momentsInfo.reviewerIcon == '') {
                         reviewItem.find('.review-header').attr('src', '${rc.contextPath}/resources/images/hackthon/user_header_icon.png');
                     } else {
-                        reviewItem.find('.review-header').attr('src', reviewInfo.reviewerIcon);
+                        reviewItem.find('.review-header').attr('src', momentsInfo.reviewerIcon);
                     }
-                    reviewItem.find('.review-name').html(reviewInfo.reviewerName);
-                    reviewItem.find('.review-team').html(reviewInfo.reviewerTeam);
-                    reviewItem.find('.review-date').html(convertTimeToDate(reviewInfo.reviewTime));
+                    reviewItem.find('.review-name').html(momentsInfo.userName);
+                    reviewItem.find('.review-date').html(convertTimeToDate(momentsInfo.crtTs));
                     reviewItem.find('.review-body').empty();
-                    if (reviewInfo.bookName != null && reviewInfo.bookName != undefined && reviewInfo.bookName != '') {
-                        var bookHtml = "<p class='review-book'>对<span>《" + reviewInfo.bookName + "》</span>发表评论：</p>";
+                    if (momentsInfo.bookName != null && momentsInfo.bookName != undefined && momentsInfo.bookName != '') {
+                        var bookHtml = "<p class='review-book'>对<span>《" + momentsInfo.bookName + "》</span>发表评论：</p>";
                         reviewItem.find('.review-body').append(bookHtml);
                     }
-                    if (reviewInfo.commentImg != null && reviewInfo.commentImg != undefined && reviewInfo.commentImg != '') {
-                        var commentImgHtml = "<img src='${rc.contextPath}/upload/" + reviewInfo.commentImg + "'></img>";
-                        reviewItem.find('.review-body').append(commentImgHtml);
+                    if (momentsInfo.momentsImg != null && momentsInfo.momentsImg != undefined && momentsInfo.momentsImg != '') {
+                        var momentsImgHtml = "<img src='${rc.contextPath}/upload/" + momentsInfo.momentsImg + "'></img>";
+                        reviewItem.find('.review-body').append(momentsImgHtml);
                     }
-                    var commentBodyHtml = "<p class='review-content'>" + reviewInfo.reviewContent + "</p>";
+                    var commentBodyHtml = "<p class='review-content'>" + momentsInfo.content + "</p>";
                     reviewItem.find('.review-body').append(commentBodyHtml);
                     var uid = $("#hideUid").val();
                     reviewItem.find('.delete-operation').remove();
-                    if (uid == reviewInfo.reviewerId) {
-                        var deleteHtml = "<a class='delete-operation' href='javascript:deleteComment(\"" + reviewInfo.reviewId + "\");'><img src='${rc.contextPath}/resources/images/hackthon/delete_comment_icon.png'></img> 删除</a>";
+                    if (uid == momentsInfo.reviewerId) {
+                        var deleteHtml = "<a class='delete-operation' href='javascript:deleteComment(\"" + momentsInfo.momentId + "\");'><img src='${rc.contextPath}/resources/images/hackthon/delete_comment_icon.png'></img> 删除</a>";
                         reviewItem.find('.review-operation').prepend(deleteHtml);
                     }
-                    reviewItem.find('.like-operation').attr('href', "javascript:addLike('" + reviewInfo.reviewId + "')");
+                    reviewItem.find('.like-operation').attr('href', "javascript:addLike('" + momentsInfo.momentId + "')");
                     reviewItem.find('.like-operation').empty();
-                    if (reviewInfo.isLike == 'yes') {
-                        var likeHtml = "<img class='likeBtnImg" + reviewInfo.reviewId + "' src='${rc.contextPath}/resources/images/hackthon/like_icon.png'></img>";
+                    if (momentsInfo.isLike == 'yes') {
+                        var likeHtml = "<img class='likeBtnImg" + momentsInfo.momentId + "' src='${rc.contextPath}/resources/images/hackthon/like_icon.png'></img>";
                         reviewItem.find('.like-operation').append(likeHtml);
                     } else {
-                        var likeHtml = "<img class='likeBtnImg" + reviewInfo.reviewId + "' src='${rc.contextPath}/resources/images/hackthon/like_yet_icon.png'></img>";
+                        var likeHtml = "<img class='likeBtnImg" + momentsInfo.momentId + "' src='${rc.contextPath}/resources/images/hackthon/like_yet_icon.png'></img>";
                         reviewItem.find('.like-operation').append(likeHtml);
                     }
-                    reviewItem.find('.like-span').attr('class', 'like-span like-span likeNum' + reviewInfo.reviewId);
-                    reviewItem.find('.like-span').html(reviewInfo.likeNums);
-                    reviewItem.find('.reply-icon').attr('onclick', "showReplyDialog('" + reviewInfo.reviewId + "','')");
+                    reviewItem.find('.like-span').attr('class', 'like-span like-span likeNum' + momentsInfo.momentId);
+                    reviewItem.find('.like-span').html(momentsInfo.likeNums);
+                    reviewItem.find('.reply-icon').attr('onclick', "showReplyDialog('" + momentsInfo.momentId + "','')");
 
                     reviewItem.find('.review-reply').empty();
                     var replyHtml = "<ul>";
-                    var replyList = reviewInfo.reviewReplyList;
+                    var replyList = momentsInfo.momentsReplyList;
                     for (var j = 0; j < replyList.length; j++) {
                         var replyItem = replyList[j];
                         if (replyItem.replyerName != null && replyItem.replyerName != undefined && replyItem.replyerName != '') {
                             replyHtml += "<li>";
-                            replyHtml = replyHtml + "<p onclick='showReplyDialog(\"" + reviewInfo.reviewId + "\",\"" + replyItem.replyerName + "\")'";
+                            replyHtml = replyHtml + "<p onclick='showReplyDialog(\"" + momentsInfo.momentId + "\",\"" + replyItem.replyerName + "\")'";
                             replyHtml = replyHtml + "<span>" + replyItem.replyerName + "</span>";
-                            if (replyItem.parentReplyName != null && replyItem.parentReplyName != undefined && replyItem.parentReplyName != '') {
-                                replyHtml = replyHtml + " 回复<span>" + replyItem.parentReplyName + "</span>";
+                            if (replyItem.parentReplyerName != null && replyItem.parentReplyerName != undefined && replyItem.parentReplyerName != '') {
+                                replyHtml = replyHtml + " 回复<span>" + replyItem.parentReplyerName + "</span>";
                             }
                             replyHtml = replyHtml + ": " + replyItem.replyContent + "</p>";
                             replyHtml += "</li>";
