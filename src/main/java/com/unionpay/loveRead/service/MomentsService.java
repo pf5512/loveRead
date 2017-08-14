@@ -1,8 +1,12 @@
 package com.unionpay.loveRead.service;
 
 import com.unionpay.loveRead.bean.MomentsInfo;
+import com.unionpay.loveRead.dao.MomentsDao;
+import com.unionpay.loveRead.dao.MomentsReplyDao;
 import com.unionpay.loveRead.dao.MomentsViewDao;
 import com.unionpay.loveRead.domain.Book;
+import com.unionpay.loveRead.domain.Moments;
+import com.unionpay.loveRead.domain.MomentsReply;
 import com.unionpay.loveRead.domain.MomentsView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +31,12 @@ public class MomentsService {
 
     @Autowired
     MomentsViewDao momentsViewDao;
+
+    @Autowired
+    MomentsDao momentsDao;
+
+    @Autowired
+    MomentsReplyDao momentsReplyDao;
 
     /**
      * 获取圈子首页状态信息
@@ -79,5 +89,30 @@ public class MomentsService {
             }
             return ownBookList;
         }
+    }
+
+    /**
+     * 新增消息
+     * @param moments
+     */
+    public void addMoments(Moments moments) {
+        momentsDao.save(moments);
+    }
+
+    /**
+     * 新增评论
+     * @param momentsReply
+     */
+    public void addMomentsReply(MomentsReply momentsReply) {
+        momentsReplyDao.save(momentsReply);
+    }
+
+    /**
+     * 删除消息
+     * @param momentsId
+     * @param uid
+     */
+    public void deleteMoments(String momentsId, String uid) {
+        momentsDao.updateMomentsStatus(momentsId);
     }
 }

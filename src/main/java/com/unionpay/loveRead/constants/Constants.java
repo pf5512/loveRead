@@ -135,9 +135,4 @@ public class Constants {
      */
     public static final String PRIZE_ITEM_NO = "0";
 
-    /**
-     * 评论状态 00-未删除 01-已删除
-     */
-    public static final String REVIEW_STATUS_AVAILABLE = "00";
-    public static final String REVIEW_STATUS_DELETED = "01";
 }

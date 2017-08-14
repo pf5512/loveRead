@@ -3,7 +3,6 @@ package com.unionpay.loveRead.bean;
 import com.unionpay.loveRead.domain.MomentsReply;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -20,7 +19,7 @@ public class MomentsInfo implements Serializable{
     /**
      * 信息id
      */
-    private Integer   momentId;
+    private Integer   momentsId;
 
     /**
      * 用户id
@@ -40,7 +39,7 @@ public class MomentsInfo implements Serializable{
     /**
      * 发表时间
      */
-    private Timestamp   crtTs;
+    private String   crtTs;
     
     /**
      * 发布信息针对的图书id
@@ -72,16 +71,13 @@ public class MomentsInfo implements Serializable{
      */
     private List<MomentsReply>  momentsReplyList;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+
+    public Integer getMomentsId() {
+        return momentsId;
     }
 
-    public Integer getMomentId() {
-        return momentId;
-    }
-
-    public void setMomentId(Integer momentId) {
-        this.momentId = momentId;
+    public void setMomentsId(Integer momentsId) {
+        this.momentsId = momentsId;
     }
 
     public String getUserId() {
@@ -108,11 +104,11 @@ public class MomentsInfo implements Serializable{
         this.userIcon = userIcon;
     }
 
-    public Timestamp getCrtTs() {
+    public String getCrtTs() {
         return crtTs;
     }
 
-    public void setCrtTs(Timestamp crtTs) {
+    public void setCrtTs(String crtTs) {
         this.crtTs = crtTs;
     }
 

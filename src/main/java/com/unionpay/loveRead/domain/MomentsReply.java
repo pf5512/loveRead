@@ -1,5 +1,7 @@
 package com.unionpay.loveRead.domain;
 
+import com.unionpay.loveRead.constants.Constants;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -67,6 +69,12 @@ public class MomentsReply implements Serializable {
     @Column(name = "parent_replyer_name")
     private String parentReplyerName;
 
+    /**
+     * 消息回复的状态
+     */
+    @Column(name = "reply_st")
+    private String replySt = Constants.MOMENTS_STATUS_NORMAL;
+
     public Integer getId() {
         return id;
     }
@@ -133,5 +141,13 @@ public class MomentsReply implements Serializable {
 
     public void setParentReplyerName(String parentReplyerName) {
         this.parentReplyerName = parentReplyerName;
+    }
+
+    public String getReplySt() {
+        return replySt;
+    }
+
+    public void setReplySt(String replySt) {
+        this.replySt = replySt;
     }
 }

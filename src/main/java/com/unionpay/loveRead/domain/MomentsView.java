@@ -36,14 +36,14 @@ public class MomentsView implements Serializable {
     /**
      * 发表内容
      */
-    @Column(name = "moment_content")
-    private String momentContent;
+    @Column(name = "moments_content")
+    private String momentsContent;
 
     /**
      * 发表的图片
      */
-    @Column(name = "moment_img")
-    private String momentImg;
+    @Column(name = "moments_img")
+    private String momentsImg;
 
     /**
      * 评论的图书id
@@ -66,8 +66,8 @@ public class MomentsView implements Serializable {
     /**
      * 消息状态
      */
-    @Column(name = "moment_st")
-    private String  momentSt;
+    @Column(name = "moments_st")
+    private String  momentsSt;
 
     /**
      * 回复者id
@@ -99,6 +99,20 @@ public class MomentsView implements Serializable {
     @Column(name = "parent_replyer_name")
     private String parentReplyerName;
 
+    /**
+     * 消息回复的状态
+     */
+    @Column(name = "reply_st")
+    private String replySt;
+
+    public MomentViewId getMomentViewId() {
+        return momentViewId;
+    }
+
+    public void setMomentViewId(MomentViewId momentViewId) {
+        this.momentViewId = momentViewId;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -115,20 +129,28 @@ public class MomentsView implements Serializable {
         this.userName = userName;
     }
 
-    public String getMomentContent() {
-        return momentContent;
+    public String getUserIcon() {
+        return userIcon;
     }
 
-    public void setMomentContent(String momentContent) {
-        this.momentContent = momentContent;
+    public void setUserIcon(String userIcon) {
+        this.userIcon = userIcon;
     }
 
-    public String getMomentImg() {
-        return momentImg;
+    public String getMomentsContent() {
+        return momentsContent;
     }
 
-    public void setMomentImg(String momentImg) {
-        this.momentImg = momentImg;
+    public void setMomentsContent(String momentsContent) {
+        this.momentsContent = momentsContent;
+    }
+
+    public String getMomentsImg() {
+        return momentsImg;
+    }
+
+    public void setMomentsImg(String momentsImg) {
+        this.momentsImg = momentsImg;
     }
 
     public Integer getBookId() {
@@ -153,6 +175,14 @@ public class MomentsView implements Serializable {
 
     public void setCrtTs(Timestamp crtTs) {
         this.crtTs = crtTs;
+    }
+
+    public String getMomentsSt() {
+        return momentsSt;
+    }
+
+    public void setMomentsSt(String momentsSt) {
+        this.momentsSt = momentsSt;
     }
 
     public String getReplyerId() {
@@ -195,27 +225,11 @@ public class MomentsView implements Serializable {
         this.parentReplyerName = parentReplyerName;
     }
 
-    public String getMomentSt() {
-        return momentSt;
+    public String getReplySt() {
+        return replySt;
     }
 
-    public void setMomentSt(String momentSt) {
-        this.momentSt = momentSt;
-    }
-
-    public MomentViewId getMomentViewId() {
-        return momentViewId;
-    }
-
-    public void setMomentViewId(MomentViewId momentViewId) {
-        this.momentViewId = momentViewId;
-    }
-
-    public String getUserIcon() {
-        return userIcon;
-    }
-
-    public void setUserIcon(String userIcon) {
-        this.userIcon = userIcon;
+    public void setReplySt(String replySt) {
+        this.replySt = replySt;
     }
 }

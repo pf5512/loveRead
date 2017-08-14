@@ -1,6 +1,7 @@
 package com.unionpay.loveRead.domain;
 
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.unionpay.loveRead.constants.Constants;
 
 import javax.persistence.*;
@@ -38,7 +39,7 @@ public class Moments implements Serializable {
      * 评论的图书名id
      */
     @Column(name = "book_id")
-    private String bookId;
+    private Integer bookId;
 
     /**
      * 评论的图书名
@@ -49,26 +50,27 @@ public class Moments implements Serializable {
     /**
      * 发表的内容
      */
-    @Column(name = "moment_content")
-    private String momentContent;
+    @Column(name = "moments_content")
+    private String momentsContent;
 
     /**
      * 发表的图片
      */
-    @Column(name = "moment_img")
-    private String momentImg;
+    @Column(name = "moments_img")
+    private String momentsImg;
 
     /**
      * 发表的时间
      */
+    @JSONField(format = "yyyy-MM-dd hh:mm:ss")
     @Column(name = "crt_ts")
     private Timestamp crtTs;
 
     /**
      * 消息状态
      */
-    @Column(name = "moment_st")
-    private String  momentSt = Constants.MOMENTS_STATUS_NORMAL;
+    @Column(name = "moments_st")
+    private String  momentsSt = Constants.MOMENTS_STATUS_NORMAL;
 
     public Integer getId() {
         return id;
@@ -86,11 +88,11 @@ public class Moments implements Serializable {
         this.userId = userId;
     }
 
-    public String getBookId() {
+    public Integer getBookId() {
         return bookId;
     }
 
-    public void setBookId(String bookId) {
+    public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
 
@@ -102,20 +104,20 @@ public class Moments implements Serializable {
         this.bookName = bookName;
     }
 
-    public String getMomentContent() {
-        return momentContent;
+    public String getMomentsContent() {
+        return momentsContent;
     }
 
-    public void setMomentContent(String momentContent) {
-        this.momentContent = momentContent;
+    public void setMomentsContent(String momentsContent) {
+        this.momentsContent = momentsContent;
     }
 
-    public String getMomentImg() {
-        return momentImg;
+    public String getMomentsImg() {
+        return momentsImg;
     }
 
-    public void setMomentImg(String momentImg) {
-        this.momentImg = momentImg;
+    public void setMomentsImg(String momentsImg) {
+        this.momentsImg = momentsImg;
     }
 
     public Timestamp getCrtTs() {
@@ -126,11 +128,11 @@ public class Moments implements Serializable {
         this.crtTs = crtTs;
     }
 
-    public String getMomentSt() {
-        return momentSt;
+    public String getMomentsSt() {
+        return momentsSt;
     }
 
-    public void setMomentSt(String momentSt) {
-        this.momentSt = momentSt;
+    public void setMomentsSt(String momentsSt) {
+        this.momentsSt = momentsSt;
     }
 }

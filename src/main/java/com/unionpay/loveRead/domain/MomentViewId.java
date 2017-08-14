@@ -12,18 +12,18 @@ import java.io.Serializable;
 @Embeddable
 public class MomentViewId implements Serializable{
 
-    @Column(name = "moment_id")
-    private Integer momentId;
+    @Column(name = "moments_id")
+    private Integer momentsId;
 
     @Column(name = "reply_id")
     private Integer replyId;
 
-    public Integer getMomentId() {
-        return momentId;
+    public Integer getMomentsId() {
+        return momentsId;
     }
 
-    public void setMomentId(Integer momentId) {
-        this.momentId = momentId;
+    public void setMomentsId(Integer momentsId) {
+        this.momentsId = momentsId;
     }
 
     public Integer getReplyId() {
@@ -38,7 +38,7 @@ public class MomentViewId implements Serializable{
     public boolean equals(Object o) {
         if(o instanceof MomentViewId){
             MomentViewId key = (MomentViewId)o ;
-            if(this.momentId == key.getMomentId() && this.replyId.equals(key.getReplyId())){
+            if(this.momentsId == key.getMomentsId() && this.replyId.equals(key.getReplyId())){
                 return true ;
             }
         }
@@ -48,6 +48,6 @@ public class MomentViewId implements Serializable{
 
     @Override
     public int hashCode() {
-        return this.momentId.hashCode();
+        return this.momentsId.hashCode();
     }
 }

@@ -14,7 +14,7 @@ public enum RespStatus {
 
     OK("0", "成功"), // 操作成功
     FAIL("1", "失败"), // 操作失败，不满足业务逻辑
-    LOGIN_EXPIRED("100", "登录已失效，请打开U聊重新登录"),
+    LOGIN_EXPIRED("100", "登录已失效，请重新登录"),
     LACK_PARAM("101", "缺少必要参数"),
     SERVER_ERROR("102", "服务器内部错误"), // 服务器异常了
     INVALID_REQ("103", "非法请求"), // 客户端请求有问题

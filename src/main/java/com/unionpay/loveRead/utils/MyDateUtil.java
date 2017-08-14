@@ -1,6 +1,7 @@
 package com.unionpay.loveRead.utils;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,7 +29,7 @@ public class MyDateUtil {
 
 
     /**
-     * 转化字符串timestamp
+     * 字符串转化timestamp
      *
      * @param timestampStr
      *
@@ -40,6 +41,21 @@ public class MyDateUtil {
         return timestamp;
     }
 
+    /**
+     * timestamp转化字符串
+     * @param timestamp
+     * @return
+     */
+    public static String timestamp2Str(Timestamp timestamp){
+        String tsStr = "";
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        try {
+            tsStr = sdf.format(timestamp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tsStr;
+    }
 
     /**
      * 获取yyyyMMdd格式日期
