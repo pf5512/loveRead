@@ -199,9 +199,8 @@
         </div>
         <div class="form-group">
             <img id="commentImg" style="margin-left:5%;"
-                 src="${rc.contextPath}/resources/images/hackthon/gray_add_icon.png"
-                 onclick="$('#commentImgInput').click()"></img>
-            <input type="file" style="display:none;" id="commentImgInput" name="momentsImg" capture='camera'>
+                 src="${rc.contextPath}/resources/images/hackthon/gray_add_icon.png"></img>
+            <input type="text" style="display:none;" id="commentImgInput" name="commentsImg">
         </div>
         <button type="button" style="background-color:#449d44;" onclick="commentCheck()">发表</button>
         <button type="button" style="background-color:#f0ad4e;" onclick="hideCommentDialog()">返回</button>
@@ -222,7 +221,29 @@
     </form>
 </div>
 <input type="hidden" id="hideUid" value="$!currentUserId">
-<script type="text/javascript" src="${rc.contextPath}/resources/js/jquery.form.js?v=$!staticVersion"></script>
+<script src="${rc.contextPath}/resources/js/jquery.form.js?v=$!staticVersion"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+#if($!wxConfig)
+<script type="text/javascript">
+$(function () {
+    if (window.wx) {
+        var appId = "$!wxConfig.appId";
+        var timestamp = "$!wxConfig.timestamp";
+        var nonceStr = "$!wxConfig.nonceStr";
+        var signature = "$!wxConfig.signature";
+
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: appId, // 必填，公众号的唯一标识
+            timestamp: timestamp, // 必填，生成签名的时间戳
+            nonceStr: nonceStr, // 必填，生成签名的随机串
+            signature: signature,// 必填，签名，见附录1
+            jsApiList: ['chooseImage', 'uploadImage', 'downloadImage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+    }
+});
+</script>
+#end
 <script>
     var reviewSwiper;
     var refreshFlag = false, loadFlag = false, moreFlag = true;
@@ -254,31 +275,51 @@
                 }
             }
         });
+        $("#commentImg").click(function () {
+            wx.chooseImage({
+                count: 1, // 默认9
+                sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                success: function (res) {
+                    var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 
-        $("#commentImgInput").change(function () {
-            var $file =$(this);
-            var fileObj = $file[0];
-            var windowURL = window.URL || window.webkitURL;
-            var dataURL;
-            var $img = $("#commentImg");
-
-            if (!$("#commentImgInput").val().match(/.jpg|.gif|.png|.bmp/i)) {
-                $("#commentImgInput").val('');
-                return zzrw.alert("上传的图片格式不正确，请重新选择")
-            } else {
-                $img.css('width','100px');
-                if (fileObj && fileObj.files && fileObj.files[0]) {
-                    dataURL = windowURL.createObjectURL(fileObj.files[0]);
-                    $img.attr('src', dataURL);
-                } else {
-                    dataURL = $file.val();
-                    var imgObj = document.getElementById("momentsImg");
-                    imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
-                    imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+                    wx.uploadImage({
+                        localId: localIds.toString(), // 需要上传的图片的本地ID，由chooseImage接口获得
+                        isShowProgressTips: 1, // 默认为1，显示进度提示
+                        success: function (res) {
+                            var mediaId = res.serverId; // 返回图片的服务器端ID，即mediaId
+                            //将获取到的 mediaId 传入后台 方法savePicture
+                            $.ajax({
+                                type: 'POST',
+                                url: "${rc.contextPath}/moments/savePicture",
+                                data: {
+                                    mediaId:mediaId
+                                },
+                                dataType: 'json',
+                                success: function (data) {
+                                    if (data.code == '0') {
+                                        zzrw.alert("上传成功！");
+                                        var dataURL = "${rc.contextPath}/upload/"+data.message;
+                                        $("#commentImgInput").val(data.message);
+                                        var $img = $("#commentImg");
+                                        $img.css('width','100px');
+                                        $img.attr('src', dataURL);
+                                    } else {
+                                        zzrw.alert(data.message);
+                                    }
+                                },
+                                error: function () {
+                                    zzrw.alert("服务器异常，请稍后再试！");
+                                }
+                            });
+                        },
+                        fail: function (res) {
+                            zzrw.alert('上传图片失败，请重试')
+                        }
+                    });
                 }
-            }
+            });
         });
-
     });
 
     $(window).load(function () {
@@ -423,11 +464,13 @@
             zzrw.alert("评论内容不能为空哦!");
             $("#contentArea").focus();
         } else {
+            showLoading();
             $("#commentForm").ajaxSubmit({
                 url: "${rc.contextPath}/moments/add",
                 dataType: "json",
                 type: 'POST',
                 success: function (data) {
+                    removeLoading();
                     if (data.code == "0") {
                         var momentsInfo = data.data;
                         var reviewItem = $('.workmate-review-list .review-item-li').eq(0).clone();
@@ -494,11 +537,13 @@
             zzrw.alert("回复内容不能为空哦!");
             $("#replyContentArea").focus();
         } else {
+            showLoading();
             $("#replyForm").ajaxSubmit({
                 url: "${rc.contextPath}/moments/reply",
                 dataType: "json",
                 type: 'POST',
                 success: function (data) {
+                    removeLoading();
                     if (data.code == "0") {
                         var replyItem = data.data;
                         var replyHtml = "<li>";

@@ -77,7 +77,7 @@ public abstract class BaseController {
         HttpSession session = request.getSession();
         String uid = (String) session.getAttribute(Constants.SESSION_OPENID);
         if (uid == null) {
-            uid = "7f6d6a82bb9eb8974d410a48c78def6f";
+            uid = "";
         }
         return uid;
     }

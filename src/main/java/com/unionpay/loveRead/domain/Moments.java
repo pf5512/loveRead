@@ -62,7 +62,7 @@ public class Moments implements Serializable {
     /**
      * 发表的时间
      */
-    @JSONField(format = "yyyy-MM-dd hh:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "crt_ts")
     private Timestamp crtTs;
 

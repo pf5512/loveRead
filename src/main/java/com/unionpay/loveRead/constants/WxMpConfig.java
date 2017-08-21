@@ -3,6 +3,8 @@ package com.unionpay.loveRead.constants;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.File;
+
 /**
  * @Desc:
  * @Author: tony
@@ -22,6 +24,9 @@ public class WxMpConfig {
     @Value("#{configuration.wx_aeskey}")
     private String aesKey;
 
+    @Value("#{configuration.shareDir}")
+    private String tmpDirFile;
+
     public String getToken() {
         return this.token;
     }
@@ -36,5 +41,10 @@ public class WxMpConfig {
 
     public String getAesKey() {
         return this.aesKey;
+    }
+
+    public File getTmpDirFile() {
+        File tempFileDir = new File(this.tmpDirFile);
+        return tempFileDir;
     }
 }

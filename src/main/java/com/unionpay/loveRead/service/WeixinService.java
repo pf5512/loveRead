@@ -66,6 +66,7 @@ public class WeixinService extends WxMpServiceImpl {
         config.setSecret(this.wxConfig.getAppsecret());// 设置微信公众号的app corpSecret
         config.setToken(this.wxConfig.getToken());// 设置微信公众号的token
         config.setAesKey(this.wxConfig.getAesKey());// 设置消息加解密密钥
+        config.setTmpDirFile(this.wxConfig.getTmpDirFile());// 设置文件上传路径
         super.setWxMpConfigStorage(config);
 
         this.refreshRouter();
