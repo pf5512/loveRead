@@ -1,6 +1,7 @@
 package com.unionpay.loveRead.service;
 
 import com.unionpay.loveRead.bean.MomentsInfo;
+import com.unionpay.loveRead.constants.Constants;
 import com.unionpay.loveRead.dao.MomentsDao;
 import com.unionpay.loveRead.dao.MomentsReplyDao;
 import com.unionpay.loveRead.dao.MomentsViewDao;
@@ -114,5 +115,28 @@ public class MomentsService {
      */
     public void deleteMoments(String momentsId, String uid) {
         momentsDao.updateMomentsStatus(momentsId);
+    }
+
+    /**
+     * 点赞/取赞
+     * @param uid
+     * @param momentsId
+     * @return
+     */
+    public boolean addLike(String uid, String momentsId) {
+        //点赞key
+        String momentsLikeKey = Constants.REDIS_KEY_PRFIX_MOMENT_LIKE
+                + Constants.REDIS_KEY_AND_FLAG + momentsId;
+        try{
+            //如果redis存在该key，表示取消赞，否则是点赞
+            if(RedisSingletonService.isExistInSet(momentsLikeKey,uid)){
+                RedisSingletonService.remSet(momentsLikeKey, uid);
+            }else{
+                RedisSingletonService.addSet(momentsLikeKey, uid);
+            }
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 }

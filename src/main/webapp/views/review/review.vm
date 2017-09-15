@@ -53,7 +53,7 @@
                                                 删除</a>
                                         #end
                                         <a class="like-operation" href="javascript:addLike('$momentsInfo.momentsId')">
-                                            #if($!momentsInfo.isLike == 'yes')
+                                            #if($!momentsInfo.isLike == '00')
                                                 <img class="likeBtnImg$momentsInfo.momentId"
                                                      src="${rc.contextPath}/resources/images/hackthon/like_icon.png"></img>
                                             #else
@@ -133,7 +133,7 @@
                                                 src="${rc.contextPath}/resources/images/hackthon/delete_comment_icon.png"></img>
                                             删除</a>
                                         <a class="like-operation" href="javascript:addLike('$momentsInfo.momentsId')">
-                                            #if($!momentsInfo.isLike == 'yes')
+                                            #if($!momentsInfo.isLike == '00')
                                                 <img class="likeBtnImg$momentsInfo.momentsId"
                                                      src="${rc.contextPath}/resources/images/hackthon/like_icon.png"></img>
                                             #else
@@ -615,7 +615,7 @@ $(function () {
                     }
                     reviewItem.find('.like-operation').attr('href', "javascript:addLike('" + momentsInfo.momentsId + "')");
                     reviewItem.find('.like-operation').empty();
-                    if (momentsInfo.isLike == 'yes') {
+                    if (momentsInfo.isLike == '00') {
                         var likeHtml = "<img class='likeBtnImg" + momentsInfo.momentsId + "' src='${rc.contextPath}/resources/images/hackthon/like_icon.png'></img>";
                         reviewItem.find('.like-operation').append(likeHtml);
                     } else {
@@ -708,7 +708,7 @@ $(function () {
                     }
                     reviewItem.find('.like-operation').attr('href', "javascript:addLike('" + momentsInfo.momentsId + "')");
                     reviewItem.find('.like-operation').empty();
-                    if (momentsInfo.isLike == 'yes') {
+                    if (momentsInfo.isLike == '00') {
                         var likeHtml = "<img class='likeBtnImg" + momentsInfo.momentsId + "' src='${rc.contextPath}/resources/images/hackthon/like_icon.png'></img>";
                         reviewItem.find('.like-operation').append(likeHtml);
                     } else {

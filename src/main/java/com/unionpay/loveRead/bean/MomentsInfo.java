@@ -71,7 +71,7 @@ public class MomentsInfo implements Serializable{
      */
     private List<MomentsReply>  momentsReplyList;
 
-
+    private String isLike;
     public Integer getMomentsId() {
         return momentsId;
     }
@@ -158,5 +158,13 @@ public class MomentsInfo implements Serializable{
 
     public void setMomentsReplyList(List<MomentsReply> momentsReplyList) {
         this.momentsReplyList = momentsReplyList;
+    }
+
+    public String getIsLike() {
+        return isLike;
+    }
+
+    public void setIsLike(String isLike) {
+        this.isLike = isLike;
     }
 }

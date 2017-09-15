@@ -10,6 +10,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 import javax.annotation.PostConstruct;
+import java.util.Set;
 
 /**
  * 启动并创建Jedis实例
@@ -26,6 +27,13 @@ public class RedisSingletonService {
     private static String redisPort;
     @Autowired
     private AppConfig appConfig;
+
+
+    @PostConstruct
+    public void init() {
+        redisIp = appConfig.getRedisIP();
+        redisPort = appConfig.getRedisPort();
+    }
 
     /**
      * 创建Jedis单例
@@ -196,10 +204,86 @@ public class RedisSingletonService {
         return false;
     }
 
-    @PostConstruct
-    public void init() {
-        redisIp = appConfig.getRedisIP();
-        redisPort = appConfig.getRedisPort();
+    /**
+     * 从set中移除元素
+     *
+     * @param setKey
+     * @param value
+     */
+    public static void remSet(String setKey, String value) {
+        Jedis jedis = null;
+        try {
+            redisPool = getInstance(); // 获取资源池
+            jedis = redisPool.getResource(); // 获取资源
+            if (jedis != null) {
+                jedis.srem(setKey, value);
+            }
+        } catch (Exception e) {
+            logger.info("Jedis addSet fail!");
+        } finally {
+            if (jedis != null) {
+                jedis.close(); // 释放连接
+                logger.info("Jedis connection releases successfully!");
+            }
+        }
     }
 
+    /**
+     * 从set中移除元素
+     *
+     * @param setKey
+     */
+    public static Set<String> getSetMembers(String setKey) {
+        Jedis jedis = null;
+        try {
+            redisPool = getInstance(); // 获取资源池
+            jedis = redisPool.getResource(); // 获取资源
+            if (jedis != null) {
+                return jedis.smembers(setKey);
+            }
+        } catch (Exception e) {
+            logger.info("Jedis addSet fail!");
+        } finally {
+            if (jedis != null) {
+                jedis.close(); // 释放连接
+                logger.info("Jedis connection releases successfully!");
+            }
+            return null;
+        }
+    }
+
+    /**
+     * 往redis里存储有时效性的值
+     * @param key
+     * @param value
+     * @param seconds 0表示永不过期
+     */
+    public static boolean put(String key, String value, Integer seconds) {
+        Jedis jedis = null;
+        try {
+            redisPool = getInstance();
+            jedis = redisPool.getResource(); // 获取资源
+            if (jedis != null) {
+                String result = "";
+                //如果是永久有效,
+                if(seconds.equals(0)){
+                    jedis.set(key,value);
+                    return true;
+                }else{
+                    result = jedis.setex(key,seconds,value);
+                    if(result.equalsIgnoreCase("ok")){
+                        return true;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logger.info("Jedis insert value fail!");
+        } finally {
+            if (jedis != null) {
+                jedis.close(); // 释放连接
+                logger.info("Jedis connection releases successfully!");
+            }
+        }
+        return false;
+    }
 }

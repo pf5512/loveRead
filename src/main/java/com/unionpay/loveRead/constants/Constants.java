@@ -10,6 +10,10 @@ public class Constants {
 
     public static final String API_KEY = "137b97f1f2c702d4551887783bbe96ed";
     public static final String REDIS_USERSET_KEY = "userSet";
+
+    public static final String REDIS_KEY_PRFIX_MOMENT_LIKE = "momentLike";
+    public static final String REDIS_KEY_AND_FLAG = "_";
+
     public static final String SESSION_OPENID = "openId";
     public static final String SESSION_USER = "user";
 
@@ -57,7 +61,7 @@ public class Constants {
     public static final String MOMENTS_STATUS_DELETED = "1";
 
     /**
-     * 图书点赞状态 00-点赞，01-取消赞
+     * 点赞状态 00-点赞，01-取消赞
      */
     public static final String LIKE_STATUS_LIKE = "00";
     public static final String LIKE_STATUS_UNLIKE = "01";

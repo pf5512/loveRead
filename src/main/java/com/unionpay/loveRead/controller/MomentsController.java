@@ -74,7 +74,7 @@ public class MomentsController extends BaseController{
         //从视图中查出所有的发表信息和对应的回复信息
         List<MomentsView> momentViewList = momentsService.getMomentsViewList(0);
         //将回复信息归类到每条评论下
-        List<MomentsInfo> momentsInfoList = daraWrapperService.convertView2Info(momentViewList);
+        List<MomentsInfo> momentsInfoList = daraWrapperService.convertView2Info(momentViewList,userId);
         model.addAttribute("momentsInfoList", momentsInfoList);
         model.addAttribute("currentUserId", userId);
 
@@ -222,6 +222,33 @@ public class MomentsController extends BaseController{
             baseResp.setCode(RespStatus.FAIL.getCode());
             baseResp.setMessage("保存失败，请重新上传！");
             e.printStackTrace();
+        }
+
+        return baseResp;
+    }
+
+    /**
+     * 用户点/取赞
+     *
+     * @param momentsId
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "addLike")
+    @ResponseBody
+    public BaseResponse addLike(String momentsId,HttpServletRequest request) {
+        logger.info("------用户对状态点赞操作-----");
+        BaseResponse baseResp = new BaseResponse();
+        String result = Constants.FAIL;
+        WxMpUser user = getUserInfo(request);
+
+        if(!StringUtils.isBlank(user.getOpenId())){
+            if(momentsService.addLike(user.getOpenId(), momentsId)){
+                result = Constants.SUCCESS;
+            }
+        }else{
+            baseResp.setCode(RespStatus.LOGIN_EXPIRED.getCode());
+            baseResp.setMessage(RespStatus.LOGIN_EXPIRED.getMessage());
         }
 
         return baseResp;

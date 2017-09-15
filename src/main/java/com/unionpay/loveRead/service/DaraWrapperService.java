@@ -1,6 +1,8 @@
 package com.unionpay.loveRead.service;
 
 import com.unionpay.loveRead.bean.MomentsInfo;
+import com.unionpay.loveRead.bean.MomentsLikeInfo;
+import com.unionpay.loveRead.constants.Constants;
 import com.unionpay.loveRead.constants.WxMpConfig;
 import com.unionpay.loveRead.domain.*;
 import com.unionpay.loveRead.utils.MyDateUtil;
@@ -62,9 +64,10 @@ public class DaraWrapperService {
     /**
      * 将消息视图转化成返回前端的消息实体类
      * @param momentViewList
+     * @param userId
      * @return
      */
-    public List<MomentsInfo> convertView2Info(List<MomentsView> momentViewList) {
+    public List<MomentsInfo> convertView2Info(List<MomentsView> momentViewList, String userId) {
         List<MomentsInfo> momentsInfoList = new ArrayList<>();
         //遍历所有评论和回复信息，并将review归类，放入map中
         LinkedHashMap<Integer,MomentsInfo> momentsInfoMap = new LinkedHashMap<Integer,MomentsInfo>();
@@ -112,14 +115,39 @@ public class DaraWrapperService {
             }
         }
         //遍历LinkedHashMap,并添加点赞信息
+        String momentsLikeKey = Constants.REDIS_KEY_PRFIX_MOMENT_LIKE
+                + Constants.REDIS_KEY_AND_FLAG;
         Iterator<Map.Entry<Integer,MomentsInfo>> iterator= momentsInfoMap.entrySet().iterator();
         while(iterator.hasNext()){
             Map.Entry<Integer,MomentsInfo> entry = iterator.next();
             MomentsInfo review =  entry.getValue();
+            //增加该状态的所有点赞信息
+//            List<MomentsLikeInfo> likeList = getLikeList(review.getMomentsId());
+//            review.setMomentsLikeList(likeList);
+            //增加当前用户对该状态的点赞情况
+            if(RedisSingletonService.isExistInSet(momentsLikeKey+review.getMomentsId(),userId)){
+                review.setIsLike(Constants.LIKE_STATUS_LIKE);
+            }
             momentsInfoList.add(review);
         }
         return momentsInfoList;
     }
+
+    private List<MomentsLikeInfo> getLikeList(Integer momentsId) {
+        List<MomentsLikeInfo> likeList = new ArrayList<>();
+        //点赞key
+        String momentsLikeKey = Constants.REDIS_KEY_PRFIX_MOMENT_LIKE
+                + Constants.REDIS_KEY_AND_FLAG;
+        Set<String> likeMembersSet = RedisSingletonService.getSetMembers(
+                momentsLikeKey+momentsId);
+        Iterator i = likeMembersSet.iterator();//先迭代出来
+        while(i.hasNext()) {
+            //TODO 遍历
+
+        }
+        return likeList;
+    }
+
 
     /**
      * 将消息转化为返回前端的momentsInfo

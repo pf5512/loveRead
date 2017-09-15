@@ -48,7 +48,7 @@ public class MyDateUtil {
      */
     public static String timestamp2Str(Timestamp timestamp){
         String tsStr = "";
-        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             tsStr = sdf.format(timestamp);
         } catch (Exception e) {
