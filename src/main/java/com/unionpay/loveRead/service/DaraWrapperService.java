@@ -128,6 +128,8 @@ public class DaraWrapperService {
             if(RedisSingletonService.isExistInSet(momentsLikeKey+review.getMomentsId(),userId)){
                 review.setIsLike(Constants.LIKE_STATUS_LIKE);
             }
+            //该状态的总点赞数
+            review.setLikeNums(RedisSingletonService.getTotalSetMembers(momentsLikeKey+review.getMomentsId()));
             momentsInfoList.add(review);
         }
         return momentsInfoList;

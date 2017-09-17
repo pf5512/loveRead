@@ -229,7 +229,7 @@ public class RedisSingletonService {
     }
 
     /**
-     * 从set中移除元素
+     * 从set中获取某个元素
      *
      * @param setKey
      */
@@ -243,6 +243,30 @@ public class RedisSingletonService {
             }
         } catch (Exception e) {
             logger.info("Jedis addSet fail!");
+        } finally {
+            if (jedis != null) {
+                jedis.close(); // 释放连接
+                logger.info("Jedis connection releases successfully!");
+            }
+            return null;
+        }
+    }
+
+    /**
+     * 返回set集合中所有元素个数
+     *
+     * @param setKey
+     */
+    public static Long getTotalSetMembers(String setKey) {
+        Jedis jedis = null;
+        try {
+            redisPool = getInstance(); // 获取资源池
+            jedis = redisPool.getResource(); // 获取资源
+            if (jedis != null) {
+                return jedis.scard(setKey);
+            }
+        } catch (Exception e) {
+            logger.info("Jedis count fail!");
         } finally {
             if (jedis != null) {
                 jedis.close(); // 释放连接

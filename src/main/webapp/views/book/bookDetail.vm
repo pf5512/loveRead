@@ -1,7 +1,13 @@
 <div class="title-bar">
     <img src="${rc.contextPath}/resources/images/arrow-left.png" onclick="javascript:history.back();"></img>
-
     <p>图书详情</p>
+    <a href="javascript:dianZan('$!bookDetail.bookId')">
+        #if($!isLike == 'yes')
+            <img id="likeBtnImg" src="$!{specialUrl}${rc.contextPath}/resources/images/hackthon/like_btn.png"></img>
+        #else
+            <img id="likeBtnImg" src="$!{specialUrl}${rc.contextPath}/resources/images/hackthon/like_yet_btn.png"></img>
+        #end
+    </a>
 </div>
 <div class="book-detail-img">
     <img class="book-pic" src="$!bookDetail.cover"></img>
@@ -94,19 +100,21 @@
             },
             success: function (data) {
                 removeLoading();
-                if (data == "fail") {
+                if (data.code == "fail") {
                     zzrw.alert("操作失败!");
                 } else {
                     var likeNums = $("#likeNum").html();
                     var countNum = parseInt(likeNums);
-                    if (data == "success_up") {
+                    if (data.code == "success_up") {
                         countNum++;
                         $("#likeBtnImg").attr("src", "${rc.contextPath}/resources/images/hackthon/like_btn.png");
                         zzrw.alert("点赞成功!");
-                    } else {
+                    } else if (data.code == 'success_down') {
                         countNum--;
                         $("#likeBtnImg").attr("src", "${rc.contextPath}/resources/images/hackthon/like_yet_btn.png");
                         zzrw.alert("已取消赞!");
+                    }else{
+                        zzrw.alert("操作失败!");
                     }
                     $("#likeNum").text(countNum);
                 }

@@ -123,7 +123,8 @@ public class MomentsService {
      * @param momentsId
      * @return
      */
-    public boolean addLike(String uid, String momentsId) {
+    public String addLike(String uid, String momentsId) {
+        String result = Constants.FAIL;
         //点赞key
         String momentsLikeKey = Constants.REDIS_KEY_PRFIX_MOMENT_LIKE
                 + Constants.REDIS_KEY_AND_FLAG + momentsId;
@@ -131,12 +132,14 @@ public class MomentsService {
             //如果redis存在该key，表示取消赞，否则是点赞
             if(RedisSingletonService.isExistInSet(momentsLikeKey,uid)){
                 RedisSingletonService.remSet(momentsLikeKey, uid);
+                result = Constants.SUCCESS_DOWN;
             }else{
                 RedisSingletonService.addSet(momentsLikeKey, uid);
+                result = Constants.SUCCESS_UP;
             }
         }catch (Exception e){
-            return false;
+            result = Constants.FAIL;
         }
-        return true;
+        return result;
     }
 }

@@ -154,6 +154,11 @@ public class BookService {
         logger.info("----------查询图书详情...");
         int bookIdInt = Integer.parseInt(bookId);
         BookInfoView bookDetail = bookDetailDao.get(bookIdInt);
+        //获取点赞总数
+        String bookLikeKey = Constants.REDIS_KEY_PRFIX_BOOK_LIKE
+                + Constants.REDIS_KEY_AND_FLAG;
+        Long likeNums = RedisSingletonService.getTotalSetMembers(bookLikeKey+bookId);
+        bookDetail.setLikeNums(Integer.valueOf(likeNums+""));
         return bookDetail;
     }
 
@@ -348,5 +353,31 @@ public class BookService {
             return bookList.size();
         }
         return 0;
+    }
+
+    /**
+     * 图书点赞
+     * @param userId
+     * @param bookId
+     * @return
+     */
+    public String addLike(String userId, String bookId) {
+        String result = Constants.FAIL;
+        //点赞key
+        String bookLikeKey = Constants.REDIS_KEY_PRFIX_BOOK_LIKE
+                + Constants.REDIS_KEY_AND_FLAG + bookId;
+        try{
+            //如果redis存在该key，表示取消赞，否则是点赞
+            if(RedisSingletonService.isExistInSet(bookLikeKey,userId)){
+                RedisSingletonService.remSet(bookLikeKey, userId);
+                result = Constants.SUCCESS_DOWN;
+            }else{
+                RedisSingletonService.addSet(bookLikeKey, userId);
+                result = Constants.SUCCESS_UP;
+            }
+        }catch (Exception e){
+            result = Constants.FAIL;
+        }
+        return result;
     }
 }

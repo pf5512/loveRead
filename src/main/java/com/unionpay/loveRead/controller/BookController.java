@@ -315,21 +315,27 @@ public class BookController extends BaseController {
     /**
      * 用户点/取赞
      *
-     * @param model
+     * @param bookId
      * @param request
      *
      * @return
      */
     @RequestMapping(value = "addLike")
-    public void addLike(ModelMap model, String bookId,
-                        HttpServletRequest request, HttpServletResponse response) {
-        logger.info("------用户点赞操作-----");
-        String result = "fail";
-        String uid = getSessionUid(request);
-        if (!StringUtils.isBlank(uid)) {
-            //result = bookLikeService.addLike(uid, bookId);
+    @ResponseBody
+    public BaseResponse addLike(String bookId,HttpServletRequest request) {
+        logger.info("------用户对图书点赞操作-----");
+        BaseResponse baseResp = new BaseResponse();
+        WxMpUser user = getUserInfo(request);
+
+        if(!StringUtils.isBlank(user.getOpenId())){
+            String result = bookService.addLike(user.getOpenId(), bookId);
+            baseResp.setCode(result);
+        }else{
+            baseResp.setCode(RespStatus.LOGIN_EXPIRED.getCode());
+            baseResp.setMessage(RespStatus.LOGIN_EXPIRED.getMessage());
         }
-        writeResponseStr(result, response);
+
+        return baseResp;
     }
 
     /**

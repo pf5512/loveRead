@@ -12,6 +12,7 @@ public class Constants {
     public static final String REDIS_USERSET_KEY = "userSet";
 
     public static final String REDIS_KEY_PRFIX_MOMENT_LIKE = "momentLike";
+    public static final String REDIS_KEY_PRFIX_BOOK_LIKE = "bookLike";
     public static final String REDIS_KEY_AND_FLAG = "_";
 
     public static final String SESSION_OPENID = "openId";

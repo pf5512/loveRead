@@ -239,13 +239,11 @@ public class MomentsController extends BaseController{
     public BaseResponse addLike(String momentsId,HttpServletRequest request) {
         logger.info("------用户对状态点赞操作-----");
         BaseResponse baseResp = new BaseResponse();
-        String result = Constants.FAIL;
         WxMpUser user = getUserInfo(request);
 
         if(!StringUtils.isBlank(user.getOpenId())){
-            if(momentsService.addLike(user.getOpenId(), momentsId)){
-                result = Constants.SUCCESS;
-            }
+            String result = momentsService.addLike(user.getOpenId(), momentsId);
+            baseResp.setCode(result);
         }else{
             baseResp.setCode(RespStatus.LOGIN_EXPIRED.getCode());
             baseResp.setMessage(RespStatus.LOGIN_EXPIRED.getMessage());
