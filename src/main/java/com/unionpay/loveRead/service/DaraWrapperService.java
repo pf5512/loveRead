@@ -25,6 +25,8 @@ public class DaraWrapperService {
     @Autowired
     private WxMpConfig wxConfig;
 
+    @Autowired
+    BookService bookService;
     /**
      * 将微信返回的用户信息封装成系统需要的用户信息
      * @param wxMpUser
@@ -166,5 +168,14 @@ public class DaraWrapperService {
         mInfo.setMomentsImg(moments.getMomentsImg());
         mInfo.setCrtTs(MyDateUtil.timestamp2Str(moments.getCrtTs()));
         return mInfo;
+    }
+
+    public List<BookInfoView> addLikeNums(List<BookInfoView> bookList) {
+        int likeNums = 0;
+        for(BookInfoView bookInfoView:bookList){
+            likeNums = bookService.getBookLikeNums(bookInfoView.getBookId());
+            bookInfoView.setLikeNums(likeNums);
+        }
+        return bookList;
     }
 }

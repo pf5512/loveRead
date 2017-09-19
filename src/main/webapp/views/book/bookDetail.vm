@@ -98,6 +98,8 @@
             data: {
                 bookId: id
             },
+            dataType: 'json',
+            type: 'post',
             success: function (data) {
                 removeLoading();
                 if (data.code == "fail") {

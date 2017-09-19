@@ -154,12 +154,25 @@ public class BookService {
         logger.info("----------查询图书详情...");
         int bookIdInt = Integer.parseInt(bookId);
         BookInfoView bookDetail = bookDetailDao.get(bookIdInt);
-        //获取点赞总数
+        int likeNums = getBookLikeNums(bookIdInt);
+        bookDetail.setLikeNums(likeNums);
+        return bookDetail;
+    }
+
+    /**
+     * 获取图书点赞总数
+     * @param bookId
+     * @return
+     */
+    public int getBookLikeNums(Integer bookId){
         String bookLikeKey = Constants.REDIS_KEY_PRFIX_BOOK_LIKE
                 + Constants.REDIS_KEY_AND_FLAG;
         Long likeNums = RedisSingletonService.getTotalSetMembers(bookLikeKey+bookId);
-        bookDetail.setLikeNums(Integer.valueOf(likeNums+""));
-        return bookDetail;
+        if( likeNums != null){
+            return Integer.valueOf(likeNums+"");
+        }
+        return 0;
+
     }
 
     /**
