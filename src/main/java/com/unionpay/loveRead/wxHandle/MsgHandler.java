@@ -37,7 +37,7 @@ public class MsgHandler extends AbstractHandler {
             //如果是文本事件，则接入图灵机器人处理
             content = tuLingRobot.processMessage(wxMessage);
         }else if(wxMessage.getMsgType().equals(WxConsts.XML_MSG_LINK)){
-            //如果是链接事件，则转浦发红包机器人处理
+            //如果是链接事件，则转spdbcc红包机器人处理
             if(wxMessage.getDescription().contains("红包")){
                 content = spdbcccRobot.processMessage(wxMessage);
             }

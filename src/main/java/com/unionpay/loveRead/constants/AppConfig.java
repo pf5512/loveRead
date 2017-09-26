@@ -41,6 +41,9 @@ public class AppConfig {
     @Value("#{configuration.tuling_api_key}")
     private String tulingApiKey;
 
+    @Value("#{configuration.spdbccc_url}")
+    private String spdbcccUrl;
+
     public String getAppUrl() {
         return appUrl;
     }
@@ -79,5 +82,9 @@ public class AppConfig {
 
     public String getTulingApiKey() {
         return tulingApiKey;
+    }
+
+    public String getSpdbcccUrl() {
+        return spdbcccUrl;
     }
 }

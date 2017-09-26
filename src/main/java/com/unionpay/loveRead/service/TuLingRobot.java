@@ -11,10 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,28 +23,21 @@ import java.util.Map;
 public class TuLingRobot {
     @Autowired
     AppConfig appConfig;
-    private static Logger logger = LoggerFactory.getLogger(BookService.class);
+    private static Logger logger = LoggerFactory.getLogger(TuLingRobot.class);
 
     public String processMessage(WxMpXmlMessage wxMessage) {
         //1.调用图灵接口
         String fromUserName = wxMessage.getFromUser();
-        String content = wxMessage.getContent();
-        String info = "";
-        try {
-            info = URLEncoder.encode(content, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         Map<String, String> paramMaps = new HashMap<>();
         paramMaps.put("key", appConfig.getTulingApiKey());
-        paramMaps.put("info", info);
+        paramMaps.put("info", wxMessage.getContent());
         paramMaps.put("userid", fromUserName);
         logger.info("paramMaps:"+paramMaps);
         String result = HttpClientUtil.getInstance().sendHttpPost(appConfig.getTulingApiUrl(),paramMaps);
         logger.info("result:"+result);
         //2.处理图灵机器人返回的结果
         String answer = processTuRingResult(result);
-        return result;
+        return answer;
     }
 
     /**
@@ -62,13 +52,14 @@ public class TuLingRobot {
                 answer = rootObj.getString("text");
                 break;
             case Constants.LINK_CODE:
-                answer = rootObj.getString("text");
+                answer = "<a href='" + rootObj.getString("url") + "'>"
+                        + rootObj.getString("text") + "</a>";
                 break;
             case Constants.NEWS_CODE:
             case Constants.TRAIN_CODE:
             case Constants.FLIGHT_CODE:
             case Constants.MENU_CODE:
-                answer = "我暂时处理不了这些信息哦";
+                answer = processNews(code);
                 break;
             case Constants.LENGTH_WRONG_CODE:
             case Constants.KEY_WRONG_CODE:
@@ -97,7 +88,25 @@ public class TuLingRobot {
         return answer;
     }
 
-    private void assembleNews(String answer, List<JSONObject> list, int code) {
-
+    private String processNews(String code) {
+        String answer = "";
+        switch (code){
+            case Constants.TRAIN_CODE:
+                answer = "火车信息建议你去12306哦";
+                break;
+            case Constants.FLIGHT_CODE:
+                answer = "航班信息建议你去携程或去哪上查哦";
+                break;
+            case Constants.NEWS_CODE:
+                answer = "新闻建议你去今日头条查哦";
+                break;
+            case Constants.MENU_CODE:
+                answer = "视频小说内容太大了，我暂时处理不了哦";
+                break;
+            default:
+                answer = "陛下请原谅我的无知";
+                break;
+        }
+        return answer;
     }
 }

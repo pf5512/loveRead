@@ -168,4 +168,12 @@ public class Constants {
     /** 服务器数据格式异常 */
     public static final String DATA_EXCEPTION_CODE = "40007";
 
+    /* spdbcc机器人 */
+    public static final String EMPTY_PACKET_TIPS = "请不要发空包给我。多次发送空包会被管理员锁定账户，谢谢合作。";
+    public static final String INVALID_PACKET_TIPS = "请不要发无效的红包给我。多次发送会被管理员锁定账户，谢谢合作。";
+    public static final String RESEND_PACKET_TIPS = "由于浦发网络原因导致无法判断红包有效性，请稍后重试";
+
+    public static final String PACKET_VALID = "0";
+    public static final String PACKET_INVALID = "1";
+
 }
