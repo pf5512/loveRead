@@ -10,7 +10,6 @@ import com.unionpay.loveRead.constants.Constants;
 import com.unionpay.loveRead.domain.Book;
 import com.unionpay.loveRead.domain.BookInfoView;
 import com.unionpay.loveRead.service.BookService;
-import com.unionpay.loveRead.service.DaraWrapperService;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -46,8 +45,6 @@ public class BookController extends BaseController {
     @Autowired
     AppConfig appConfig;
 
-    @Autowired
-    DaraWrapperService daraWrapperService;
 
     /**
      * 图书总搜索
@@ -64,8 +61,7 @@ public class BookController extends BaseController {
         logger.info("----------搜索开始,keywords：" + keywords + "--------");
         // 缺少必要参数
         List<BookInfoView> bookList = bookService.getBookListByKeywords(keywords);
-        //增加点赞数
-        bookList = daraWrapperService.addLikeNums(bookList);
+
         model.addAttribute("bookDetailList", bookList);
         logger.info("----------搜索结果:共" + bookList.size() + "本书-------");
         return "book/bookList";

@@ -35,6 +35,12 @@ public class AppConfig {
     @Value("#{configuration.lottery_cost}")
     private Integer lotteryCost;
 
+    @Value("#{configuration.tuling_api_url}")
+    private String tulingApiUrl;
+
+    @Value("#{configuration.tuling_api_key}")
+    private String tulingApiKey;
+
     public String getAppUrl() {
         return appUrl;
     }
@@ -65,5 +71,13 @@ public class AppConfig {
 
     public Integer getLotteryCost() {
         return lotteryCost;
+    }
+
+    public String getTulingApiUrl() {
+        return tulingApiUrl;
+    }
+
+    public String getTulingApiKey() {
+        return tulingApiKey;
     }
 }

@@ -46,6 +46,8 @@ public class BookService {
     @Autowired
     BookLikeCountDao bookLikeCountDao;
 
+    @Autowired
+    DaraWrapperService daraWrapperService;
 
     /**
      * 根据图书id查询唯一图书
@@ -140,6 +142,8 @@ public class BookService {
      */
     public List<BookInfoView> getBookListByKeywords(String keywords) {
         List<BookInfoView> bookDetailList = bookDetailDao.findBookListByKeywords(keywords);
+        //增加点赞数
+        bookDetailList = daraWrapperService.addLikeNums(bookDetailList);
         return bookDetailList;
     }
 
@@ -168,6 +172,7 @@ public class BookService {
         String bookLikeKey = Constants.REDIS_KEY_PRFIX_BOOK_LIKE
                 + Constants.REDIS_KEY_AND_FLAG;
         Long likeNums = RedisSingletonService.getTotalSetMembers(bookLikeKey+bookId);
+        logger.info(bookId + " likeNums : " + likeNums);
         if( likeNums != null){
             return Integer.valueOf(likeNums+"");
         }
@@ -184,6 +189,8 @@ public class BookService {
      */
     public List<BookInfoView> getBookListByBorrowType(String borrowType) {
         List<BookInfoView> bookDetailList = bookDetailDao.findBookListByBorrowType(borrowType);
+        //增加点赞数
+        bookDetailList = daraWrapperService.addLikeNums(bookDetailList);
         return bookDetailList;
     }
 
@@ -197,6 +204,8 @@ public class BookService {
      */
     public List<BookInfoView> getBooInfoListByUid(String uid) {
         List<BookInfoView> bookDetailList = bookDetailDao.findBookListByUid(uid);
+        //增加点赞数
+        bookDetailList = daraWrapperService.addLikeNums(bookDetailList);
         return bookDetailList;
     }
 
@@ -277,6 +286,8 @@ public class BookService {
      */
     public List<BookInfoView> getOutBookList() {
         List<BookInfoView> bookDetailList = bookDetailDao.findOutBookList();
+        //增加点赞数
+        bookDetailList = daraWrapperService.addLikeNums(bookDetailList);
         return bookDetailList;
     }
 
@@ -324,7 +335,10 @@ public class BookService {
      * @return
      */
     public List<BookInfoView> findBookListByLimits(Integer start, String type) {
-        return bookDetailDao.findBookListByLimits(start, type);
+        List<BookInfoView> bookDetailList = bookDetailDao.findBookListByLimits(start, type);
+        //增加点赞数
+        bookDetailList = daraWrapperService.addLikeNums(bookDetailList);
+        return bookDetailList;
     }
 
     /**
